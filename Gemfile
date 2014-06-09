@@ -34,6 +34,7 @@ gem 'haml-rails'
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'simple_form', '~> 3.0.2'
 gem 'kaminari'
+gem 'active_link_to'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
