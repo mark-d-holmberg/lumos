@@ -1,0 +1,21 @@
+en:
+  date:
+    formats:
+      short: "%d %B %Y"
+  time:
+    formats:
+      short: "%d %b %Y,%l:%M %P"
+      only_time: "%l:%M %P"
+      only_date: "%d %B %Y"
+  activerecord:
+    attributes:
+      created_at: 'Created'
+      updated_at: 'Updated'
+    models:
+  layouts:
+    application:
+      brand: 'Go Lumos'
+      copyright: "Go Lumos %{year}"
+      default_title: 'Go Lumos - Outpost'
+      default_sub_title: ''
+      title: "Go Lumos - Outpost : %{title}"
