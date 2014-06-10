@@ -1,0 +1,40 @@
+- title "User : #{@user.email}", false
+
+.page-header
+  %h3.sub-title.inline
+    User : #{@user.email}
+    %span
+      = link_to edit_user_path(@user), class: 'btn btn-warning', title: "Edit User" do
+        %span.glyphicon.glyphicon-edit
+
+.col-sm-12
+  %table.table.table-striped
+    %tbody
+      %tr
+        %th= User.human_attribute_name(:email)
+        %td= mail_to @user.email
+        %th= User.human_attribute_name(:sign_in_count)
+        %td= @user.sign_in_count
+      %tr
+        %th= User.human_attribute_name(:current_sign_in_ip)
+        %td= @user.current_sign_in_ip
+        %th= User.human_attribute_name(:last_sign_in_ip)
+        %td= @user.last_sign_in_ip
+      %tr
+        %th= User.human_attribute_name(:current_sign_in_at)
+        %td
+          - if @user.current_sign_in_at.present?
+            = l @user.current_sign_in_at, format: :short
+          - else
+            N/A
+        %th= User.human_attribute_name(:last_sign_in_at)
+        %td
+          - if @user.last_sign_in_at.present?
+            = l @user.last_sign_in_at, format: :short
+          - else
+            N/A
+      %tr
+        %th= User.human_attribute_name(:created_at)
+        %td= l(@user.created_at, format: :short)
+        %th= User.human_attribute_name(:updated_at)
+        %td= l(@user.updated_at, format: :short)

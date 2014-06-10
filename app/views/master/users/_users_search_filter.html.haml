@@ -1,0 +1,5 @@
+= simple_form_for :search, url: users_path, method: :get, html: { id: "users_search_filter", class: "form-inline inline-search-form form" }, wrapper: :inline do |f|
+  = f.input :query, as: :string, input_html: { value: (params[:search].try(:[], :query) if params[:search].present?), class: 'search-query', id: "inline_search" }, placeholder: "Search Term", autocomplete: 'off', label: false
+  - if params[:search].present?
+    = link_to users_path, class: 'btn btn-danger', title: 'Clear Filter' do
+      %span.glyphicon.glyphicon-remove

@@ -4,41 +4,10 @@
       = active_link_to root_path, active: ["public"] do
         %span.glyphicon.glyphicon-home
         Home
-    %li
-      = active_link_to '#', active: ["campaigns"] do
-        %span.glyphicon.glyphicon-fire
-        Campaigns
-    %li
-      = active_link_to '#', active: ["contributors"] do
-        %span.glyphicon.glyphicon-shopping-cart
-        Contributors
 
   -# Sidebar menu
   %ul.nav.navbar-nav.navbar-right
     %li
       = link_to '#' do
-        %span.glyphicon.glyphicon-signal
-        Status
-    %li.dropdown
-      %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
-        %span.glyphicon.glyphicon-user
-        John Doe
-        %b.caret
-      %ul.dropdown-menu
-        %li
-          = link_to '#' do
-            %span.glyphicon.glyphicon-fire
-            Campaigns
-        %li
-          = link_to '#' do
-            %span.glyphicon.glyphicon-usd
-            Donations
-        %li
-          = link_to '#' do
-            %span.glyphicon.glyphicon-cog
-            Configuration
-        %li.divider
-        %li
-          = link_to '#' do
-            %span.glyphicon.glyphicon-off
-            Logout
+        %span.glyphicon.glyphicon-list-alt
+        Register

@@ -1,0 +1,33 @@
+- title "Users"
+
+- content_for(:toolbar) do
+  = link_to new_user_path, title: "New User", class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+  = render "users_search_filter"
+
+= paginate @users
+
+%table.table.table-striped.table-hover#users_index_table
+  %thead
+    %tr
+      %th= User.human_attribute_name(:email)
+      %th= User.human_attribute_name(:sign_in_count)
+      %th= User.human_attribute_name(:created_at)
+      %th= User.human_attribute_name(:updated_at)
+      %th
+      %th
+  %tbody
+    - @users.each do |user|
+      %tr
+        %td= link_to user.email, user
+        %td= user.sign_in_count
+        %td= l(user.created_at, format: :short)
+        %td= l(user.updated_at, format: :short)
+        %td
+          = link_to edit_user_path(user), class: 'btn btn-warning btn-xs', title: 'Edit User' do
+            %span.glyphicon.glyphicon-edit
+        %td
+          = link_to user, method: :delete, data: { confirm: 'Are you sure?' }, id: "user_destroy_#{user.id}", title: "Remove User", class: 'btn btn-danger btn-xs' do
+            %span.glyphicon.glyphicon-remove
+
+= paginate @users

@@ -7,15 +7,30 @@ en:
       short: "%d %b %Y,%l:%M %P"
       only_time: "%l:%M %P"
       only_date: "%d %B %Y"
+  attributes:
+    created_at: 'Created'
+    updated_at: 'Updated'
   activerecord:
     attributes:
-      created_at: 'Created'
-      updated_at: 'Updated'
+      user:
+        current_sign_in_at: "Current Sign In At"
+        current_sign_in_ip: "Current Sign In IP"
+        email: 'Email'
+        last_sign_in_at: "Last Sign In At"
+        last_sign_in_ip: 'Last Sign In IP'
+        sign_in_count: 'Sign In Count'
     models:
+      user: 'User'
   layouts:
     application:
-      brand: 'Go Lumos'
-      copyright: "Go Lumos %{year}"
-      default_title: 'Go Lumos - Outpost'
+      brand: 'Lumos CFC'
+      copyright: "Lumos Technology %{year}"
+      default_title: 'Lumos Crowd Funding Campaign'
       default_sub_title: ''
-      title: "Go Lumos - Outpost : %{title}"
+      title: "Lumos Crowd Funding Campaign : %{title}"
+    master:
+      brand: 'Lumos CFC'
+      copyright: "Lumos Technology %{year}"
+      default_title: 'Lumos Crowd Funding Campaign'
+      default_sub_title: ''
+      title: "Lumos Crowd Funding Campaign : %{title}"

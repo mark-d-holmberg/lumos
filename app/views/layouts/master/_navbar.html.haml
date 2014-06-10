@@ -1,0 +1,51 @@
+#navbar-collapse-1.collapse.navbar-collapse
+  %ul.nav.navbar-nav
+    - if user_signed_in?
+      %li
+        = active_link_to '#', active: ["campaigns"] do
+          %span.glyphicon.glyphicon-fire
+          Campaigns
+      %li
+        = active_link_to '#', active: ["contributors"] do
+          %span.glyphicon.glyphicon-shopping-cart
+          Contributors
+      %li
+        = link_to '#' do
+          %span.glyphicon.glyphicon-signal
+          Reports
+
+  -# Sidebar menu
+  %ul.nav.navbar-nav.navbar-right
+    - if user_signed_in?
+      %li{class: is_active_link?(users_path, :inclusive) ? 'active' : nil}
+        = active_link_to users_path, active: ["master/users"] do
+          %span.glyphicon.glyphicon-user
+          Users
+      %li.dropdown
+        %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
+          = current_user.email
+          %b.caret
+        %ul.dropdown-menu
+          %li
+            = link_to '#' do
+              %span.glyphicon.glyphicon-user
+              My Profile
+          %li.divider
+          %li
+            = link_to '#' do
+              %span.glyphicon.glyphicon-fire
+              Campaigns
+          %li
+            = link_to '#' do
+              %span.glyphicon.glyphicon-cog
+              Configuration
+          %li.divider
+          %li
+            = link_to destroy_user_session_path, method: :delete do
+              %span.glyphicon.glyphicon-off
+              Logout
+    - else
+      %li{class: is_active_link?(new_user_session_path, :inclusive) ? 'active' : nil}
+        = active_link_to new_user_session_path, active: ["master/sessions"] do
+          %span.glyphicon.glyphicon-off
+          Login
