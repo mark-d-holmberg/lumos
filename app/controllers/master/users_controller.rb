@@ -28,10 +28,21 @@ class Master::UsersController < MasterController
   end
 
   def update
-    if @user.update(safe_params)
-      redirect_to @user, notice: 'User was successfully updated.'
+    if safe_params[:password].blank?
+      safe_params.delete("password")
+      safe_params.delete("password_confirmation")
+
+      if @user.update_without_password(safe_params)
+        redirect_to users_path, notice: 'User was successfully updated.'
+      else
+        render :edit
+      end
     else
-      render :edit
+      if @user.update(safe_params)
+        redirect_to users_path, notice: 'User was successfully updated.'
+      else
+        render :edit
+      end
     end
   end
 
@@ -42,6 +53,10 @@ class Master::UsersController < MasterController
 
 
   private
+
+  def needs_password?(user, params)
+    user.email != params[:user][:email] || params[:user][:password].present?
+  end
 
   def set_user
     @user = User.find(params[:id])
