@@ -17,10 +17,22 @@
   -# Sidebar menu
   %ul.nav.navbar-nav.navbar-right
     - if user_signed_in?
-      %li{class: is_active_link?(users_path, :inclusive) ? 'active' : nil}
-        = active_link_to users_path, active: ["master/users"] do
-          %span.glyphicon.glyphicon-user
-          Users
+      -# Configuration Menu
+      %li.dropdown
+        %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
+          %span.glyphicon.glyphicon-cog
+          Configuration
+          %b.caret
+        %ul.dropdown-menu
+          %li
+            = link_to users_path do
+              %span.glyphicon.glyphicon-user
+              Users
+          %li
+            = link_to states_path do
+              %span.glyphicon.glyphicon-globe
+              States
+      -# User Menu
       %li.dropdown
         %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
           = current_user.email
@@ -38,7 +50,7 @@
           %li
             = link_to '#' do
               %span.glyphicon.glyphicon-cog
-              Configuration
+              Something Else
           %li.divider
           %li
             = link_to destroy_user_session_path, method: :delete do

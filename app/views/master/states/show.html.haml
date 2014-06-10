@@ -1,0 +1,21 @@
+- title @state.name, false
+
+.page-header
+  %h3.sub-title.inline
+    = @state.name
+    %span
+      = link_to edit_state_path(@state), class: 'btn btn-warning btn-xs', title: "Edit State" do
+        %span.glyphicon.glyphicon-edit
+
+%table.table.table-hover.table-striped.table-condensed
+  %tbody
+    %tr
+      %th= State.human_attribute_name(:name)
+      %td= @state.name
+      %th= State.human_attribute_name(:abbr)
+      %td= @state.abbr
+    %tr
+      %th= State.human_attribute_name(:created_at)
+      %td= l(@state.created_at, format: :short)
+      %th= State.human_attribute_name(:updated_at)
+      %td= l(@state.updated_at, format: :short)

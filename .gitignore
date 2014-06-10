@@ -42,3 +42,4 @@ config/secrets.yml
 .rvmrc
 
 public/assets
+.DS_Store

@@ -1,7 +1,7 @@
 - title "Users"
 
 - content_for(:toolbar) do
-  = link_to new_user_path, title: "New User", class: 'btn btn-primary' do
+  = link_to new_user_path, title: "New User", class: 'btn btn-primary btn-xs' do
     %span.glyphicon.glyphicon-plus
   = render "users_search_filter"
 

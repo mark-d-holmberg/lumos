@@ -1,0 +1,32 @@
+- title "States"
+
+- content_for(:toolbar) do
+  = link_to new_state_path, title: "New State", class: 'btn btn-primary btn-xs' do
+    %span.glyphicon.glyphicon-plus
+
+= paginate @states
+
+%table.table.table-striped.table-hover.table-condensed
+  %thead
+    %tr
+      %th= State.human_attribute_name(:name)
+      %th= State.human_attribute_name(:abbr)
+      %th= State.human_attribute_name(:created_at)
+      %th= State.human_attribute_name(:updated_at)
+      %th
+      %th
+  %tbody
+    - @states.each do |state|
+      %tr
+        %td= link_to state.name, state
+        %td= state.abbr
+        %td= l(state.created_at, format: :short)
+        %td= l(state.updated_at, format: :short)
+        %td
+          = link_to edit_state_path(state), class: 'btn btn-warning btn-xs', title: 'Edit State' do
+            %span.glyphicon.glyphicon-edit
+        %td
+          = link_to state, method: :delete, data: { confirm: 'Are you sure?' }, id: "state_destroy_#{state.id}", title: "Remove State", class: 'btn btn-danger btn-xs' do
+            %span.glyphicon.glyphicon-remove
+
+= paginate @states

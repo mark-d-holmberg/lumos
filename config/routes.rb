@@ -12,6 +12,8 @@ Rails.application.routes.draw do
       # For adding new devise users the hard way
       resources :users
 
+      resources :states
+
       match '/', to: 'dashboard#index', via: [:get], as: :master_root
     end
   end
