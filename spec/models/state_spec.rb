@@ -34,4 +34,24 @@ RSpec.describe State, type: :model do
       expect(build(:state, abbr: 'UT')).to_not be_valid
     end
   end
+
+  describe "concerning associations" do
+    it "should have many districts" do
+      state = create(:state, name: "Utah", abbr: 'UT')
+      district_1 = create(:district, state: state)
+      district_2 = create(:district, state: state)
+      expect(state.districts).to match_array([district_1, district_2])
+    end
+  end
+
+  describe "concerning ActiveRecord callbacks" do
+    it "should destroy dependent districts" do
+      state = create(:state, name: "Utah", abbr: 'UT')
+      district = create(:district, state: state)
+      state.destroy
+      expect {
+        district.reload
+      }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
 end

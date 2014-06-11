@@ -1,5 +1,7 @@
 class State < ActiveRecord::Base
 
+  has_many :districts, dependent: :destroy
+
   sorty on: [:name, :abbr, :created_at, :updated_at]
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }

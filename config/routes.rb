@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       resources :users
 
       resources :states
+      resources :districts
 
       match '/', to: 'dashboard#index', via: [:get], as: :master_root
     end

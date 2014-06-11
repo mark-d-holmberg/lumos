@@ -1,0 +1,25 @@
+- title "District : #{@district.name}", false
+
+.page-header
+  %h3.sub-title.inline
+    District : #{@district.name}
+    %span
+      = link_to edit_district_path(@district), class: 'btn btn-warning btn-xs', title: "Edit District" do
+        %span.glyphicon.glyphicon-edit
+
+%table.table.table-hover.table-striped.table-condensed
+  %tbody
+    %tr
+      %th= District.human_attribute_name(:name)
+      %td= @district.name
+      %th= District.human_attribute_name(:state)
+      %td
+        - if @district.state.present?
+          = link_to @district.state.name, @district.state
+        - else
+          N/A
+    %tr
+      %th= District.human_attribute_name(:created_at)
+      %td= l(@district.created_at, format: :short)
+      %th= District.human_attribute_name(:updated_at)
+      %td= l(@district.updated_at, format: :short)

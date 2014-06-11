@@ -1,0 +1,8 @@
+= simple_form_for :search, url: districts_path, method: :get, html: { id: "districts_search_filter", class: "inline-search-form form form-inline" }, wrapper: :inline do |f|
+  = f.input :query, as: :string, input_html: { value: (params[:search].try(:[], :query) if params[:search].present?), class: 'search-query', id: "inline_search" }, placeholder: "Search Term", autocomplete: 'off', label: false
+  = f.simple_fields_for :sorty do |s|
+    = s.input :direction, as: :hidden, input_html: { value: (params[:search][:sorty].try(:[], :direction) if params[:search].try(:[], :sorty).present?) } if params[:search].try(:[], :sorty).present?
+    = s.input :sort, as: :hidden, input_html: { value: (params[:search][:sorty].try(:[], :sort) if params[:search].try(:[], :sorty).present?) } if params[:search].try(:[], :sorty).present?
+  - if params[:search].present?
+    = link_to districts_path, class: 'btn btn-danger', title: 'Clear Filter' do
+      %span.glyphicon.glyphicon-remove

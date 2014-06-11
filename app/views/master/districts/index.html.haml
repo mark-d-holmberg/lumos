@@ -1,0 +1,37 @@
+- title "Districts"
+
+- content_for(:toolbar) do
+  = link_to new_district_path, title: "New District", class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+  = render "districts_search_filter"
+
+= paginate @districts
+
+%table.table.table-striped.table-hover.table-condensed
+  %thead
+    %tr
+      %th= sorty "name", District.human_attribute_name(:name), true
+      %th= sorty "state", District.human_attribute_name(:state)
+      %th= sorty "created_at", District.human_attribute_name(:created_at)
+      %th= sorty "updated_at", District.human_attribute_name(:updated_at)
+      %th
+      %th
+  %tbody
+    - @districts.each do |district|
+      %tr
+        %td= link_to district.name, district
+        %td
+          - if district.state.present?
+            = link_to district.state.name, district.state
+          - else
+            N/A
+        %td= l(district.created_at, format: :short)
+        %td= l(district.updated_at, format: :short)
+        %td
+          = link_to edit_district_path(district), class: 'btn btn-warning btn-xs', title: 'Edit District' do
+            %span.glyphicon.glyphicon-edit
+        %td
+          = link_to district, method: :delete, data: { confirm: 'Are you sure?' }, id: "district_destroy_#{district.id}", title: "Remove District", class: 'btn btn-danger btn-xs' do
+            %span.glyphicon.glyphicon-remove
+
+= paginate @districts

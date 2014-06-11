@@ -13,6 +13,7 @@ class Master::StatesController < MasterController
   end
 
   def show
+    @districts = @state.districts.page(params[:page])
   end
 
   def new

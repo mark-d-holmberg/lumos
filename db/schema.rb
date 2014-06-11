@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140610201839) do
+ActiveRecord::Schema.define(version: 20140611164713) do
+
+  create_table "districts", force: true do |t|
+    t.string   "name"
+    t.integer  "state_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "districts", ["state_id"], name: "index_districts_on_state_id", using: :btree
 
   create_table "states", force: true do |t|
     t.string   "name"

@@ -39,6 +39,7 @@ RSpec.describe Master::StatesController, type: :controller do
       state = State.create! valid_attributes
       get :show, {id: state.to_param}, valid_session
       expect(assigns(:state)).to eq(state)
+      expect(assigns(:districts)).to match_array([])
     end
   end
 
