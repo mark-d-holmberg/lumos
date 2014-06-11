@@ -73,7 +73,7 @@ RSpec.describe Master::StatesController, type: :controller do
 
       it "redirects to the created state" do
         post :create, {state: valid_attributes}, valid_session
-        expect(response).to redirect_to(State.last)
+        expect(response).to redirect_to(states_url)
       end
     end
 
@@ -116,7 +116,7 @@ RSpec.describe Master::StatesController, type: :controller do
       it "redirects to the state" do
         state = State.create! valid_attributes
         put :update, {id: state.to_param, state: valid_attributes}, valid_session
-        expect(response).to redirect_to(state)
+        expect(response).to redirect_to(states_url)
       end
     end
 

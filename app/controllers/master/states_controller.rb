@@ -20,7 +20,7 @@ class Master::StatesController < MasterController
     @state = State.new(safe_params)
 
     if @state.save
-      redirect_to @state, notice: 'State was successfully created.'
+      redirect_to states_url, notice: 'State was successfully created.'
     else
       render :new
     end
@@ -28,7 +28,7 @@ class Master::StatesController < MasterController
 
   def update
     if @state.update(safe_params)
-      redirect_to @state, notice: 'State was successfully updated.'
+      redirect_to states_url, notice: 'State was successfully updated.'
     else
       render :edit
     end
