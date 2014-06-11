@@ -1,0 +1,37 @@
+- title "Schools"
+
+- content_for(:toolbar) do
+  = link_to new_school_path, title: "New School", class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+  = render "schools_search_filter"
+
+= paginate @schools
+
+%table.table.table-striped.table-hover.table-condensed
+  %thead
+    %tr
+      %th= sorty "name", School.human_attribute_name(:name), true
+      %th= sorty "district", School.human_attribute_name(:district)
+      %th= sorty "created_at", School.human_attribute_name(:created_at)
+      %th= sorty "updated_at", School.human_attribute_name(:updated_at)
+      %th
+      %th
+  %tbody
+    - @schools.each do |school|
+      %tr
+        %td= link_to school.name, school
+        %td
+          - if school.district.present?
+            = link_to school.district.name, school.district
+          - else
+            N/A
+        %td= l(school.created_at, format: :short)
+        %td= l(school.updated_at, format: :short)
+        %td
+          = link_to edit_school_path(school), class: 'btn btn-warning btn-xs', title: 'Edit School' do
+            %span.glyphicon.glyphicon-edit
+        %td
+          = link_to school, method: :delete, data: { confirm: 'Are you sure?' }, id: "school_destroy_#{school.id}", title: "Remove School", class: 'btn btn-danger btn-xs' do
+            %span.glyphicon.glyphicon-remove
+
+= paginate @schools

@@ -1,0 +1,40 @@
+- title "School : #{@school.name}", false
+
+.page-header
+  %h3.sub-title.inline
+    School : #{@school.name}
+    %span
+      = link_to edit_school_path(@school), class: 'btn btn-warning btn-xs', title: "Edit School" do
+        %span.glyphicon.glyphicon-edit
+.row
+  .col-lg-4
+    %h5.page-header General Information
+    %table.table.table-hover.table-striped.table-condensed
+      %tbody
+        %tr
+          %th= School.human_attribute_name(:name)
+          %td= @school.name
+        %tr
+          %th= School.human_attribute_name(:district)
+          %td
+            - if @school.district.present?
+              = link_to @school.district.name, @school.district
+            - else
+              N/A
+        %tr
+          %th= School.human_attribute_name(:created_at)
+          %td= l(@school.created_at, format: :short)
+        %tr
+          %th= School.human_attribute_name(:updated_at)
+          %td= l(@school.updated_at, format: :short)
+  .col-lg-8
+    %h5.page-header Teachers
+    -# = paginate @teachers
+    -# %table.table.table-striped.table-hover.table-condensed
+    -#   %thead
+    -#     %tr
+    -#       %th= Teacher.human_attribute_name(:name)
+    -#   %tbody
+    -#     - @teachers.each do |teacher|
+    -#       %tr
+    -#         %td= link_to teacher.name, teacher
