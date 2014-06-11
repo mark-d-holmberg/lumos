@@ -3,6 +3,12 @@ class Master::StatesController < MasterController
 
   def index
     @states = State.all
+    @states = @states.search(params[:search][:query]) if params[:search].try(:[], :query).present?
+    if params[:search].try(:[], :sorty).present?
+      @states = @states.sorty_order(sort_column, sort_direction)
+    else
+      @states = @states.ordered
+    end
     @states = @states.page(params[:page])
   end
 

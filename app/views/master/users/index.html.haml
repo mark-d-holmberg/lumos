@@ -1,7 +1,7 @@
 - title "Users"
 
 - content_for(:toolbar) do
-  = link_to new_user_path, title: "New User", class: 'btn btn-primary btn-xs' do
+  = link_to new_user_path, title: "New User", class: 'btn btn-primary' do
     %span.glyphicon.glyphicon-plus
   = render "users_search_filter"
 
@@ -10,10 +10,10 @@
 %table.table.table-striped.table-hover#users_index_table
   %thead
     %tr
-      %th= User.human_attribute_name(:email)
-      %th= User.human_attribute_name(:sign_in_count)
-      %th= User.human_attribute_name(:created_at)
-      %th= User.human_attribute_name(:updated_at)
+      %th= sorty "email", User.human_attribute_name(:email), true
+      %th= sorty "sign_in_count", User.human_attribute_name(:sign_in_count)
+      %th= sorty "created_at", User.human_attribute_name(:created_at)
+      %th= sorty "updated_at", User.human_attribute_name(:updated_at)
       %th
       %th
   %tbody

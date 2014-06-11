@@ -1,3 +1,10 @@
+GIT
+  remote: git@github.com:mark-d-holmberg/sorty.git
+  revision: 11aaabc2e8706cb577b466be39e66d2dfa94a550
+  specs:
+    sorty (0.0.1)
+      rails (>= 4.0.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -176,6 +183,7 @@ DEPENDENCIES
   rspec-rails (~> 3.0.0)
   sass-rails (~> 4.0.3)
   simple_form (~> 3.0.2)
+  sorty!
   spring
   therubyracer
   turbolinks

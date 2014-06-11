@@ -1,18 +1,19 @@
 - title "States"
 
 - content_for(:toolbar) do
-  = link_to new_state_path, title: "New State", class: 'btn btn-primary btn-xs' do
+  = link_to new_state_path, title: "New State", class: 'btn btn-primary' do
     %span.glyphicon.glyphicon-plus
+  = render "states_search_filter"
 
 = paginate @states
 
 %table.table.table-striped.table-hover.table-condensed
   %thead
     %tr
-      %th= State.human_attribute_name(:name)
-      %th= State.human_attribute_name(:abbr)
-      %th= State.human_attribute_name(:created_at)
-      %th= State.human_attribute_name(:updated_at)
+      %th= sorty "name", State.human_attribute_name(:name), true
+      %th= sorty "abbr", State.human_attribute_name(:abbr)
+      %th= sorty "created_at", State.human_attribute_name(:created_at)
+      %th= sorty "updated_at", State.human_attribute_name(:updated_at)
       %th
       %th
   %tbody

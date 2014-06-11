@@ -4,6 +4,12 @@ class Master::UsersController < MasterController
 
   def index
     @users = User.all
+    @users = @users.search(params[:search][:query]) if params[:search].try(:[], :query).present?
+    if params[:search].try(:[], :sorty).present?
+      @users = @users.sorty_order(sort_column, sort_direction)
+    else
+      @users = @users.ordered
+    end
     @users = @users.page(params[:page])
   end
 
