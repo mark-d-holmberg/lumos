@@ -40,6 +40,7 @@ RSpec.describe Master::DistrictsController, type: :controller do
       district = District.create! valid_attributes
       get :show, {id: district.to_param}, valid_session
       expect(assigns(:district)).to eq(district)
+      expect(assigns(:schools)).to match_array([])
     end
   end
 

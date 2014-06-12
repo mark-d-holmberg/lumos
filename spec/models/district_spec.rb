@@ -30,5 +30,24 @@ RSpec.describe District, type: :model do
       district = create(:district, state: state)
       expect(district.state).to eql(state)
     end
+
+    it "should have many schools" do
+      district = create(:district, name: 'Washington County')
+      school_1 = create(:school, name: 'Snow Canyon', district: district)
+      school_2 = create(:school, name: 'Desert Hills', district: district)
+      expect(district.schools).to match_array([school_1, school_2])
+    end
   end
+
+  describe "concerning ActiveRecord callbacks" do
+    it "should destroy dependent schools" do
+      district = create(:district, name: 'Washington County')
+      school = create(:school, name: 'Snow Canyon', district: district)
+      district.destroy
+      expect {
+        school.reload
+      }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
 end

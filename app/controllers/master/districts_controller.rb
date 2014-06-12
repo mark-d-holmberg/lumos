@@ -14,6 +14,7 @@ class Master::DistrictsController < MasterController
 
   def show
     # TODO: Show schools here
+    @schools = @district.schools.ordered.page(params[:page])
   end
 
   def new

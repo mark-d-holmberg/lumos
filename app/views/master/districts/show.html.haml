@@ -7,19 +7,35 @@
       = link_to edit_district_path(@district), class: 'btn btn-warning btn-xs', title: "Edit District" do
         %span.glyphicon.glyphicon-edit
 
-%table.table.table-hover.table-striped.table-condensed
-  %tbody
-    %tr
-      %th= District.human_attribute_name(:name)
-      %td= @district.name
-      %th= District.human_attribute_name(:state)
-      %td
-        - if @district.state.present?
-          = link_to @district.state.name, @district.state
-        - else
-          N/A
-    %tr
-      %th= District.human_attribute_name(:created_at)
-      %td= l(@district.created_at, format: :short)
-      %th= District.human_attribute_name(:updated_at)
-      %td= l(@district.updated_at, format: :short)
+.row
+  .col-lg-4
+    %h5.page-header General Information
+    %table.table.table-hover.table-striped.table-condensed
+      %tbody
+        %tr
+          %th= District.human_attribute_name(:name)
+          %td= @district.name
+        %tr
+          %th= District.human_attribute_name(:state)
+          %td
+            - if @district.state.present?
+              = link_to @district.state.name, @district.state
+            - else
+              N/A
+        %tr
+          %th= District.human_attribute_name(:created_at)
+          %td= l(@district.created_at, format: :short)
+        %tr
+          %th= District.human_attribute_name(:updated_at)
+          %td= l(@district.updated_at, format: :short)
+  .col-lg-8
+    %h5.page-header Schools
+    = paginate @schools
+    %table.table.table-striped.table-hover.table-condensed
+      %thead
+        %tr
+          %th= School.human_attribute_name(:name)
+      %tbody
+        - @schools.each do |school|
+          %tr
+            %td= link_to school.name, school

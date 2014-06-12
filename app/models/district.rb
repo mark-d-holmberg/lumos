@@ -2,6 +2,8 @@ class District < ActiveRecord::Base
 
   belongs_to :state
 
+  has_many :schools, dependent: :destroy
+
   sorty on: [:name, :created_at, :updated_at],
     references: {state: "name"}
 

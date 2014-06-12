@@ -24,6 +24,12 @@ RSpec.describe School, type: :model do
   end
 
   describe "concerning relations" do
+    it "should belong to a district" do
+      district = create(:district, name: 'Washington County')
+      school = create(:school, name: 'Snow Canyon', district: district)
+      expect(school.district).to eq(district)
+    end
+
     it "should have many teachers" do
       school = create(:school, name: 'Snow Canyon')
       teacher_1 = create(:teacher, school: school)
