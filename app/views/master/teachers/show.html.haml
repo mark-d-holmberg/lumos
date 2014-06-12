@@ -1,0 +1,29 @@
+- title "Teacher : #{@teacher.full_name}", false
+
+.page-header
+  %h3.sub-title.inline
+    Teacher : #{@teacher.full_name}
+    %span
+      = link_to edit_teacher_path(@teacher), class: 'btn btn-warning btn-xs', title: "Edit Teacher" do
+        %span.glyphicon.glyphicon-edit
+.row
+  .col-lg-4
+    %h5.page-header General Information
+    %table.table.table-hover.table-striped.table-condensed
+      %tbody
+        %tr
+          %th= Teacher.human_attribute_name(:full_name)
+          %td= @teacher.full_name
+        %tr
+          %th= Teacher.human_attribute_name(:school)
+          %td
+            - if @teacher.school.present?
+              = link_to @teacher.school.name, @teacher.school
+            - else
+              N/A
+        %tr
+          %th= Teacher.human_attribute_name(:created_at)
+          %td= l(@teacher.created_at, format: :short)
+        %tr
+          %th= Teacher.human_attribute_name(:updated_at)
+          %td= l(@teacher.updated_at, format: :short)

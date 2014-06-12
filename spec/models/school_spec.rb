@@ -22,4 +22,24 @@ RSpec.describe School, type: :model do
       expect(build(:school, name: 'Snow Canyon', district: district_2)).to be_valid
     end
   end
+
+  describe "concerning relations" do
+    it "should have many teachers" do
+      school = create(:school, name: 'Snow Canyon')
+      teacher_1 = create(:teacher, school: school)
+      teacher_2 = create(:teacher, school: school)
+      expect(school.teachers).to match_array([teacher_1, teacher_2])
+    end
+  end
+
+  describe "concernign ActiveRecord callbacks" do
+    it "destroys dependent teachers" do
+      school = create(:school, name: 'Snow Canyon')
+      teacher = create(:teacher, school: school)
+      school.destroy
+      expect {
+        teacher.reload
+      }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
 end

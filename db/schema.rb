@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140611195117) do
+ActiveRecord::Schema.define(version: 20140611220414) do
 
   create_table "districts", force: true do |t|
     t.string   "name"
@@ -37,6 +37,16 @@ ActiveRecord::Schema.define(version: 20140611195117) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "teachers", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.integer  "school_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "teachers", ["school_id"], name: "index_teachers_on_school_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

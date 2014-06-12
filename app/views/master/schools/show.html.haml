@@ -29,12 +29,14 @@
           %td= l(@school.updated_at, format: :short)
   .col-lg-8
     %h5.page-header Teachers
-    -# = paginate @teachers
-    -# %table.table.table-striped.table-hover.table-condensed
-    -#   %thead
-    -#     %tr
-    -#       %th= Teacher.human_attribute_name(:name)
-    -#   %tbody
-    -#     - @teachers.each do |teacher|
-    -#       %tr
-    -#         %td= link_to teacher.name, teacher
+    = paginate @teachers
+    %table.table.table-striped.table-hover.table-condensed
+      %thead
+        %tr
+          %th= Teacher.human_attribute_name(:last_name)
+          %th= Teacher.human_attribute_name(:first_name)
+      %tbody
+        - @teachers.each do |teacher|
+          %tr
+            %td= link_to teacher.last_name, teacher
+            %td= teacher.first_name

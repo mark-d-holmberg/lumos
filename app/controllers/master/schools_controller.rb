@@ -13,6 +13,7 @@ class Master::SchoolsController < MasterController
   end
 
   def show
+    @teachers = @school.teachers.ordered.page(params[:page])
   end
 
   def new

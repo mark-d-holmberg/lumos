@@ -12,6 +12,19 @@ en:
     updated_at: 'Updated'
   activerecord:
     attributes:
+      district:
+        name: 'Name'
+        state: 'State'
+      school:
+        district: 'District'
+        name: 'Name'
+      state:
+        abbr: 'Abbreviation'
+        name: 'Name'
+      teacher:
+        first_name: 'First Name'
+        full_name: 'Full Name'
+        last_name: 'Last Name'
       user:
         current_sign_in_at: "Current Sign In At"
         current_sign_in_ip: "Current Sign In IP"
@@ -20,6 +33,10 @@ en:
         last_sign_in_ip: 'Last Sign In IP'
         sign_in_count: 'Sign In Count'
     models:
+      district: 'District'
+      school: 'School'
+      state: 'State'
+      teacher: 'Teacher'
       user: 'User'
   layouts:
     application:

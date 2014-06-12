@@ -2,6 +2,7 @@ class School < ActiveRecord::Base
 
   belongs_to :district
   has_one :state, through: :district
+  has_many :teachers, dependent: :destroy
 
   sorty on: [:name, :created_at, :updated_at],
     references: {district: "name"}

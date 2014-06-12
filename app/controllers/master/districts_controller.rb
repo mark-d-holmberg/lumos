@@ -13,6 +13,7 @@ class Master::DistrictsController < MasterController
   end
 
   def show
+    # TODO: Show schools here
   end
 
   def new

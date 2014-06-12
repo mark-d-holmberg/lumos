@@ -1,0 +1,11 @@
+= simple_form_for(@teacher) do |f|
+  = f.error_notification
+
+  = f.input :first_name
+  = f.input :last_name
+  = f.association :school, include_blank: false
+
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.button :submit, class: 'btn btn-primary'
+      = link_to 'Cancel', teachers_path, class: 'btn btn-link'

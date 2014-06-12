@@ -1,0 +1,39 @@
+- title "Teachers"
+
+- content_for(:toolbar) do
+  = link_to new_teacher_path, title: "New Teacher", class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+  = render "teachers_search_filter"
+
+= paginate @teachers
+
+%table.table.table-striped.table-hover.table-condensed
+  %thead
+    %tr
+      %th= sorty "last_name", Teacher.human_attribute_name(:last_name), true
+      %th= sorty "first_name", Teacher.human_attribute_name(:first_name)
+      %th= sorty "school", Teacher.human_attribute_name(:abbr)
+      %th= sorty "created_at", Teacher.human_attribute_name(:created_at)
+      %th= sorty "updated_at", Teacher.human_attribute_name(:updated_at)
+      %th
+      %th
+  %tbody
+    - @teachers.each do |teacher|
+      %tr
+        %td= link_to teacher.last_name, teacher
+        %td= teacher.first_name
+        %td
+          - if teacher.school.present?
+            = link_to teacher.school.name, teacher.school
+          - else
+            N/A
+        %td= l(teacher.created_at, format: :short)
+        %td= l(teacher.updated_at, format: :short)
+        %td
+          = link_to edit_teacher_path(teacher), class: 'btn btn-warning btn-xs', title: 'Edit Teacher' do
+            %span.glyphicon.glyphicon-edit
+        %td
+          = link_to teacher, method: :delete, data: { confirm: 'Are you sure?' }, id: "teacher_destroy_#{teacher.id}", title: "Remove Teacher", class: 'btn btn-danger btn-xs' do
+            %span.glyphicon.glyphicon-remove
+
+= paginate @teachers

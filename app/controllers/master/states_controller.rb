@@ -13,7 +13,7 @@ class Master::StatesController < MasterController
   end
 
   def show
-    @districts = @state.districts.page(params[:page])
+    @districts = @state.districts.ordered.page(params[:page])
   end
 
   def new
