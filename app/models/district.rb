@@ -2,7 +2,8 @@ class District < ActiveRecord::Base
 
   belongs_to :state
 
-  has_many :schools, dependent: :destroy
+  has_many :schools
+  has_many :campaigns
 
   sorty on: [:name, :created_at, :updated_at],
     references: {state: "name"}
@@ -12,6 +13,8 @@ class District < ActiveRecord::Base
 
   scope :ordered, -> { order("districts.name ASC") }
 
+  before_destroy :avert_destruction
+
 
   def self.search(query)
     t = arel_table
@@ -19,6 +22,19 @@ class District < ActiveRecord::Base
     conditions = t[:name].matches("#{query}%")
     conditions = conditions.or(st[:name].matches("#{query}%"))
     includes(:state).where(conditions).references(:state)
+  end
+
+
+  private
+
+  def avert_destruction
+    if schools.present?
+      self.errors.add(:base, "cannot remove a District with associated Schools")
+      false
+    elsif campaigns.present?
+      self.errors.add(:base, "cannot remove a District with associated Campaigns")
+      false
+    end
   end
 
 end

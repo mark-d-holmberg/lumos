@@ -37,16 +37,30 @@ RSpec.describe District, type: :model do
       school_2 = create(:school, name: 'Desert Hills', district: district)
       expect(district.schools).to match_array([school_1, school_2])
     end
+
+    it "should have many campaigns" do
+      district = create(:district, name: 'Washington County')
+      campaign_1 = create(:campaign, name: 'Snow Canyon', district: district)
+      campaign_2 = create(:campaign, name: 'Desert Hills', district: district)
+      expect(district.campaigns).to match_array([campaign_1, campaign_2])
+    end
   end
 
   describe "concerning ActiveRecord callbacks" do
-    it "should destroy dependent schools" do
-      district = create(:district, name: 'Washington County')
-      school = create(:school, name: 'Snow Canyon', district: district)
-      district.destroy
+    it "should not be destroyable if it has schools" do
+      district = create(:district, name: "Washington County")
+      school = create(:school, district: district)
       expect {
-        school.reload
-      }.to raise_error(ActiveRecord::RecordNotFound)
+        district.destroy
+      }.to_not change(District, :count)
+    end
+
+    it "should not be destroyable if it has campaigns" do
+      district = create(:district, name: "Washington County")
+      campaign = create(:campaign, district: district)
+      expect {
+        district.destroy
+      }.to_not change(District, :count)
     end
   end
 

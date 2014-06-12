@@ -1,0 +1,57 @@
+- title "Campaigns"
+
+- content_for(:toolbar) do
+  = link_to new_campaign_path, title: "New Campaign", class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+  = render "campaigns_search_filter"
+
+= paginate @campaigns
+
+%table.table.table-striped.table-hover.table-condensed
+  %thead
+    %tr
+      %th= sorty "name", Campaign.human_attribute_name(:name), true
+      %th= sorty "state", Campaign.human_attribute_name(:state)
+      %th= sorty "district", Campaign.human_attribute_name(:district)
+      %th= sorty "school", Campaign.human_attribute_name(:school)
+      %th= sorty "teacher", Campaign.human_attribute_name(:teacher)
+      %th= sorty "active", Campaign.human_attribute_name(:active)
+      %th= sorty "created_at", Campaign.human_attribute_name(:created_at)
+      %th= sorty "updated_at", Campaign.human_attribute_name(:updated_at)
+      %th
+      %th
+  %tbody
+    - @campaigns.each do |campaign|
+      %tr
+        %td= link_to campaign.name, campaign
+        %td
+          - if campaign.state.present?
+            = link_to campaign.state.name, campaign.state
+          - else
+            N/A
+        %td
+          - if campaign.district.present?
+            = link_to campaign.district.name, campaign.district
+          - else
+            N/A
+        %td
+          - if campaign.school.present?
+            = link_to campaign.school.name, campaign.school
+          - else
+            N/A
+        %td
+          - if campaign.teacher.present?
+            = link_to campaign.teacher.full_name, campaign.teacher
+          - else
+            N/A
+        %td= campaign.active? ? "Yes" : "No"
+        %td= l(campaign.created_at, format: :short)
+        %td= l(campaign.updated_at, format: :short)
+        %td
+          = link_to edit_campaign_path(campaign), class: 'btn btn-warning btn-xs', title: 'Edit Campaign' do
+            %span.glyphicon.glyphicon-edit
+        %td
+          = link_to campaign, method: :delete, data: { confirm: 'Are you sure?' }, id: "campaign_destroy_#{campaign.id}", title: "Remove Campaign", class: 'btn btn-danger btn-xs' do
+            %span.glyphicon.glyphicon-remove
+
+= paginate @campaigns

@@ -2,6 +2,8 @@ class Teacher < ActiveRecord::Base
 
   belongs_to :school
 
+  has_many :campaigns
+
   sorty on: [:first_name, :last_name, :created_at, :updated_at],
     references: {school: "name"}
 
@@ -9,6 +11,8 @@ class Teacher < ActiveRecord::Base
   validates :last_name, uniqueness: { case_sensitive: false, scope: [:first_name, :school_id] }
 
   scope :ordered, -> { order("teachers.last_name ASC") }
+
+  before_destroy :avert_destruction
 
 
   def self.search(query)
@@ -21,6 +25,20 @@ class Teacher < ActiveRecord::Base
 
   def full_name
     [first_name, last_name].join(" ")
+  end
+
+  def to_s
+    full_name
+  end
+
+
+  private
+
+  def avert_destruction
+    if campaigns.present?
+      self.errors.add(:base, "cannot remove a Teacher with associated Campaigns")
+      false
+    end
   end
 
 end

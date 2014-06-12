@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :state do
-    name { Faker::Address.state }
-    abbr { Faker::Address.state_abbr}
+    sequence(:name) { |k| "#{Faker::Address.state}-#{k}" }
+    sequence(:abbr) { |k| "#{Faker::Address.state_abbr}-#{k}" }
   end
 end

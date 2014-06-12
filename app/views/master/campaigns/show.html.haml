@@ -1,0 +1,55 @@
+- title "Campaign : #{@campaign.name}", false
+
+.page-header
+  %h3.sub-title.inline
+    Campaign : #{@campaign.name}
+    %span
+      = link_to edit_campaign_path(@campaign), class: 'btn btn-warning btn-xs', title: "Edit Campaign" do
+        %span.glyphicon.glyphicon-edit
+.row
+  .col-lg-4
+    %h5.page-header General Information
+    %table.table.table-hover.table-striped.table-condensed
+      %tbody
+        %tr
+          %th= Campaign.human_attribute_name(:name)
+          %td= @campaign.name
+        %tr
+          %th= Campaign.human_attribute_name(:state)
+          %td
+            - if @campaign.state.present?
+              = link_to @campaign.state.name, @campaign.state
+            - else
+              N/A
+        %tr
+          %th= Campaign.human_attribute_name(:district)
+          %td
+            - if @campaign.district.present?
+              = link_to @campaign.district.name, @campaign.district
+            - else
+              N/A
+        %tr
+          %th= Campaign.human_attribute_name(:school)
+          %td
+            - if @campaign.school.present?
+              = link_to @campaign.school.name, @campaign.school
+            - else
+              N/A
+        %tr
+          %th= Campaign.human_attribute_name(:teacher)
+          %td
+            - if @campaign.teacher.present?
+              = link_to @campaign.teacher.full_name, @campaign.teacher
+            - else
+              N/A
+        %tr
+          %th= Campaign.human_attribute_name(:active)
+          %td= @campaign.active? ? "Yes" : "No"
+        %tr
+          %th= Campaign.human_attribute_name(:created_at)
+          %td= l(@campaign.created_at, format: :short)
+        %tr
+          %th= Campaign.human_attribute_name(:updated_at)
+          %td= l(@campaign.updated_at, format: :short)
+  .col-lg-8
+    %h5.page-header Contributors / Contributions

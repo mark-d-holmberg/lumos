@@ -42,16 +42,31 @@ RSpec.describe State, type: :model do
       district_2 = create(:district, state: state)
       expect(state.districts).to match_array([district_1, district_2])
     end
+
+    it "should have many campaigns" do
+      state = create(:state, name: "Utah", abbr: 'UT')
+      campaign_1 = create(:campaign, name: 'Campaign 1', state: state)
+      campaign_2 = create(:campaign, name: 'Campaign 2', state: state)
+      expect(state.campaigns).to match_array([campaign_1, campaign_2])
+    end
   end
 
   describe "concerning ActiveRecord callbacks" do
-    it "should destroy dependent districts" do
+    it "should not be destroyable if it has districts" do
       state = create(:state, name: "Utah", abbr: 'UT')
       district = create(:district, state: state)
-      state.destroy
       expect {
-        district.reload
-      }.to raise_error(ActiveRecord::RecordNotFound)
+        state.destroy
+      }.to_not change(State, :count)
+    end
+
+    it "should not be destroyable if it has campaigns" do
+      state = create(:state, name: "Utah", abbr: 'UT')
+      campaign = create(:campaign, state: state)
+      expect {
+        state.destroy
+      }.to_not change(State, :count)
     end
   end
+
 end

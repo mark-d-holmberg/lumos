@@ -4,7 +4,8 @@ class School < ActiveRecord::Base
 
   has_one :state, through: :district
 
-  has_many :teachers, dependent: :destroy
+  has_many :teachers
+  has_many :campaigns
 
   sorty on: [:name, :created_at, :updated_at],
     references: {district: "name"}
@@ -13,6 +14,10 @@ class School < ActiveRecord::Base
   validates :district, presence: true
 
   scope :ordered, -> { order("schools.name ASC") }
+
+  before_destroy :avert_destruction
+
+  # TODO: Campaignable
 
 
   def self.search(query)
@@ -23,6 +28,19 @@ class School < ActiveRecord::Base
     conditions = conditions.or(dt[:name].matches("#{query}%"))
     conditions = conditions.or(st[:name].matches("#{query}%"))
     includes([:state, :district]).where(conditions).references([:state, :district])
+  end
+
+
+  private
+
+  def avert_destruction
+    if teachers.present?
+      self.errors.add(:base, "cannot remove a School with associated Teachers")
+      false
+    elsif campaigns.present?
+      self.errors.add(:base, "cannot remove a School with associated Campaigns")
+      false
+    end
   end
 
 end
