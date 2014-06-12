@@ -1,0 +1,27 @@
+- title "Contributor : #{@contributor.name}", false
+
+.page-header
+  %h3.sub-title.inline
+    Contributor : #{@contributor.name}
+    %span
+      = link_to edit_contributor_path(@contributor), class: 'btn btn-warning btn-xs', title: "Edit Contributor" do
+        %span.glyphicon.glyphicon-edit
+.row
+  .col-lg-4
+    %h5.page-header General Information
+    %table.table.table-hover.table-striped.table-condensed
+      %tbody
+        %tr
+          %th= Contributor.human_attribute_name(:name)
+          %td= @contributor.name
+        %tr
+          %th= Contributor.human_attribute_name(:email)
+          %td= mail_to @contributor.email
+        %tr
+          %th= Contributor.human_attribute_name(:created_at)
+          %td= l(@contributor.created_at, format: :short)
+        %tr
+          %th= Contributor.human_attribute_name(:updated_at)
+          %td= l(@contributor.updated_at, format: :short)
+  .col-lg-8
+    %h5.page-header Contributions

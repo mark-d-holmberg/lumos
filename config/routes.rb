@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       resources :schools
       resources :teachers
       resources :campaigns
+      resources :contributors
 
       match '/', to: 'dashboard#index', via: [:get], as: :master_root
     end

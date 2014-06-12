@@ -11,6 +11,10 @@ class Campaign < ActiveRecord::Base
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :state, :district, :school, :teacher, presence: true
 
+  # TODO: validate that the district is in the states -> Districts
+  # TODO: validate that the school is in the District -> Schools
+  # TODO: validate that the teacher is in the School -> Teachers
+
   scope :ordered, -> { order("campaigns.name ASC") }
 
   before_destroy :avert_destruction

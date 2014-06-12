@@ -1,0 +1,10 @@
+= simple_form_for(@contributor) do |f|
+  = f.error_notification
+
+  = f.input :name
+  = f.input :email
+
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.button :submit, class: 'btn btn-primary'
+      = link_to 'Cancel', contributors_path, class: 'btn btn-link'

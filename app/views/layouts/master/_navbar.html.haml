@@ -6,8 +6,8 @@
         = active_link_to campaigns_path, active: ["master/campaigns"] do
           %span.glyphicon.glyphicon-fire
           Campaigns
-      %li
-        = active_link_to '#', active: ["contributors"] do
+      %li{class: is_active_link?(contributors_path, :inclusive) ? 'active' : nil}
+        = active_link_to contributors_path, active: ["master/contributors"] do
           %span.glyphicon.glyphicon-shopping-cart
           Contributors
       %li
