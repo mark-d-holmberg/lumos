@@ -38,6 +38,7 @@ gem 'active_link_to'
 gem 'devise'
 gem 'faker'
 gem 'sorty', git: 'git@github.com:mark-d-holmberg/sorty.git'
+gem 'money-rails', git: 'https://github.com/RubyMoney/money-rails.git'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'

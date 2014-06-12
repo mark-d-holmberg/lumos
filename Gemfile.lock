@@ -5,6 +5,16 @@ GIT
     sorty (0.0.1)
       rails (>= 4.0.2)
 
+GIT
+  remote: https://github.com/RubyMoney/money-rails.git
+  revision: f40aec6e1ec1b6aef65f4f0e1b4eea348efa1925
+  specs:
+    money-rails (0.11.0)
+      activesupport (>= 3.0)
+      monetize (~> 0.3.0)
+      money (~> 6.1.1)
+      railties (>= 3.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -86,6 +96,10 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.25.1)
     minitest (5.3.4)
+    monetize (0.3.0)
+      money (~> 6.1.0.beta1)
+    money (6.1.1)
+      i18n (~> 0.6.4)
     multi_json (1.10.1)
     mysql2 (0.3.16)
     orm_adapter (0.5.0)
@@ -178,6 +192,7 @@ DEPENDENCIES
   haml-rails
   jquery-rails
   kaminari
+  money-rails!
   mysql2
   rails (= 4.1.1)
   rspec-rails (~> 3.0.0)
