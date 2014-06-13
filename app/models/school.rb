@@ -6,6 +6,7 @@ class School < ActiveRecord::Base
 
   has_many :teachers
   has_many :campaigns
+  # has_many :school_wide_campaigns, as: :campaignable, class_name: 'Campaign'
 
   sorty on: [:name, :created_at, :updated_at],
     references: {district: "name"}
@@ -40,6 +41,7 @@ class School < ActiveRecord::Base
     elsif campaigns.present?
       self.errors.add(:base, "cannot remove a School with associated Campaigns")
       false
+    # TODO: school_wide_campaigns
     end
   end
 

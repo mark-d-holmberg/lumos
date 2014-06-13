@@ -13,6 +13,7 @@ class Master::TeachersController < MasterController
   end
 
   def show
+    @campaigns = @teacher.campaigns.ordered.page(params[:page])
   end
 
   def new

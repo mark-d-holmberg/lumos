@@ -5,19 +5,21 @@ class Campaign < ActiveRecord::Base
   belongs_to :state
   belongs_to :district
   belongs_to :school
-  belongs_to :teacher
+  belongs_to :campaignable, polymorphic: true
 
   has_many :contributions
 
-  sorty on: [:name, :slug, :created_at, :updated_at],
-    references: {state: "name", district: "name", school: "name", teacher: "last_name"}
+  sorty on: [:name, :school_wide, :created_at, :updated_at],
+    references: {state: "name", district: "name", school: "name"}
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
-  validates :state, :district, :school, :teacher, presence: true
+  validates :state, :district, :school, presence: true
+  validates :campaignable, presence: true
   validates :slug, uniqueness: { case_sensitive: false }
+  validates :school_wide, inclusion: { in: [true, false] }
   validates :district_id, inclusion: { in: Proc.new { |k| k.state.district_ids } }, if: Proc.new { |k| k.state.present? }
   validates :school_id, inclusion: { in: Proc.new { |k| k.district.school_ids } }, if: Proc.new { |k| k.district.present? }
-  validates :teacher_id, inclusion: { in: Proc.new { |k| k.school.teacher_ids } }, if: Proc.new { |k| k.teacher.present? }
+  validates :campaignable_id, inclusion: { in: Proc.new { |k| k.school.teacher_ids } }, if: Proc.new { |k| k.campaignable.present? && !k.school_wide? }
 
   scope :ordered, -> { order("campaigns.name ASC") }
 

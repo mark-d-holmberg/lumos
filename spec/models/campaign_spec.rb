@@ -35,8 +35,12 @@ RSpec.describe Campaign, type: :model do
       }.to raise_error(ActiveRecord::RecordInvalid)
     end
 
-    it "should require the teacher" do
-      expect(build(:campaign, teacher: nil)).to_not be_valid
+    it "should require the campaignable" do
+      expect(build(:campaign, campaignable: nil)).to_not be_valid
+    end
+
+    it "should require the school_wide" do
+      expect(build(:campaign, school_wide: nil)).to_not be_valid
     end
 
     it "should require a unique slug" do
@@ -68,7 +72,7 @@ RSpec.describe Campaign, type: :model do
       expect(build(:campaign, district: washington, school: desert_hills, state: utah)).to_not be_valid
     end
 
-    it "should validate that the teacher is associated with the proper school" do
+    it "should NOT validate that the teacher is associated with the proper school if it is school wide" do
       utah = create(:state, name: 'Utah', abbr: 'UT')
       nevada = create(:state, name: 'Nevada', abbr: 'NV')
       washington = create(:district, name: 'Washington County', state: utah)
@@ -85,7 +89,27 @@ RSpec.describe Campaign, type: :model do
       expect(desert_hills.state).to eq(nevada)
       expect(snow_canyon.teachers).to match_array([teacher_1])
       expect(desert_hills.teachers).to match_array([teacher_2])
-      expect(build(:campaign, district: washington, school: snow_canyon, state: utah, teacher: teacher_2)).to_not be_valid
+      expect(build(:campaign, district: washington, school: snow_canyon, state: utah, campaignable: teacher_2, school_wide: true)).to be_valid
+    end
+
+    it "should validate that the teacher is associated with the proper school if it is NOT school wide" do
+      utah = create(:state, name: 'Utah', abbr: 'UT')
+      nevada = create(:state, name: 'Nevada', abbr: 'NV')
+      washington = create(:district, name: 'Washington County', state: utah)
+      mojave = create(:district, name: 'Mojave County', state: nevada)
+      snow_canyon = create(:school, name: 'Snow Canyon', district: washington)
+      desert_hills = create(:school, name: 'Desert Hills', district: mojave)
+      teacher_1 = create(:teacher, first_name: 'Mark', last_name: 'Holmberg', school: snow_canyon)
+      teacher_2 = create(:teacher, first_name: 'Scott', last_name: 'Holmberg', school: desert_hills)
+      expect(utah.districts).to match_array([washington])
+      expect(nevada.districts).to match_array([mojave])
+      expect(washington.schools).to match_array([snow_canyon])
+      expect(mojave.schools).to match_array([desert_hills])
+      expect(snow_canyon.state).to eq(utah)
+      expect(desert_hills.state).to eq(nevada)
+      expect(snow_canyon.teachers).to match_array([teacher_1])
+      expect(desert_hills.teachers).to match_array([teacher_2])
+      expect(build(:campaign, district: washington, school: snow_canyon, state: utah, campaignable: teacher_2, school_wide: false)).to_not be_valid
     end
   end
 
@@ -108,10 +132,16 @@ RSpec.describe Campaign, type: :model do
       expect(campaign.school).to eql(school)
     end
 
-    it "should belong to a teacher" do
+    it "should belong to a campaignable for a teacher" do
       teacher = create(:teacher, first_name: 'Mark', last_name: 'Holmberg')
-      campaign = create(:campaign, teacher: teacher, school: teacher.school, district: teacher.school.district, state: teacher.school.district.state)
-      expect(campaign.teacher).to eql(teacher)
+      campaign = create(:campaign, campaignable: teacher, school: teacher.school, district: teacher.school.district, state: teacher.school.district.state, school_wide: false)
+      expect(campaign.campaignable).to eql(teacher)
+    end
+
+    it "should belong to a campaignable for a school" do
+      snow_canyon = create(:school, name: 'Snow Canyon')
+      campaign = create(:campaign, campaignable: snow_canyon, school: snow_canyon, district: snow_canyon.district, state: snow_canyon.district.state, school_wide: true)
+      expect(campaign.campaignable).to eql(snow_canyon)
     end
 
     it "should have many contributions" do

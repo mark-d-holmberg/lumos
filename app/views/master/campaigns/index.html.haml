@@ -14,8 +14,8 @@
       %th= sorty "state", Campaign.human_attribute_name(:state)
       %th= sorty "district", Campaign.human_attribute_name(:district)
       %th= sorty "school", Campaign.human_attribute_name(:school)
-      %th= sorty "teacher", Campaign.human_attribute_name(:teacher)
-      %th= sorty "slug", Campaign.human_attribute_name(:slug)
+      %th= Campaign.human_attribute_name(:campaignable)
+      %th= sorty "school_wide", Campaign.human_attribute_name(:school_wide)
       %th= sorty "active", Campaign.human_attribute_name(:active)
       %th= sorty "created_at", Campaign.human_attribute_name(:created_at)
       %th= sorty "updated_at", Campaign.human_attribute_name(:updated_at)
@@ -41,11 +41,11 @@
           - else
             N/A
         %td
-          - if campaign.teacher.present?
-            = link_to campaign.teacher.full_name, campaign.teacher
+          - if campaign.campaignable.present?
+            = link_to campaign.campaignable.to_s, campaign.campaignable
           - else
             N/A
-        %td= campaign.slug
+        %td= campaign.school_wide? ? 'Yes' : 'No'
         %td= campaign.active? ? "Yes" : "No"
         %td= l(campaign.created_at, format: :short)
         %td= l(campaign.updated_at, format: :short)

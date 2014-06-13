@@ -41,6 +41,7 @@ RSpec.describe Master::TeachersController, type: :controller do
       teacher = Teacher.create! valid_attributes
       get :show, {id: teacher.to_param}, valid_session
       expect(assigns(:teacher)).to eq(teacher)
+      expect(assigns(:campaigns)).to match_array([])
     end
   end
 

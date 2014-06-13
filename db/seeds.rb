@@ -5,3 +5,9 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+
+# Create the default TOS
+Tos.create!(content: "Terms and Conditions")
+
+admin = User.create!(email: 'mark.d.holmberg@gmail.com', password: 'change_me_123', password_confirmation: 'change_me_123')

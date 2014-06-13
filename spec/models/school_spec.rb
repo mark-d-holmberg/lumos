@@ -43,6 +43,9 @@ RSpec.describe School, type: :model do
       campaign_2 = create(:campaign, school: school, district: school.district, state: school.district.state)
       expect(school.campaigns).to match_array([campaign_1, campaign_2])
     end
+
+    # TODO: school can still have many campaigns that are teacher based
+    # TODO: school can have many campaigns that are school wide.
   end
 
   describe "concernign ActiveRecord callbacks" do

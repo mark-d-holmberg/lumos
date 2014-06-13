@@ -46,8 +46,8 @@ RSpec.describe Teacher, type: :model do
 
     it "should have many campaigns" do
       teacher = create(:teacher, first_name: 'Mark', last_name: 'Holmberg')
-      campaign_1 = create(:campaign, teacher: teacher, school: teacher.school, district: teacher.school.district, state: teacher.school.district.state)
-      campaign_2 = create(:campaign, teacher: teacher, school: teacher.school, district: teacher.school.district, state: teacher.school.district.state)
+      campaign_1 = create(:campaign, campaignable: teacher, school: teacher.school, district: teacher.school.district, state: teacher.school.district.state)
+      campaign_2 = create(:campaign, campaignable: teacher, school: teacher.school, district: teacher.school.district, state: teacher.school.district.state)
       expect(teacher.campaigns).to match_array([campaign_1, campaign_2])
     end
   end
@@ -61,7 +61,7 @@ RSpec.describe Teacher, type: :model do
   describe "concerning ActiveRecord callbacks" do
     it "should not be destroyable if it has campaigns" do
       teacher = create(:teacher, first_name: 'Mark', last_name: 'Holmberg')
-      campaign = create(:campaign, teacher: teacher, school: teacher.school, district: teacher.school.district, state: teacher.school.district.state)
+      campaign = create(:campaign, campaignable: teacher, school: teacher.school, district: teacher.school.district, state: teacher.school.district.state)
       expect {
         teacher.destroy
       }.to_not change(Teacher, :count)

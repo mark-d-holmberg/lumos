@@ -54,7 +54,7 @@ class Master::CampaignsController < MasterController
   end
 
   def safe_params
-    params.require(:campaign).permit(:name, :state_id, :district_id, :school_id, :teacher_id, :active)
+    params.require(:campaign).permit(:name, :state_id, :district_id, :school_id, :campaignable_id, :campaignable_type, :active)
   end
 
 end

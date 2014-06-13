@@ -14,9 +14,11 @@ en:
     attributes:
       campaign:
         active: 'Active'
+        campaignable: 'Campaignable'
         district: 'District'
         name: 'Name'
         school: 'School'
+        school_wide: 'School Wide'
         slug: 'Slug'
         state: 'State'
         teacher: 'Teacher'

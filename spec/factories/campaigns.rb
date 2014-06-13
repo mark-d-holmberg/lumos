@@ -4,7 +4,8 @@ FactoryGirl.define do
     state { |k| k.association(:state) }
     district { |k| k.association(:district, state: state) }
     school { |k| k.association(:school, district: district) }
-    teacher { |k| k.association(:teacher, school: school) }
+    campaignable { |k| k.association(:teacher, school: school) }
+    school_wide false
     active true
   end
 end

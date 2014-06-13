@@ -36,15 +36,18 @@
             - else
               N/A
         %tr
-          %th= Campaign.human_attribute_name(:teacher)
+          %th= Campaign.human_attribute_name(:campaignable)
           %td
-            - if @campaign.teacher.present?
-              = link_to @campaign.teacher.full_name, @campaign.teacher
+            - if @campaign.campaignable.present?
+              = link_to @campaign.campaignable.to_s, @campaign.campaignable
             - else
               N/A
         %tr
           %th= Campaign.human_attribute_name(:slug)
           %td= @campaign.slug
+        %tr
+          %th= Campaign.human_attribute_name(:school_wide)
+          %td= @campaign.school_wide? ? "Yes" : "No"
         %tr
           %th= Campaign.human_attribute_name(:active)
           %td= @campaign.active? ? "Yes" : "No"
@@ -61,13 +64,13 @@
       %thead
         %tr
           %th= Contribution.human_attribute_name(:pledge_id)
-          %th= Contribution.human_attribute_name(:pledged_at)
-          %th= Contribution.human_attribute_name(:contributor)
           %th= Contribution.human_attribute_name(:amount)
+          %th= Contribution.human_attribute_name(:contributor)
+          %th= Contribution.human_attribute_name(:pledged_at)
       %tbody
         - @contributions.each do |contribution|
           %tr
             %td= link_to contribution.pledge_id, contribution
-            %td= l(contribution.pledged_at, format: :short)
-            %td= link_to contribution.contributor.name, contribution.contributor
             %td= humanized_money_with_symbol(contribution.amount.dollars, no_cents_if_whole: false)
+            %td= link_to contribution.contributor.name, contribution.contributor
+            %td= l(contribution.pledged_at, format: :short)

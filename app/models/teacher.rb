@@ -2,7 +2,9 @@ class Teacher < ActiveRecord::Base
 
   belongs_to :school
 
-  has_many :campaigns
+  has_many :campaigns, as: :campaignable
+
+  # TODO: contributions
 
   sorty on: [:first_name, :last_name, :created_at, :updated_at],
     references: {school: "name"}
