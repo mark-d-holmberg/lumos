@@ -17,6 +17,7 @@ en:
         district: 'District'
         name: 'Name'
         school: 'School'
+        slug: 'Slug'
         state: 'State'
         teacher: 'Teacher'
       contribution:

@@ -43,6 +43,9 @@
             - else
               N/A
         %tr
+          %th= Campaign.human_attribute_name(:slug)
+          %td= @campaign.slug
+        %tr
           %th= Campaign.human_attribute_name(:active)
           %td= @campaign.active? ? "Yes" : "No"
         %tr

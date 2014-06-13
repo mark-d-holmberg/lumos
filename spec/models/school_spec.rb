@@ -39,8 +39,8 @@ RSpec.describe School, type: :model do
 
     it "should have many campaigns" do
       school = create(:school, name: 'Snow Canyon')
-      campaign_1 = create(:campaign, school: school)
-      campaign_2 = create(:campaign, school: school)
+      campaign_1 = create(:campaign, school: school, district: school.district, state: school.district.state)
+      campaign_2 = create(:campaign, school: school, district: school.district, state: school.district.state)
       expect(school.campaigns).to match_array([campaign_1, campaign_2])
     end
   end
@@ -56,7 +56,7 @@ RSpec.describe School, type: :model do
 
     it "should not be destroyable if it has campaigns" do
       school = create(:school, name: "Snow Canyon")
-      campaign = create(:campaign, school: school)
+      campaign = create(:campaign, school: school, district: school.district, state: school.district.state)
       expect {
         school.destroy
       }.to_not change(School, :count)

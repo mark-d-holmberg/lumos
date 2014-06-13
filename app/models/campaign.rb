@@ -1,5 +1,7 @@
 class Campaign < ActiveRecord::Base
 
+  include Tokenable
+
   belongs_to :state
   belongs_to :district
   belongs_to :school
@@ -7,18 +9,19 @@ class Campaign < ActiveRecord::Base
 
   has_many :contributions
 
-  sorty on: [:name, :created_at, :updated_at],
+  sorty on: [:name, :slug, :created_at, :updated_at],
     references: {state: "name", district: "name", school: "name", teacher: "last_name"}
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :state, :district, :school, :teacher, presence: true
-
-  # TODO: validate that the district is in the states -> Districts
-  # TODO: validate that the school is in the District -> Schools
-  # TODO: validate that the teacher is in the School -> Teachers
+  validates :slug, uniqueness: { case_sensitive: false }
+  validates :district_id, inclusion: { in: Proc.new { |k| k.state.district_ids } }, if: Proc.new { |k| k.state.present? }
+  validates :school_id, inclusion: { in: Proc.new { |k| k.district.school_ids } }, if: Proc.new { |k| k.district.present? }
+  validates :teacher_id, inclusion: { in: Proc.new { |k| k.school.teacher_ids } }, if: Proc.new { |k| k.teacher.present? }
 
   scope :ordered, -> { order("campaigns.name ASC") }
 
+  before_create { |record| generate_token(:slug) if slug.nil? }
   before_destroy :avert_destruction
 
 

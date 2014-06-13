@@ -40,8 +40,8 @@ RSpec.describe District, type: :model do
 
     it "should have many campaigns" do
       district = create(:district, name: 'Washington County')
-      campaign_1 = create(:campaign, name: 'Snow Canyon', district: district)
-      campaign_2 = create(:campaign, name: 'Desert Hills', district: district)
+      campaign_1 = create(:campaign, name: 'Snow Canyon', district: district, state: district.state)
+      campaign_2 = create(:campaign, name: 'Desert Hills', district: district, state: district.state)
       expect(district.campaigns).to match_array([campaign_1, campaign_2])
     end
   end
@@ -57,7 +57,7 @@ RSpec.describe District, type: :model do
 
     it "should not be destroyable if it has campaigns" do
       district = create(:district, name: "Washington County")
-      campaign = create(:campaign, district: district)
+      campaign = create(:campaign, district: district, state: district.state)
       expect {
         district.destroy
       }.to_not change(District, :count)

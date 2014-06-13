@@ -15,6 +15,7 @@
       %th= sorty "district", Campaign.human_attribute_name(:district)
       %th= sorty "school", Campaign.human_attribute_name(:school)
       %th= sorty "teacher", Campaign.human_attribute_name(:teacher)
+      %th= sorty "slug", Campaign.human_attribute_name(:slug)
       %th= sorty "active", Campaign.human_attribute_name(:active)
       %th= sorty "created_at", Campaign.human_attribute_name(:created_at)
       %th= sorty "updated_at", Campaign.human_attribute_name(:updated_at)
@@ -44,6 +45,7 @@
             = link_to campaign.teacher.full_name, campaign.teacher
           - else
             N/A
+        %td= campaign.slug
         %td= campaign.active? ? "Yes" : "No"
         %td= l(campaign.created_at, format: :short)
         %td= l(campaign.updated_at, format: :short)
