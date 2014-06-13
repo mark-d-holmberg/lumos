@@ -1,0 +1,14 @@
+= simple_form_for(@contribution) do |f|
+  = f.error_notification
+
+  = f.input :pledge_id, as: :string
+  = f.input :pledged_at
+  = f.association :contributor, include_blank: false
+  = f.association :campaign, include_blank: false
+  = f.input :amount_dollars, required: true do
+    = f.input_field :amount_dollars, value: @contribution.new_record? ? number_with_precision(1.00, precision: 2) : number_with_precision(@contribution.amount.dollars, precision: 2), class: "amount-dollars", as: :string
+
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.button :submit, class: 'btn btn-primary'
+      = link_to 'Cancel', contributions_path, class: 'btn btn-link'

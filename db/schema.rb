@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140612200822) do
+ActiveRecord::Schema.define(version: 20140612211434) do
 
   create_table "campaigns", force: true do |t|
     t.string   "name"
@@ -28,6 +28,20 @@ ActiveRecord::Schema.define(version: 20140612200822) do
   add_index "campaigns", ["school_id"], name: "index_campaigns_on_school_id", using: :btree
   add_index "campaigns", ["state_id"], name: "index_campaigns_on_state_id", using: :btree
   add_index "campaigns", ["teacher_id"], name: "index_campaigns_on_teacher_id", using: :btree
+
+  create_table "contributions", force: true do |t|
+    t.integer  "pledge_id"
+    t.date     "pledged_at"
+    t.integer  "contributor_id"
+    t.integer  "campaign_id"
+    t.integer  "amount_cents",    default: 0,     null: false
+    t.string   "amount_currency", default: "USD", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "contributions", ["campaign_id"], name: "index_contributions_on_campaign_id", using: :btree
+  add_index "contributions", ["contributor_id"], name: "index_contributions_on_contributor_id", using: :btree
 
   create_table "contributors", force: true do |t|
     t.string   "name"

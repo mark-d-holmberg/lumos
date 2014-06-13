@@ -17,7 +17,10 @@ Rails.application.routes.draw do
       resources :schools
       resources :teachers
       resources :campaigns
+
+      # TODO: make this nested
       resources :contributors
+      resources :contributions
 
       match '/', to: 'dashboard#index', via: [:get], as: :master_root
     end

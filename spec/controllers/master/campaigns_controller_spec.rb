@@ -46,6 +46,7 @@ RSpec.describe Master::CampaignsController, type: :controller do
       campaign = Campaign.create! valid_attributes
       get :show, {id: campaign.to_param}, valid_session
       expect(assigns(:campaign)).to eq(campaign)
+      expect(assigns(:contributions)).to eq([])
     end
   end
 

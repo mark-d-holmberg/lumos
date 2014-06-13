@@ -13,6 +13,7 @@ class Master::ContributorsController < MasterController
   end
 
   def show
+    @contributions = @contributor.contributions.ordered.page(params[:page])
   end
 
   def new

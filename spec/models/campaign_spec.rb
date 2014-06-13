@@ -58,6 +58,13 @@ RSpec.describe Campaign, type: :model do
       campaign = create(:campaign, teacher: teacher)
       expect(campaign.teacher).to eql(teacher)
     end
+
+    it "should have many contributions" do
+      campaign = create(:campaign)
+      contribution_1 = create(:contribution, campaign: campaign)
+      contribution_2 = create(:contribution, campaign: campaign)
+      expect(campaign.contributions).to match_array([contribution_1, contribution_2])
+    end
   end
 
   describe "concerning ActiveRecord callbacks" do
@@ -68,7 +75,13 @@ RSpec.describe Campaign, type: :model do
       }.to_not change(Campaign, :count)
     end
 
-    it "should not be destroyable if it has contributions"
+    it "should not be destroyable if it has contributions" do
+      campaign = create(:campaign, name: 'Campaign', active: false)
+      contribution = create(:contribution, campaign: campaign)
+      expect {
+        campaign.destroy
+      }.to_not change(Campaign, :count)
+    end
   end
 
 end

@@ -5,6 +5,8 @@ class Campaign < ActiveRecord::Base
   belongs_to :school
   belongs_to :teacher
 
+  has_many :contributions
+
   sorty on: [:name, :created_at, :updated_at],
     references: {state: "name", district: "name", school: "name", teacher: "last_name"}
 
@@ -30,7 +32,13 @@ class Campaign < ActiveRecord::Base
   private
 
   def avert_destruction
-    false if active?
+    if active?
+      self.errors.add(:base, "cannot remove an active Campaign")
+      false
+    elsif contributions.present?
+      self.errors.add(:base, "cannot remove a Campaign with associated Contributions")
+      false
+    end
   end
 
 end

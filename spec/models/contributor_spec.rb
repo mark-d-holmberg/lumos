@@ -38,4 +38,24 @@ RSpec.describe Contributor, type: :model do
       end
     end
   end
+
+  describe "concerning associations" do
+    it "should have many contributions" do
+      contributor = create(:contributor, name: "Mark Holmberg")
+      contribution_1 = create(:contribution, contributor: contributor)
+      contribution_2 = create(:contribution, contributor: contributor)
+      expect(contributor.contributions).to match_array([contribution_1, contribution_2])
+    end
+  end
+
+  describe "concernign ActiveRecord callbacks" do
+    it "should not be destroyable if it has contributions" do
+      contributor = create(:contributor, name: "Mark Holmberg")
+      contribution = create(:contribution, contributor: contributor)
+      expect {
+        contributor.destroy
+      }.to_not change(Contributor, :count)
+    end
+  end
+
 end

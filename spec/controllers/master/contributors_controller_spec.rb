@@ -39,6 +39,7 @@ RSpec.describe Master::ContributorsController, type: :controller do
       contributor = Contributor.create! valid_attributes
       get :show, {id: contributor.to_param}, valid_session
       expect(assigns(:contributor)).to eq(contributor)
+      expect(assigns(:contributions)).to match_array([])
     end
   end
 

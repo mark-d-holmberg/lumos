@@ -1,0 +1,41 @@
+- title "Contribution : #{@contribution.pledge_id}", false
+
+.page-header
+  %h3.sub-title.inline
+    Contribution : #{@contribution.pledge_id}
+    %span
+      = link_to edit_contribution_path(@contribution), class: 'btn btn-warning btn-xs', title: "Edit Contribution" do
+        %span.glyphicon.glyphicon-edit
+
+%h5.page-header General Information
+%table.table.table-hover.table-striped.table-condensed
+  %tbody
+    %tr
+      %th= Contribution.human_attribute_name(:pledge_id)
+      %td= @contribution.pledge_id
+    %tr
+      %th= Contribution.human_attribute_name(:pledged_at)
+      %td= l(@contribution.pledged_at, format: :short)
+    %tr
+      %th= Contribution.human_attribute_name(:contributor)
+      %td
+        - if @contribution.contributor.present?
+          = link_to @contribution.contributor.name, @contribution.contributor
+        - else
+          N/A
+    %tr
+      %th= Contribution.human_attribute_name(:campaign)
+      %td
+        - if @contribution.campaign.present?
+          = link_to @contribution.campaign.name, @contribution.campaign
+        - else
+          N/A
+    %tr
+      %th= Contribution.human_attribute_name(:amount)
+      %td= humanized_money_with_symbol(@contribution.amount.dollars, no_cents_if_whole: false)
+    %tr
+      %th= Contribution.human_attribute_name(:created_at)
+      %td= l(@contribution.created_at, format: :short)
+    %tr
+      %th= Contribution.human_attribute_name(:updated_at)
+      %td= l(@contribution.updated_at, format: :short)

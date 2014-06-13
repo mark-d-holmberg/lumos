@@ -13,6 +13,7 @@ class Master::CampaignsController < MasterController
   end
 
   def show
+    @contributions = @campaign.contributions.ordered.page(params[:page])
   end
 
   def new

@@ -6,6 +6,10 @@
         = active_link_to campaigns_path, active: ["master/campaigns"] do
           %span.glyphicon.glyphicon-fire
           Campaigns
+      %li{class: is_active_link?(contributions_path, :inclusive) ? 'active' : nil}
+        = active_link_to contributions_path, active: ["master/contributions"] do
+          %span.glyphicon.glyphicon-usd
+          Contributions
       %li{class: is_active_link?(contributors_path, :inclusive) ? 'active' : nil}
         = active_link_to contributors_path, active: ["master/contributors"] do
           %span.glyphicon.glyphicon-shopping-cart

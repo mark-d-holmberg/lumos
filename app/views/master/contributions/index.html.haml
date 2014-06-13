@@ -1,0 +1,47 @@
+- title "Contributions"
+
+- content_for(:toolbar) do
+  = link_to new_contribution_path, title: "New Contribution", class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+  = render "contributions_search_filter"
+
+= paginate @contributions
+
+%table.table.table-striped.table-hover.table-condensed
+  %thead
+    %tr
+      %th= sorty "pledge_id", Contribution.human_attribute_name(:pledge_id), true
+      %th= sorty "pledged_at", Contribution.human_attribute_name(:pledged_at)
+      %th= sorty "contributor", Contribution.human_attribute_name(:contributor)
+      %th= sorty "campaign", Contribution.human_attribute_name(:campaign)
+      %th= sorty "amount_cents", Contribution.human_attribute_name(:amount)
+      %th= sorty "created_at", Contribution.human_attribute_name(:created_at)
+      %th= sorty "updated_at", Contribution.human_attribute_name(:updated_at)
+      %th
+      %th
+  %tbody
+    - @contributions.each do |contribution|
+      %tr
+        %td= link_to contribution.pledge_id, contribution
+        %td= l(contribution.pledged_at, format: :short)
+        %td
+          - if contribution.contributor.present?
+            = link_to contribution.contributor.name, contribution.contributor
+          - else
+            N/A
+        %td
+          - if contribution.campaign.present?
+            = link_to contribution.campaign.name, contribution.campaign
+          - else
+            N/A
+        %td= link_to(humanized_money_with_symbol(contribution.amount.dollars, no_cents_if_whole: false), contribution)
+        %td= l(contribution.created_at, format: :short)
+        %td= l(contribution.updated_at, format: :short)
+        %td
+          = link_to edit_contribution_path(contribution), class: 'btn btn-warning btn-xs', title: 'Edit Contribution' do
+            %span.glyphicon.glyphicon-edit
+        %td
+          = link_to contribution, method: :delete, data: { confirm: 'Are you sure?' }, id: "contribution_destroy_#{contribution.id}", title: "Remove Contribution", class: 'btn btn-danger btn-xs' do
+            %span.glyphicon.glyphicon-remove
+
+= paginate @contributions

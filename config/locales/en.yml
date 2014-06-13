@@ -12,6 +12,24 @@ en:
     updated_at: 'Updated'
   activerecord:
     attributes:
+      campaign:
+        active: 'Active'
+        district: 'District'
+        name: 'Name'
+        school: 'School'
+        state: 'State'
+        teacher: 'Teacher'
+      contribution:
+        amount: 'Amount'
+        amount_cents: 'Amount (cents)'
+        amount_dollars: 'Amount (USD)'
+        campaign: 'Campaign'
+        contributor: 'Contributor'
+        pledge_id: 'Pledge ID'
+        pledged_at: 'Pledged At'
+      contributor:
+        email: 'Email'
+        name: 'Name'
       district:
         name: 'Name'
         state: 'State'
@@ -33,6 +51,9 @@ en:
         last_sign_in_ip: 'Last Sign In IP'
         sign_in_count: 'Sign In Count'
     models:
+      campaign: 'Campaign'
+      contribution: 'Contribution'
+      contributor: 'Contributor'
       district: 'District'
       school: 'School'
       state: 'State'
