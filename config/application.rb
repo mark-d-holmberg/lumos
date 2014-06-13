@@ -41,6 +41,7 @@ module Lumos
       g.stylesheet_engine :scss
       g.assets false
       g.helper false
+      g.request_specs false
     end
   end
 end

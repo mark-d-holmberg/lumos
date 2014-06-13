@@ -1,0 +1,11 @@
+- title "Terms and Conditions", false
+
+.page-header
+  %h3.sub-title.inline
+    Terms and Conditions
+    %span
+      = link_to edit_tos_path, class: 'btn btn-warning btn-xs', title: "Edit Terms and Conditions" do
+        %span.glyphicon.glyphicon-edit
+
+.well
+  = simple_format(@tos.content)

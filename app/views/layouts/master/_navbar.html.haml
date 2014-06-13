@@ -30,10 +30,6 @@
           %b.caret
         %ul.dropdown-menu
           %li
-            = link_to users_path do
-              %span.glyphicon.glyphicon-user
-              Users
-          %li
             = link_to states_path do
               %span.glyphicon.glyphicon-globe
               States
@@ -49,6 +45,15 @@
             = link_to teachers_path do
               %span.glyphicon.glyphicon-briefcase
               Teachers
+          %li.divider
+          %li
+            = link_to users_path do
+              %span.glyphicon.glyphicon-user
+              Users
+          %li
+            = link_to tos_path do
+              %span.glyphicon.glyphicon-eye-close
+              Terms and Conditions
       -# User Menu
       %li.dropdown
         %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}

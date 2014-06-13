@@ -1,0 +1,11 @@
+= simple_form_for @tos, url: tos_path, html: { class: 'form-horizontal' }, wrapper: :inline do |f|
+  = f.error_notification
+
+  #terms_and_conditions
+    .col-lg-12.well
+      = f.input :content, as: :text, input_html: { rows: 10 }, label: false, wrapper: :inline
+
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.button :submit, class: 'btn btn-primary'
+      = link_to 'Cancel', tos_path, class: 'btn btn-link'

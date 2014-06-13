@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       # TODO: make this nested
       resources :contributors
       resources :contributions
+      resource :tos, only: [:show, :edit, :update]
 
       match '/', to: 'dashboard#index', via: [:get], as: :master_root
     end

@@ -43,6 +43,8 @@ en:
         first_name: 'First Name'
         full_name: 'Full Name'
         last_name: 'Last Name'
+      tos:
+        content: 'Content'
       user:
         current_sign_in_at: "Current Sign In At"
         current_sign_in_ip: "Current Sign In IP"
@@ -58,6 +60,7 @@ en:
       school: 'School'
       state: 'State'
       teacher: 'Teacher'
+      tos: 'Terms and Conditions'
       user: 'User'
   layouts:
     application:
