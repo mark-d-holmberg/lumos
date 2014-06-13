@@ -39,6 +39,7 @@ gem 'devise'
 gem 'faker'
 gem 'sorty', git: 'git@github.com:mark-d-holmberg/sorty.git'
 gem 'money-rails', git: 'https://github.com/RubyMoney/money-rails.git'
+gem 'bootstrap-datepicker-rails', require: 'bootstrap-datepicker-rails', git: 'git://github.com/Nerian/bootstrap-datepicker-rails.git'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'

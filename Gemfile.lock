@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/Nerian/bootstrap-datepicker-rails.git
+  revision: fb0700d197540f1a84b54f5d1e0606ddace2732a
+  specs:
+    bootstrap-datepicker-rails (1.3.0.2)
+      railties (>= 3.0)
+
+GIT
   remote: git@github.com:mark-d-holmberg/sorty.git
   revision: 11aaabc2e8706cb577b466be39e66d2dfa94a550
   specs:
@@ -184,6 +191,7 @@ PLATFORMS
 DEPENDENCIES
   active_link_to
   bcrypt (~> 3.1.7)
+  bootstrap-datepicker-rails!
   bootstrap-sass (~> 3.1.1)
   coffee-rails (~> 4.0.0)
   devise
