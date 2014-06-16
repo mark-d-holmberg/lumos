@@ -31,6 +31,10 @@ class School < ActiveRecord::Base
     includes([:state, :district]).where(conditions).references([:state, :district])
   end
 
+  def to_s
+    name
+  end
+
 
   private
 
