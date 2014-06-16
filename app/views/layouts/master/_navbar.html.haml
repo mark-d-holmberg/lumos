@@ -61,18 +61,18 @@
           %b.caret
         %ul.dropdown-menu
           %li
-            = link_to '#' do
+            = link_to edit_user_path(current_user) do
               %span.glyphicon.glyphicon-user
               My Profile
           %li.divider
           %li
-            = link_to '#' do
+            = link_to campaigns_path do
               %span.glyphicon.glyphicon-fire
               Campaigns
           %li
             = link_to '#' do
-              %span.glyphicon.glyphicon-cog
-              Something Else
+              %span.glyphicon.glyphicon-import
+              Import Indiegogo Data
           %li.divider
           %li
             = link_to destroy_user_session_path, method: :delete do
