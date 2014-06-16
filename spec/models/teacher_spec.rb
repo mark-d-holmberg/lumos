@@ -50,6 +50,14 @@ RSpec.describe Teacher, type: :model do
       campaign_2 = create(:campaign, campaignable: teacher, school: teacher.school, district: teacher.school.district, state: teacher.school.district.state)
       expect(teacher.campaigns).to match_array([campaign_1, campaign_2])
     end
+
+    it "should have many contributions through their teacher based campaigns" do
+      teacher = create(:teacher, first_name: 'Mark', last_name: 'Holmberg')
+      campaign = create(:campaign, campaignable: teacher, school: teacher.school, district: teacher.school.district, state: teacher.school.district.state)
+      contribution_1 = create(:contribution, campaign: campaign, amount_cents: 1337)
+      contribution_2 = create(:contribution, campaign: campaign, amount_cents: 5443)
+      expect(teacher.contributions).to match_array([contribution_1, contribution_2])
+    end
   end
 
   describe "concerning public instance methods" do
