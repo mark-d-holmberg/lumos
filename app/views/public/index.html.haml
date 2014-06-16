@@ -1,1 +1,16 @@
-- title "Crowd Funding Campaign"
+- title "Crowd Funding Campaign", false
+
+.row
+  .col-lg-8.col-lg-offset-2
+    %h1.page-header Campaign Search
+    -# Create a new one, unless it already exists
+    = simple_form_for :search, url: '#', method: :get, wrapper: :modal do |f|
+      = f.input :state, as: :select, collection: State.ordered.pluck(:name, :abbr), include_blank: false
+      = f.input :district, as: :select, collection: District.ordered, include_blank: false
+      = f.input :school_wide, as: :select, collection: [['School Based', true], ['Teacher Based', false]], include_blank: false, label: 'Kind'
+      = f.input :school, as: :select, collection: School.ordered, include_blank: false
+      = f.input :teacher, as: :select, collection: Teacher.ordered.map { |k| [k.full_name, k.id] }, include_blank: false
+      = f.input :name, as: :string
+      - if params[:search].present?
+        = link_to '#', class: 'btn btn-danger', title: 'Clear Filter' do
+          %span.glyphicon.glyphicon-remove
