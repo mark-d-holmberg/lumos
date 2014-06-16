@@ -43,6 +43,16 @@ RSpec.describe Campaign, type: :model do
       expect(build(:campaign, school_wide: nil)).to_not be_valid
     end
 
+    it "should require the campaignable_type to be in the right set" do
+      expect(build(:campaign, campaignable: build(:school), campaignable_type: 'School', school_wide: true)).to be_valid
+      expect(build(:campaign, campaignable_type: 'Teacher', school_wide: false)).to be_valid
+      expect(build(:campaign, campaignable: build(:teacher), campaignable_type: 'District', school_wide: false)).to_not be_valid
+    end
+
+    it "should require the campaignable_type to be present" do
+      expect(build(:campaign, campaignable: build(:school), campaignable_type: nil, school_wide: true)).to_not be_valid
+    end
+
     it "should require a unique slug" do
       expect(create(:campaign, slug: '12345')).to be_valid
       expect(build(:campaign, slug: '12345')).to_not be_valid
@@ -149,6 +159,12 @@ RSpec.describe Campaign, type: :model do
       contribution_1 = create(:contribution, campaign: campaign)
       contribution_2 = create(:contribution, campaign: campaign)
       expect(campaign.contributions).to match_array([contribution_1, contribution_2])
+    end
+  end
+
+  describe "concerning instance methods" do
+    it "should have a campaignable_types method" do
+      expect(Campaign.campaignable_types).to match_array(['School', 'Teacher'])
     end
   end
 

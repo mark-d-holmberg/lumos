@@ -5,7 +5,9 @@
   = f.association :state, include_blank: false
   = f.association :district, include_blank: false
   = f.association :school, include_blank: false
-  /= f.association :teacher, include_blank: false
+  = f.input :school_wide, as: :select, include_blank: false
+  = f.input :campaignable, as: :select, include_blank: false, collection: Teacher.ordered
+  = f.input :campaignable_type, as: :select, include_blank: false, collection: Campaign.campaignable_types
   = f.input :active, as: :select, include_blank: false
 
   .form-group

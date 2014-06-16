@@ -20,6 +20,7 @@ class Campaign < ActiveRecord::Base
   validates :district_id, inclusion: { in: Proc.new { |k| k.state.district_ids } }, if: Proc.new { |k| k.state.present? }
   validates :school_id, inclusion: { in: Proc.new { |k| k.district.school_ids } }, if: Proc.new { |k| k.district.present? }
   validates :campaignable_id, inclusion: { in: Proc.new { |k| k.school.teacher_ids } }, if: Proc.new { |k| k.campaignable.present? && !k.school_wide? }
+  validates :campaignable_type, inclusion: { in: Proc.new { Campaign.campaignable_types } }, presence: true
 
   scope :ordered, -> { order("campaigns.name ASC") }
 
@@ -31,6 +32,10 @@ class Campaign < ActiveRecord::Base
     t = arel_table
     conditions = t[:name].matches("%#{query}%")
     where(conditions)
+  end
+
+  def self.campaignable_types
+    ['School', 'Teacher']
   end
 
 

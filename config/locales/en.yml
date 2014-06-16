@@ -15,6 +15,7 @@ en:
       campaign:
         active: 'Active'
         campaignable: 'Campaignable'
+        campaignable_type: 'Campaignable Type'
         district: 'District'
         name: 'Name'
         school: 'School'
