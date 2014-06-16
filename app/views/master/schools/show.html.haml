@@ -28,17 +28,43 @@
           %th= School.human_attribute_name(:updated_at)
           %td= l(@school.updated_at, format: :short)
   .col-lg-8
-    %h5.page-header Teachers
-    = paginate @teachers
-    %table.table.table-striped.table-hover.table-condensed
-      %thead
-        %tr
-          %th= Teacher.human_attribute_name(:last_name)
-          %th= Teacher.human_attribute_name(:first_name)
-      %tbody
-        - @teachers.each do |teacher|
-          %tr
-            %td= link_to teacher.last_name, teacher
-            %td= teacher.first_name
-
-TODO: school wide campaigns
+    %ul.nav.nav-tabs
+      %li.active
+        = link_to '#teachers', data: {toggle: 'tab'} do
+          %span.glyphicon.glyphicon-briefcase
+          Teachers
+      %li
+        = link_to '#school_based_campaigns', data: {toggle: 'tab'} do
+          %span.glyphicon.glyphicon-fire
+          School Based Campaigns
+    .tab-content
+      #teachers.tab-pane.active
+        %h5.page-header Teachers
+        = paginate @teachers, param_name: "teachers_page", params: { anchor: "teachers" }
+        %table.table.table-striped.table-hover.table-condensed
+          %thead
+            %tr
+              %th= Teacher.human_attribute_name(:last_name)
+              %th= Teacher.human_attribute_name(:first_name)
+          %tbody
+            - @teachers.each do |teacher|
+              %tr
+                %td= link_to teacher.last_name, teacher
+                %td= teacher.first_name
+      #school_based_campaigns.tab-pane
+        %h5.page-header School Based Campaigns
+        = paginate @school_based_campaigns, param_name: "campaigns_page", params: { anchor: "school_based_campaigns" }
+        %table.table.table-striped.table-hover.table-condensed
+          %thead
+            %tr
+              %th= Campaign.human_attribute_name(:name)
+              %th= Campaign.human_attribute_name(:district)
+              %th= Campaign.human_attribute_name(:school_wide)
+              %th= Campaign.human_attribute_name(:active)
+          %tbody
+            - @school_based_campaigns.each do |campaign|
+              %tr
+                %td= link_to campaign.name, campaign
+                %td= link_to campaign.district.name, campaign.district
+                %td= campaign.school_wide? ? "Yes" : "No"
+                %td= campaign.active? ? "Yes" : "No"

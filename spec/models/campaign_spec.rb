@@ -189,4 +189,18 @@ RSpec.describe Campaign, type: :model do
     end
   end
 
+  describe "concerning scopes" do
+    it "should have a teacher_based scope" do
+      yes = create(:campaign, name: 'Teacher Based', school_wide: false)
+      no = create(:campaign, name: 'School Based', school_wide: true)
+      expect(Campaign.teacher_based).to match_array([yes])
+    end
+
+    it "should have a school_based scope" do
+      yes = create(:campaign, name: 'School Based', school_wide: true)
+      no = create(:campaign, name: 'Teacher Based', school_wide: false)
+      expect(Campaign.school_based).to match_array([yes])
+    end
+  end
+
 end

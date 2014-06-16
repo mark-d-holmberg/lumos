@@ -41,6 +41,7 @@ RSpec.describe Master::SchoolsController, type: :controller do
       get :show, {id: school.to_param}, valid_session
       expect(assigns(:school)).to eq(school)
       expect(assigns(:teachers)).to match_array([])
+      expect(assigns(:school_based_campaigns)).to match_array([])
     end
   end
 

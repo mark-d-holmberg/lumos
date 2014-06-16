@@ -23,6 +23,8 @@ class Campaign < ActiveRecord::Base
   validates :campaignable_type, inclusion: { in: Proc.new { Campaign.campaignable_types } }, presence: true
 
   scope :ordered, -> { order("campaigns.name ASC") }
+  scope :teacher_based, -> { where(school_wide: false) }
+  scope :school_based, -> { where(school_wide: true) }
 
   before_create { |record| generate_token(:slug) if slug.nil? }
   before_destroy :avert_destruction

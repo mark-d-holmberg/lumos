@@ -5,8 +5,8 @@ class School < ActiveRecord::Base
   has_one :state, through: :district
 
   has_many :teachers
-  has_many :campaigns
-  # has_many :school_wide_campaigns, as: :campaignable, class_name: 'Campaign'
+  has_many :campaigns, -> { where(school_wide: false) }
+  has_many :school_wide_campaigns, -> { where(school_wide: true) }, as: :campaignable, class_name: 'Campaign'
 
   sorty on: [:name, :created_at, :updated_at],
     references: {district: "name"}
@@ -17,8 +17,6 @@ class School < ActiveRecord::Base
   scope :ordered, -> { order("schools.name ASC") }
 
   before_destroy :avert_destruction
-
-  # TODO: Campaignable
 
 
   def self.search(query)
@@ -45,7 +43,9 @@ class School < ActiveRecord::Base
     elsif campaigns.present?
       self.errors.add(:base, "cannot remove a School with associated Campaigns")
       false
-    # TODO: school_wide_campaigns
+    elsif school_wide_campaigns.present?
+      self.errors.add(:base, "cannot remove a School with associated School Wide Campaigns")
+      false
     end
   end
 

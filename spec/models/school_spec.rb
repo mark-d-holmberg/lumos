@@ -37,15 +37,19 @@ RSpec.describe School, type: :model do
       expect(school.teachers).to match_array([teacher_1, teacher_2])
     end
 
-    it "should have many campaigns" do
+    it "should have many teacher based campaigns" do
       school = create(:school, name: 'Snow Canyon')
-      campaign_1 = create(:campaign, school: school, district: school.district, state: school.district.state)
-      campaign_2 = create(:campaign, school: school, district: school.district, state: school.district.state)
+      campaign_1 = create(:campaign, school: school, district: school.district, state: school.district.state, school_wide: false)
+      campaign_2 = create(:campaign, school: school, district: school.district, state: school.district.state, school_wide: false)
       expect(school.campaigns).to match_array([campaign_1, campaign_2])
     end
 
-    # TODO: school can still have many campaigns that are teacher based
-    # TODO: school can have many campaigns that are school wide.
+    it "should have many school_wide_campaigns" do
+      school = create(:school, name: 'Snow Canyon')
+      campaign_1 = create(:campaign, campaignable: school, campaignable_type: 'School', school: school, district: school.district, state: school.district.state, school_wide: true)
+      campaign_2 = create(:campaign, campaignable: school, campaignable_type: 'School', school: school, district: school.district, state: school.district.state, school_wide: true)
+      expect(school.school_wide_campaigns).to match_array([campaign_1, campaign_2])
+    end
   end
 
   describe "concernign ActiveRecord callbacks" do
@@ -57,9 +61,17 @@ RSpec.describe School, type: :model do
       }.to_not change(School, :count)
     end
 
-    it "should not be destroyable if it has campaigns" do
+    it "should not be destroyable if it has teacher based campaigns" do
       school = create(:school, name: "Snow Canyon")
       campaign = create(:campaign, school: school, district: school.district, state: school.district.state)
+      expect {
+        school.destroy
+      }.to_not change(School, :count)
+    end
+
+    it "should not be destroyable if it has school_wide campaigns" do
+      school = create(:school, name: "Snow Canyon")
+      campaign = create(:campaign, school: school, district: school.district, state: school.district.state, campaignable: school, school_wide: true)
       expect {
         school.destroy
       }.to_not change(School, :count)
