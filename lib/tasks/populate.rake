@@ -126,10 +126,10 @@ namespace :populate do
     args.repeat.to_i.times do |n|
       contribution = Contribution.new({
         pledge_id: Faker::Number.number(5),
-        pledged_at: Date.today,
+        pledged_at: rand(5.weeks.ago..1.second.ago),
         contributor: Contributor.all.sample,
         campaign: Campaign.all.sample,
-        amount_cents: (100..1000).to_a.sample,
+        amount_cents: rand(100..10000),
       })
 
       if contribution.valid?
