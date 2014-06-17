@@ -23,7 +23,7 @@ Rails.application.routes.draw do
       resources :contributions
       resource :tos, only: [:show, :edit, :update]
 
-      match '/', to: 'dashboard#index', via: [:get], as: :master_root
+      match '/', to: 'campaigns#index', via: [:get], as: :master_root
     end
   end
 
