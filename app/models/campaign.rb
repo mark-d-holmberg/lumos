@@ -21,8 +21,11 @@ class Campaign < ActiveRecord::Base
   validates :school_id, inclusion: { in: Proc.new { |k| k.district.school_ids } }, if: Proc.new { |k| k.district.present? }
   validates :campaignable_id, inclusion: { in: Proc.new { |k| k.school.teacher_ids } }, if: Proc.new { |k| k.campaignable.present? && !k.school_wide? }
   validates :campaignable_type, inclusion: { in: Proc.new { Campaign.campaignable_types } }, presence: true
+  validates :campaignable_id, uniqueness: { scope: [:school_id] }, if: Proc.new { |k| k.active? && k.school_wide? }
 
   scope :ordered, -> { order("campaigns.name ASC") }
+  scope :active, -> { where(active: true) }
+  scope :inactive, -> { where.not(active: true) }
   scope :teacher_based, -> { where(school_wide: false) }
   scope :school_based, -> { where(school_wide: true) }
 

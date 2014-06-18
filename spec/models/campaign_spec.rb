@@ -121,6 +121,13 @@ RSpec.describe Campaign, type: :model do
       expect(desert_hills.teachers).to match_array([teacher_2])
       expect(build(:campaign, district: washington, school: snow_canyon, state: utah, campaignable: teacher_2, school_wide: false)).to_not be_valid
     end
+
+    it "should only let them have a single, active school_based campaign" do
+      school = create(:school, name: 'Snow Canyon')
+      expect(create(:campaign, school_wide: true, active: true, campaignable: school, school: school, district: school.district, state: school.district.state)).to be_valid
+      expect(build(:campaign, school_wide: true, active: true, campaignable: school, school: school, district: school.district, state: school.district.state)).to_not be_valid
+      expect(build(:campaign, school_wide: true, active: false, campaignable: school, school: school, district: school.district, state: school.district.state)).to be_valid
+    end
   end
 
   describe "concerning relations" do

@@ -44,10 +44,10 @@ RSpec.describe School, type: :model do
       expect(school.campaigns).to match_array([campaign_1, campaign_2])
     end
 
-    it "should have many school_wide_campaigns" do
+    it "should have many school_wide_campaigns as long as only one is active" do
       school = create(:school, name: 'Snow Canyon')
-      campaign_1 = create(:campaign, campaignable: school, campaignable_type: 'School', school: school, district: school.district, state: school.district.state, school_wide: true)
-      campaign_2 = create(:campaign, campaignable: school, campaignable_type: 'School', school: school, district: school.district, state: school.district.state, school_wide: true)
+      campaign_1 = create(:campaign, campaignable: school, campaignable_type: 'School', school: school, district: school.district, state: school.district.state, school_wide: true, active: true)
+      campaign_2 = create(:campaign, campaignable: school, campaignable_type: 'School', school: school, district: school.district, state: school.district.state, school_wide: true, active: false)
       expect(school.school_wide_campaigns).to match_array([campaign_1, campaign_2])
     end
   end
