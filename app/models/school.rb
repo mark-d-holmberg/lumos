@@ -19,6 +19,15 @@ class School < ActiveRecord::Base
   before_destroy :avert_destruction
 
 
+  def self.without_teachers
+    existing_ids = Teacher.all.pluck(:school_id)
+    if existing_ids.empty?
+      all
+    else
+      where("schools.id NOT IN (?)", existing_ids)
+    end
+  end
+
   def self.search(query)
     t = arel_table
     dt = District.arel_table

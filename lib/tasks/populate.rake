@@ -7,8 +7,22 @@ namespace :populate do
   task :districts, [:repeat] => [:environment] do |t, args|
     args.with_defaults(repeat: '5')
     puts "Generating sample districts..."
+
+    # Loop over all this stuff
     args.repeat.to_i.times do |n|
-      district = District.new(state: State.all.sample, name: Faker::Team.name)
+      # See if there is a state that doesn't have any districts
+      unassigned_states = State.without_districts
+
+      if unassigned_states.present?
+        # Select from unassigned states
+        state = unassigned_states.sample
+      else
+        # Select from any state
+        state = State.all.sample
+      end
+
+      # Create a new district
+      district = District.new(state: state, name: "#{state.name} #{Faker::Lorem.word} #{Faker::Team.creature}")
       if district.valid?
         district.save!
         puts "Created District: #{district.name}, for State: #{district.state.name}"
@@ -23,7 +37,19 @@ namespace :populate do
     args.with_defaults(repeat: '5')
     puts "Generating sample schools..."
     args.repeat.to_i.times do |n|
-      school = School.new(district: District.all.sample, name: Faker::Team.name)
+      # See if there is a district that doesn't have any schools
+      unassigned_districts = District.without_schools
+
+      if unassigned_districts.present?
+        # Select from unassigned districts
+        district = unassigned_districts.sample
+      else
+        # Select from any district
+        district = District.all.sample
+      end
+
+      # Create a new School
+      school = School.new(district: district, name: Faker::Team.name)
       if school.valid?
         school.save!
         puts "Created School: #{school.name}, for District: #{school.district.name}"
@@ -38,7 +64,20 @@ namespace :populate do
     args.with_defaults(repeat: '5')
     puts "Generating sample teachers..."
     args.repeat.to_i.times do |n|
-      teacher = Teacher.new(school: School.all.sample, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name)
+
+      # See if there is a school that doesn't have any teachers
+      unassigned_schools = School.without_teachers
+
+      if unassigned_schools.present?
+        # Select from unassigned schools
+        school = unassigned_schools.sample
+      else
+        # Select from any school
+        school = School.all.sample
+      end
+
+      # Create a new Teacher
+      teacher = Teacher.new(school: school, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name)
       if teacher.valid?
         teacher.save!
         puts "Created Teacher: #{teacher.full_name}, for School: #{teacher.school.name}"
@@ -48,6 +87,7 @@ namespace :populate do
   end
 
   namespace :campaigns do
+    # TODO: fix me to only create a single, active school based campaign
     # School-Wide campaigns
     desc "Creates some sample school-wide campaigns"
     task :school_wide, [:repeat] => [:environment] do |t, args|

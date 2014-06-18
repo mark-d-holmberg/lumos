@@ -13,6 +13,15 @@ class State < ActiveRecord::Base
   before_destroy :avert_destruction
 
 
+  def self.without_districts
+    existing_ids = District.all.pluck(:state_id)
+    if existing_ids.empty?
+      all
+    else
+      where("states.id NOT IN (?)", existing_ids)
+    end
+  end
+
   def self.search(query)
     t = arel_table
     conditions = t[:name].matches("#{query}%").or(t[:abbr].matches("#{query}"))
