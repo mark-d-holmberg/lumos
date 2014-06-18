@@ -27,6 +27,7 @@ class Campaign < ActiveRecord::Base
   validates :campaignable_type, inclusion: { in: Proc.new { Campaign.campaignable_types } }, presence: true
   validates :campaignable_id, uniqueness: { scope: [:school_id] }, if: Proc.new { |k| k.active? && k.school_wide? }
   validates :goal_amount, numericality: { greater_than: 0 }, presence: true
+  validates :goal_amount_cents, numericality: { less_than_or_equal_to: 90000 }, if: Proc.new { |k| !k.school_wide? }
 
   scope :ordered, -> { order("campaigns.name ASC") }
   scope :active, -> { where(active: true) }

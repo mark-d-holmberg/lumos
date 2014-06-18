@@ -53,18 +53,26 @@ RSpec.describe Campaign, type: :model do
       expect(build(:campaign, goal_amount: 'abc')).to_not be_valid
     end
 
-    # TODO: teacher goal amount
+    it "should restrict teacher_based campaigns to a $900 limit" do
+      expect(build(:campaign, school_wide: false, goal_amount: 900)).to be_valid
+      expect(build(:campaign, school_wide: false, goal_amount: 1)).to be_valid
+      expect(build(:campaign, school_wide: false, goal_amount: 901)).to_not be_valid
+    end
 
-    # TODO: school_based goal amount
+    it "should not restrict the goal amount for school_wide campaigns" do
+      expect(build(:school_based_campaign, goal_amount: 900)).to be_valid
+      expect(build(:school_based_campaign, goal_amount: 1)).to be_valid
+      expect(build(:school_based_campaign, goal_amount: 901)).to be_valid
+    end
 
     it "should require the campaignable_type to be in the right set" do
-      expect(build(:campaign, campaignable: build(:school), campaignable_type: 'School', school_wide: true)).to be_valid
+      expect(build(:school_based_campaign)).to be_valid
       expect(build(:campaign, campaignable_type: 'Teacher', school_wide: false)).to be_valid
       expect(build(:campaign, campaignable: build(:teacher), campaignable_type: 'District', school_wide: false)).to_not be_valid
     end
 
     it "should require the campaignable_type to be present" do
-      expect(build(:campaign, campaignable: build(:school), campaignable_type: nil, school_wide: true)).to_not be_valid
+      expect(build(:school_based_campaign, campaignable_type: nil)).to_not be_valid
     end
 
     it "should require a unique slug" do

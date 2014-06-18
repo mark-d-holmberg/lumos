@@ -106,7 +106,7 @@ namespace :populate do
           school: school,
           campaignable: school,
           campaignable_type: 'School',
-          goal_amount_cents: rand(100..10000),
+          goal_amount_cents: rand(100..100000),
         })
         if campaign.valid?
           campaign.save!

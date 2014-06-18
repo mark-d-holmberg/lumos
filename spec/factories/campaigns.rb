@@ -10,4 +10,11 @@ FactoryGirl.define do
     goal_amount 1
     goal_amount_dollars nil
   end
+
+  # School based campaign
+  factory :school_based_campaign, parent: :campaign, class: 'Campaign' do
+    campaignable { |k| k.school }
+    school_wide true
+    active true
+  end
 end
