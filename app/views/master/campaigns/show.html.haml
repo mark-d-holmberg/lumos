@@ -43,6 +43,9 @@
             - else
               N/A
         %tr
+          %th= Campaign.human_attribute_name(:goal_amount)
+          %td= humanized_money_with_symbol(@campaign.goal_amount.dollars, no_cents_if_whole: false)
+        %tr
           %th= Campaign.human_attribute_name(:slug)
           %td= @campaign.slug
         %tr

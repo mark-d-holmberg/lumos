@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140613215036) do
+ActiveRecord::Schema.define(version: 20140618173552) do
 
   create_table "campaigns", force: true do |t|
     t.string   "name"
@@ -19,12 +19,14 @@ ActiveRecord::Schema.define(version: 20140613215036) do
     t.integer  "district_id"
     t.integer  "school_id"
     t.integer  "campaignable_id"
-    t.boolean  "active",            default: true
+    t.boolean  "active",               default: true
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "slug"
     t.string   "campaignable_type"
-    t.boolean  "school_wide",       default: false
+    t.boolean  "school_wide",          default: false
+    t.integer  "goal_amount_cents",    default: 0,     null: false
+    t.string   "goal_amount_currency", default: "USD", null: false
   end
 
   add_index "campaigns", ["campaignable_id"], name: "index_campaigns_on_campaignable_id", using: :btree

@@ -7,5 +7,7 @@ FactoryGirl.define do
     campaignable { |k| k.association(:teacher, school: school) }
     school_wide false
     active true
+    goal_amount 1
+    goal_amount_dollars nil
   end
 end

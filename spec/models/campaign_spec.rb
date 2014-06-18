@@ -43,6 +43,20 @@ RSpec.describe Campaign, type: :model do
       expect(build(:campaign, school_wide: nil)).to_not be_valid
     end
 
+    it "should require an goal_amount" do
+      expect(build(:campaign, goal_amount: nil)).to_not be_valid
+    end
+
+    it "should require a positive goal_amount" do
+      expect(build(:campaign, goal_amount: 0)).to_not be_valid
+      expect(build(:campaign, goal_amount: -1)).to_not be_valid
+      expect(build(:campaign, goal_amount: 'abc')).to_not be_valid
+    end
+
+    # TODO: teacher goal amount
+
+    # TODO: school_based goal amount
+
     it "should require the campaignable_type to be in the right set" do
       expect(build(:campaign, campaignable: build(:school), campaignable_type: 'School', school_wide: true)).to be_valid
       expect(build(:campaign, campaignable_type: 'Teacher', school_wide: false)).to be_valid
@@ -207,6 +221,27 @@ RSpec.describe Campaign, type: :model do
       yes = create(:campaign, name: 'School Based', school_wide: true)
       no = create(:campaign, name: 'Teacher Based', school_wide: false)
       expect(Campaign.school_based).to match_array([yes])
+    end
+  end
+
+  describe "concerning the nightmare of handling US Dollars" do
+    context "is a nightmare every time" do
+      it { expect(true).to eq(true) }
+    end
+
+    it "should invoke a call to the monetize gem" do
+      expect(create(:campaign)).to monetize(:goal_amount_cents)
+    end
+
+    it "should be using USD for the currency" do
+      expect(create(:campaign)).to monetize(:goal_amount_cents).with_currency(:usd)
+    end
+
+    it "can set the amount in dollars using goal_amount_dollars=" do
+      campaign = build(:campaign)
+      campaign.goal_amount_dollars = 13.37
+      campaign.save
+      expect(campaign.goal_amount.dollars).to eq(13.37)
     end
   end
 

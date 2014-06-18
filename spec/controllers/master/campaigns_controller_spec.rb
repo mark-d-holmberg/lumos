@@ -15,7 +15,14 @@ RSpec.describe Master::CampaignsController, type: :controller do
   # Campaign. As you add validations to Campaign, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    attributes_for(:campaign).merge(state_id: @state.id, district_id: @district.id, school_id: @school.id, campaignable_id: @teacher.id, campaignable_type: 'Teacher')
+    attributes_for(:campaign).merge({
+      state_id: @state.id,
+      district_id: @district.id,
+      school_id: @school.id,
+      campaignable_id: @teacher.id,
+      campaignable_type: 'Teacher',
+      goal_amount_dollars: 1.00,
+    })
   }
 
   let(:invalid_attributes) {

@@ -9,6 +9,8 @@
   = f.input :campaignable, as: :select, include_blank: false, collection: Teacher.ordered
   = f.input :campaignable_type, as: :select, include_blank: false, collection: Campaign.campaignable_types
   = f.input :active, as: :select, include_blank: false
+  = f.input :goal_amount_dollars, required: true do
+    = f.input_field :goal_amount_dollars, value: @campaign.new_record? ? number_with_precision(1.00, precision: 2) : number_with_precision(@campaign.goal_amount.dollars, precision: 2), class: "goal-amount-dollars", as: :string
 
   .form-group
     .col-sm-offset-2.col-sm-10

@@ -1,6 +1,7 @@
 class Campaign < ActiveRecord::Base
 
   include Tokenable
+  include Dollars
 
   belongs_to :state
   belongs_to :district
@@ -9,7 +10,10 @@ class Campaign < ActiveRecord::Base
 
   has_many :contributions
 
-  sorty on: [:name, :school_wide, :created_at, :updated_at],
+  monetize :goal_amount_cents
+  has_dollar_field :goal_amount
+
+  sorty on: [:name, :school_wide, :goal_amount_cents],
     references: {state: "name", district: "name", school: "name"}
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
@@ -22,6 +26,7 @@ class Campaign < ActiveRecord::Base
   validates :campaignable_id, inclusion: { in: Proc.new { |k| k.school.teacher_ids } }, if: Proc.new { |k| k.campaignable.present? && !k.school_wide? }
   validates :campaignable_type, inclusion: { in: Proc.new { Campaign.campaignable_types } }, presence: true
   validates :campaignable_id, uniqueness: { scope: [:school_id] }, if: Proc.new { |k| k.active? && k.school_wide? }
+  validates :goal_amount, numericality: { greater_than: 0 }, presence: true
 
   scope :ordered, -> { order("campaigns.name ASC") }
   scope :active, -> { where(active: true) }
@@ -35,7 +40,7 @@ class Campaign < ActiveRecord::Base
 
   def self.search(query)
     t = arel_table
-    conditions = t[:name].matches("%#{query}%")
+    conditions = t[:name].matches("%#{query}%").or(t[:goal_amount_cents].gteq(query.gsub(/\D+/, '')))
     where(conditions)
   end
 
