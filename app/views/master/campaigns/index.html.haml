@@ -5,53 +5,101 @@
     %span.glyphicon.glyphicon-plus
   = render "campaigns_search_filter"
 
-= paginate @campaigns
-
-%table.table.table-striped.table-hover.table-condensed
-  %thead
-    %tr
-      %th= sorty "name", Campaign.human_attribute_name(:name), true
-      %th= sorty "state", Campaign.human_attribute_name(:state)
-      %th= sorty "district", Campaign.human_attribute_name(:district)
-      %th= sorty "school", Campaign.human_attribute_name(:school)
-      %th= Campaign.human_attribute_name(:campaignable)
-      %th= sorty "goal_amount_cents", Campaign.human_attribute_name(:goal_amount)
-      %th= sorty "school_wide", Campaign.human_attribute_name(:school_wide)
-      %th= sorty "active", Campaign.human_attribute_name(:active)
-      %th
-      %th
-  %tbody
-    - @campaigns.each do |campaign|
-      %tr
-        %td= link_to campaign.name, campaign
-        %td
-          - if campaign.state.present?
-            = link_to campaign.state.name, campaign.state
-          - else
-            N/A
-        %td
-          - if campaign.district.present?
-            = link_to campaign.district.name, campaign.district
-          - else
-            N/A
-        %td
-          - if campaign.school.present?
-            = link_to campaign.school.name, campaign.school
-          - else
-            N/A
-        %td
-          - if campaign.campaignable.present?
-            = link_to campaign.campaignable.to_s, campaign.campaignable
-          - else
-            N/A
-        %td= link_to(humanized_money_with_symbol(campaign.goal_amount.dollars, no_cents_if_whole: false), campaign)
-        %td= campaign.school_wide? ? 'Yes' : 'No'
-        %td= campaign.active? ? "Yes" : "No"
-        %td
-          = link_to edit_campaign_path(campaign), class: 'btn btn-warning btn-xs', title: 'Edit Campaign' do
-            %span.glyphicon.glyphicon-edit
-        %td
-          = link_to campaign, method: :delete, data: { confirm: 'Are you sure?' }, id: "campaign_destroy_#{campaign.id}", title: "Remove Campaign", class: 'btn btn-danger btn-xs' do
-            %span.glyphicon.glyphicon-remove
-
-= paginate @campaigns
+.row
+  .col-lg-12
+    %ul.nav.nav-tabs
+      %li.active
+        = link_to '#teacher_based', data: {toggle: 'tab'} do
+          %span.glyphicon.glyphicon-briefcase
+          Teacher Campaigns
+      %li
+        = link_to '#school_based', data: {toggle: 'tab'} do
+          %span.glyphicon.glyphicon-bell
+          School-Wide Campaigns
+    .tab-content
+      #teacher_based.tab-pane.active
+        = paginate @teacher_campaigns, param_name: "teachers_page", params: { anchor: "teacher_based" }
+        %table.table.table-striped.table-hover.table-condensed
+          %thead
+            %tr
+              %th= sorty "name", Campaign.human_attribute_name(:name), {default: true, anchor: 'teacher_based'}
+              %th= sorty "state", Campaign.human_attribute_name(:state), {anchor: 'teacher_based'}
+              %th= sorty "district", Campaign.human_attribute_name(:district), {anchor: 'teacher_based'}
+              %th= sorty "school", Campaign.human_attribute_name(:school), {anchor: 'teacher_based'}
+              %th= sorty "teacher", Campaign.human_attribute_name(:teacher), {anchor: 'teacher_based', polymorphic: 'campaignable'}
+              %th= sorty "goal_amount_cents", Campaign.human_attribute_name(:goal_amount), {anchor: 'teacher_based'}
+              %th= sorty "active", Campaign.human_attribute_name(:active), {anchor: 'teacher_based'}
+              %th
+              %th
+          %tbody
+            - @teacher_campaigns.each do |campaign|
+              %tr
+                %td= link_to campaign.name, campaign
+                %td
+                  - if campaign.state.present?
+                    = link_to campaign.state.name, campaign.state
+                  - else
+                    N/A
+                %td
+                  - if campaign.district.present?
+                    = link_to campaign.district.name, campaign.district
+                  - else
+                    N/A
+                %td
+                  - if campaign.school.present?
+                    = link_to campaign.school.name, campaign.school
+                  - else
+                    N/A
+                %td
+                  - if campaign.campaignable.present?
+                    = link_to campaign.campaignable.to_s, campaign.campaignable
+                  - else
+                    N/A
+                %td= link_to(humanized_money_with_symbol(campaign.goal_amount.dollars, no_cents_if_whole: false), campaign)
+                %td= campaign.active? ? "Yes" : "No"
+                %td
+                  = link_to edit_campaign_path(campaign), class: 'btn btn-warning btn-xs', title: 'Edit Campaign' do
+                    %span.glyphicon.glyphicon-edit
+                %td
+                  = link_to campaign, method: :delete, data: { confirm: 'Are you sure?' }, id: "campaign_destroy_#{campaign.id}", title: "Remove Campaign", class: 'btn btn-danger btn-xs' do
+                    %span.glyphicon.glyphicon-remove
+      #school_based.tab-pane
+        = paginate @school_campaigns, param_name: "schools_page", params: { anchor: "school_based" }
+        %table.table.table-striped.table-hover.table-condensed
+          %thead
+            %tr
+              %th= sorty "name", Campaign.human_attribute_name(:name), {default: true, anchor: 'school_based'}
+              %th= sorty "state", Campaign.human_attribute_name(:state), {anchor: 'school_based'}
+              %th= sorty "district", Campaign.human_attribute_name(:district), {anchor: 'school_based'}
+              %th= sorty "school", Campaign.human_attribute_name(:school), {anchor: 'school_based', polymorphic: 'campaignable'}
+              %th= sorty "goal_amount_cents", Campaign.human_attribute_name(:goal_amount), {anchor: 'school_based'}
+              %th= sorty "active", Campaign.human_attribute_name(:active), {anchor: 'school_based'}
+              %th
+              %th
+          %tbody
+            - @school_campaigns.each do |campaign|
+              %tr
+                %td= link_to campaign.name, campaign
+                %td
+                  - if campaign.state.present?
+                    = link_to campaign.state.name, campaign.state
+                  - else
+                    N/A
+                %td
+                  - if campaign.district.present?
+                    = link_to campaign.district.name, campaign.district
+                  - else
+                    N/A
+                %td
+                  - if campaign.school.present?
+                    = link_to campaign.school.name, campaign.school
+                  - else
+                    N/A
+                %td= link_to(humanized_money_with_symbol(campaign.goal_amount.dollars, no_cents_if_whole: false), campaign)
+                %td= campaign.active? ? "Yes" : "No"
+                %td
+                  = link_to edit_campaign_path(campaign), class: 'btn btn-warning btn-xs', title: 'Edit Campaign' do
+                    %span.glyphicon.glyphicon-edit
+                %td
+                  = link_to campaign, method: :delete, data: { confirm: 'Are you sure?' }, id: "campaign_destroy_#{campaign.id}", title: "Remove Campaign", class: 'btn btn-danger btn-xs' do
+                    %span.glyphicon.glyphicon-remove

@@ -2,14 +2,18 @@ class Master::CampaignsController < MasterController
   before_action :set_campaign, only: [:show, :edit, :update, :destroy]
 
   def index
-    @campaigns = Campaign.all
+    @campaigns = Campaign.ordered
     @campaigns = @campaigns.search(params[:search][:query]) if params[:search].try(:[], :query).present?
+    @teacher_campaigns = @campaigns.teacher_based
+    @school_campaigns = @campaigns.school_based
+
     if params[:search].try(:[], :sorty).present?
-      @campaigns = @campaigns.sorty_order(sort_column, sort_direction)
-    else
-      @campaigns = @campaigns.ordered
+      @teacher_campaigns = @teacher_campaigns.sorty_order(sort_column, sort_direction, sort_polymorphic)
+      @school_campaigns = @school_campaigns.sorty_order(sort_column, sort_direction, sort_polymorphic)
     end
-    @campaigns = @campaigns.page(params[:page])
+
+    @teacher_campaigns = @teacher_campaigns.page(params[:teachers_page])
+    @school_campaigns = @school_campaigns.page(params[:schools_page])
   end
 
   def show

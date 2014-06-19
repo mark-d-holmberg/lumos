@@ -10,7 +10,7 @@
 %table.table.table-striped.table-hover.table-condensed
   %thead
     %tr
-      %th= sorty "last_name", Teacher.human_attribute_name(:last_name), true
+      %th= sorty "last_name", Teacher.human_attribute_name(:last_name), {default: true}
       %th= sorty "first_name", Teacher.human_attribute_name(:first_name)
       %th= sorty "school", Teacher.human_attribute_name(:school)
       %th= sorty "created_at", Teacher.human_attribute_name(:created_at)

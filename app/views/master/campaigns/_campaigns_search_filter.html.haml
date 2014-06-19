@@ -3,6 +3,7 @@
   = f.simple_fields_for :sorty do |s|
     = s.input :direction, as: :hidden, input_html: { value: (params[:search][:sorty].try(:[], :direction) if params[:search].try(:[], :sorty).present?) } if params[:search].try(:[], :sorty).present?
     = s.input :sort, as: :hidden, input_html: { value: (params[:search][:sorty].try(:[], :sort) if params[:search].try(:[], :sorty).present?) } if params[:search].try(:[], :sorty).present?
+    = s.input :polymorphic, as: :hidden, input_html: { value: (params[:search][:sorty].try(:[], :polymorphic) if params[:search].try(:[], :sorty).present?) } if params[:search].try(:[], :sorty).present?
   - if params[:search].present?
     = link_to campaigns_path, class: 'btn btn-danger', title: 'Clear Filter' do
       %span.glyphicon.glyphicon-remove

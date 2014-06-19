@@ -14,7 +14,13 @@ class Campaign < ActiveRecord::Base
   has_dollar_field :goal_amount
 
   sorty on: [:name, :school_wide, :goal_amount_cents],
-    references: {state: "name", district: "name", school: "name"}
+    references: {state: "name", district: "name", school: "name"},
+    polymorphic: {
+      campaignable: {
+        teacher: 'last_name',
+        school: 'name',
+      }
+    }
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :state, :district, :school, presence: true
