@@ -7,7 +7,10 @@ Rails.application.routes.draw do
   constraints(subdomain: /api/) do
     namespace :api, path: "" do
       namespace :v1 do
+        # TODO: nesting?
         resources :districts, only: [:index]
+        resources :schools, only: [:index]
+        resources :campaigns, only: [:index]
       end
     end
   end
