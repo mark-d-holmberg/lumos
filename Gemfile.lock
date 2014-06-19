@@ -6,7 +6,7 @@ GIT
       railties (>= 3.0)
 
 GIT
-  remote: git@github.com:mark-d-holmberg/sorty.git
+  remote: git://github.com/mark-d-holmberg/sorty.git
   revision: 11aaabc2e8706cb577b466be39e66d2dfa94a550
   specs:
     sorty (0.0.1)
