@@ -256,8 +256,14 @@ RSpec.describe Campaign, type: :model do
   describe "concerning being converted to JSON" do
     it "should work properly" do
       campaign = create(:campaign, name: 'Campaign 1', active: true, school_wide: false, goal_amount_cents: 1337)
-      result = campaign.attributes.slice("id", "name", "campaignable_id", "campaignable_type", "school_wide", "goal_amount_cents")
+      result = campaign.attributes.slice("slug", "name", "campaignable_id", "campaignable_type", "school_wide", "goal_amount_cents")
       expect(campaign.to_json).to eq(result.to_json)
+    end
+  end
+
+  describe "concerning finding campaigns by their slug" do
+    it "should find them by their slug" do
+      expect(create(:campaign, slug: '12345').to_param).to eq('12345')
     end
   end
 

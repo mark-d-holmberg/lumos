@@ -13,11 +13,11 @@ RSpec.describe Master::CampaignsController, type: :routing do
     end
 
     it "routes to #show" do
-      expect(get: "#{url}/campaigns/1").to route_to("master/campaigns#show", id: "1")
+      expect(get: "#{url}/campaigns/1").to route_to("master/campaigns#show", slug: "1")
     end
 
     it "routes to #edit" do
-      expect(get: "#{url}/campaigns/1/edit").to route_to("master/campaigns#edit", id: "1")
+      expect(get: "#{url}/campaigns/1/edit").to route_to("master/campaigns#edit", slug: "1")
     end
 
     it "routes to #create" do
@@ -25,11 +25,11 @@ RSpec.describe Master::CampaignsController, type: :routing do
     end
 
     it "routes to #update" do
-      expect(put: "#{url}/campaigns/1").to route_to("master/campaigns#update", id: "1")
+      expect(put: "#{url}/campaigns/1").to route_to("master/campaigns#update", slug: "1")
     end
 
     it "routes to #destroy" do
-      expect(delete: "#{url}/campaigns/1").to route_to("master/campaigns#destroy", id: "1")
+      expect(delete: "#{url}/campaigns/1").to route_to("master/campaigns#destroy", slug: "1")
     end
 
   end

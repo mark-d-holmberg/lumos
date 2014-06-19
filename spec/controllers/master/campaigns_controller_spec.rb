@@ -51,7 +51,7 @@ RSpec.describe Master::CampaignsController, type: :controller do
   describe "GET show" do
     it "assigns the requested campaign as @campaign" do
       campaign = Campaign.create! valid_attributes
-      get :show, {id: campaign.to_param}, valid_session
+      get :show, {slug: campaign.to_param}, valid_session
       expect(assigns(:campaign)).to eq(campaign)
       expect(assigns(:contributions)).to eq([])
     end
@@ -67,7 +67,7 @@ RSpec.describe Master::CampaignsController, type: :controller do
   describe "GET edit" do
     it "assigns the requested campaign as @campaign" do
       campaign = Campaign.create! valid_attributes
-      get :edit, {id: campaign.to_param}, valid_session
+      get :edit, {slug: campaign.to_param}, valid_session
       expect(assigns(:campaign)).to eq(campaign)
     end
   end
@@ -115,20 +115,20 @@ RSpec.describe Master::CampaignsController, type: :controller do
 
       it "updates the requested campaign" do
         campaign = Campaign.create! valid_attributes
-        put :update, {id: campaign.to_param, campaign: new_attributes}, valid_session
+        put :update, {slug: campaign.to_param, campaign: new_attributes}, valid_session
         campaign.reload
         expect(campaign.name).to eql('Campaign Cool')
       end
 
       it "assigns the requested campaign as @campaign" do
         campaign = Campaign.create! valid_attributes
-        put :update, {id: campaign.to_param, campaign: valid_attributes}, valid_session
+        put :update, {slug: campaign.to_param, campaign: valid_attributes}, valid_session
         expect(assigns(:campaign)).to eq(campaign)
       end
 
       it "redirects to the campaign" do
         campaign = Campaign.create! valid_attributes
-        put :update, {id: campaign.to_param, campaign: valid_attributes}, valid_session
+        put :update, {slug: campaign.to_param, campaign: valid_attributes}, valid_session
         expect(response).to redirect_to(campaign)
       end
     end
@@ -136,13 +136,13 @@ RSpec.describe Master::CampaignsController, type: :controller do
     describe "with invalid params" do
       it "assigns the campaign as @campaign" do
         campaign = Campaign.create! valid_attributes
-        put :update, {id: campaign.to_param, campaign: invalid_attributes}, valid_session
+        put :update, {slug: campaign.to_param, campaign: invalid_attributes}, valid_session
         expect(assigns(:campaign)).to eq(campaign)
       end
 
       it "re-renders the 'edit' template" do
         campaign = Campaign.create! valid_attributes
-        put :update, {id: campaign.to_param, campaign: invalid_attributes}, valid_session
+        put :update, {slug: campaign.to_param, campaign: invalid_attributes}, valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -152,13 +152,13 @@ RSpec.describe Master::CampaignsController, type: :controller do
     it "destroys the requested campaign" do
       campaign = Campaign.create! valid_attributes.merge(active: false)
       expect {
-        delete :destroy, {id: campaign.to_param}, valid_session
+        delete :destroy, {slug: campaign.to_param}, valid_session
       }.to change(Campaign, :count).by(-1)
     end
 
     it "redirects to the campaigns list" do
       campaign = Campaign.create! valid_attributes
-      delete :destroy, {id: campaign.to_param}, valid_session
+      delete :destroy, {slug: campaign.to_param}, valid_session
       expect(response).to redirect_to(campaigns_url)
     end
   end

@@ -47,7 +47,7 @@
           %td= humanized_money_with_symbol(@campaign.goal_amount.dollars, no_cents_if_whole: false)
         %tr
           %th= Campaign.human_attribute_name(:slug)
-          %td= @campaign.slug
+          %td= link_to @campaign.slug, campaign_landing_url(@campaign.to_param, subdomain: 'www')
         %tr
           %th= Campaign.human_attribute_name(:school_wide)
           %td= @campaign.school_wide? ? "Yes" : "No"

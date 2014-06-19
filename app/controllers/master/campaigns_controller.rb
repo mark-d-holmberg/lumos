@@ -50,7 +50,7 @@ class Master::CampaignsController < MasterController
   private
 
   def set_campaign
-    @campaign = Campaign.find(params[:id])
+    @campaign = Campaign.find_by(slug: params[:slug])
   end
 
   def safe_params

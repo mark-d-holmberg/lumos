@@ -29,7 +29,7 @@ Rails.application.routes.draw do
       resources :districts
       resources :schools
       resources :teachers
-      resources :campaigns
+      resources :campaigns, param: 'slug'
 
       # TODO: make this nested
       resources :contributors
@@ -38,6 +38,11 @@ Rails.application.routes.draw do
 
       match '/', to: 'campaigns#index', via: [:get], as: :master_root
     end
+  end
+
+  # The frontend
+  constraints(subdomain: /www/) do
+    resources :campaigns, only: [:show], param: 'slug', as: :campaign_landing
   end
 
   # You can have the root of your site routed with "root"
