@@ -78,4 +78,11 @@ RSpec.describe School, type: :model do
     end
   end
 
+  describe "concerning being converted to JSON" do
+    it "should work properly" do
+      school = create(:school, name: "Snow Canyon")
+      expect(school.to_json).to eq({id: school.id, name: 'Snow Canyon'}.to_json)
+    end
+  end
+
 end

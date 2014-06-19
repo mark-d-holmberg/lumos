@@ -33,6 +33,10 @@ class District < ActiveRecord::Base
     includes(:state).where(conditions).references(:state)
   end
 
+  def as_json(options)
+    {id: id, name: name}
+  end
+
 
   private
 

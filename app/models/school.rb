@@ -42,6 +42,10 @@ class School < ActiveRecord::Base
     name
   end
 
+  def as_json(options)
+    {id: id, name: name}
+  end
+
 
   private
 

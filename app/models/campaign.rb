@@ -49,6 +49,10 @@ class Campaign < ActiveRecord::Base
     ['School', 'Teacher']
   end
 
+  def as_json(options)
+    super.slice("id", "name", "campaignable_id", "campaignable_type", "school_wide", "goal_amount_cents")
+  end
+
 
   private
 

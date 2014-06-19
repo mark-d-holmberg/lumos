@@ -253,4 +253,12 @@ RSpec.describe Campaign, type: :model do
     end
   end
 
+  describe "concerning being converted to JSON" do
+    it "should work properly" do
+      campaign = create(:campaign, name: 'Campaign 1', active: true, school_wide: false, goal_amount_cents: 1337)
+      result = campaign.attributes.slice("id", "name", "campaignable_id", "campaignable_type", "school_wide", "goal_amount_cents")
+      expect(campaign.to_json).to eq(result.to_json)
+    end
+  end
+
 end

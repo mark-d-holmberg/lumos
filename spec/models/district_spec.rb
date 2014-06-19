@@ -64,4 +64,11 @@ RSpec.describe District, type: :model do
     end
   end
 
+  describe "concerning being converted to JSON" do
+    it "should work properly" do
+      district = create(:district, name: "Washington County")
+      expect(district.to_json).to eq({id: district.id, name: 'Washington County'}.to_json)
+    end
+  end
+
 end
