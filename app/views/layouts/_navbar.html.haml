@@ -4,3 +4,8 @@
       = active_link_to root_path, active: ["public"] do
         %span.glyphicon.glyphicon-home
         Home
+
+  %ul.nav.navbar-nav.navbar-right
+    %li
+      = link_to '#', title: 'New Campaign' do
+        %span.glyphicon.glyphicon-plus
