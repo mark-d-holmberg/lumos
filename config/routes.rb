@@ -41,7 +41,7 @@ Rails.application.routes.draw do
   end
 
   # The frontend
-  constraints(subdomain: /www/) do
+  constraints(subdomain: /landing/) do
     resources :campaigns, only: [:show], param: 'slug', as: :campaign_landing
   end
 
