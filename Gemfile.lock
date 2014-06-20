@@ -7,7 +7,7 @@ GIT
 
 GIT
   remote: git://github.com/mark-d-holmberg/sorty.git
-  revision: 11aaabc2e8706cb577b466be39e66d2dfa94a550
+  revision: 0adeef83110e04c5475b8c48df42a3c5195952fc
   specs:
     sorty (0.0.1)
       rails (>= 4.0.2)

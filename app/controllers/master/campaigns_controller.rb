@@ -3,13 +3,27 @@ class Master::CampaignsController < MasterController
 
   def index
     @campaigns = Campaign.all
-    @campaigns = @campaigns.search(params[:search][:query]) if params[:search].try(:[], :query).present?
-    if params[:search].try(:[], :sorty).present?
-      @campaigns = @campaigns.sorty_order(sort_column, sort_direction)
-    else
-      @campaigns = @campaigns.ordered
+    @teacher_campaigns = @campaigns.teacher_based
+    @school_campaigns = @campaigns.school_based
+
+    # Search based on my criteria
+    if params[:search].try(:[], :query).present?
+      @teacher_campaigns = @teacher_campaigns.search(params[:search][:query])
+      @school_campaigns = @school_campaigns.search(params[:search][:query])
     end
-    @campaigns = @campaigns.page(params[:page])
+
+    # Order by Sorty Params
+    if params[:search].try(:[], :sorty).present?
+      @teacher_campaigns = @teacher_campaigns.sorty_order(sort_column, sort_direction)
+      @school_campaigns = @school_campaigns.sorty_order(sort_column, sort_direction)
+    else
+      @teacher_campaigns = @teacher_campaigns.ordered
+      @school_campaigns = @school_campaigns.ordered
+    end
+
+    # Paginate them
+    @teacher_campaigns = @teacher_campaigns.page(params[:teachers_page])
+    @school_campaigns = @school_campaigns.page(params[:schools_page])
   end
 
   def show

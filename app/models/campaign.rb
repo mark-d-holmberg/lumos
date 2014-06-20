@@ -7,6 +7,7 @@ class Campaign < ActiveRecord::Base
   belongs_to :district
   belongs_to :school
   belongs_to :campaignable, polymorphic: true
+  belongs_to :teacher, -> { where("campaigns.campaignable_type = 'Teacher'") }, foreign_key: 'campaignable_id'
 
   has_many :contributions
 
@@ -14,7 +15,7 @@ class Campaign < ActiveRecord::Base
   has_dollar_field :goal_amount
 
   sorty on: [:name, :school_wide, :goal_amount_cents],
-    references: {state: "name", district: "name", school: "name"}
+    references: {state: "name", district: "name", school: "name", teacher: 'last_name'}
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :state, :district, :school, presence: true
@@ -41,8 +42,20 @@ class Campaign < ActiveRecord::Base
 
   def self.search(query)
     t = arel_table
-    conditions = t[:name].matches("%#{query}%").or(t[:goal_amount_cents].gteq(query.gsub(/\D+/, '')))
-    where(conditions)
+    sct = School.arel_table
+    st = State.arel_table
+
+    # Only do a goal amount if we have an number
+    goal_amount_query = query.gsub(/\D+/, '')
+    conditions = t[:name].matches("%#{query}%")
+    if goal_amount_query.present?
+      conditions = conditions.or(t[:goal_amount_cents].gteq(goal_amount_query))
+    end
+
+    # Find based on other tables
+    conditions = conditions.or(sct[:name].matches("#{query}%"))
+    conditions = conditions.or(st[:name].matches("#{query}%"))
+    includes([:school, :state]).where(conditions).references([:school, :state])
   end
 
   def self.campaignable_types

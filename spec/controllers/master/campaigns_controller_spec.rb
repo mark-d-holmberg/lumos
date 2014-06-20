@@ -45,6 +45,8 @@ RSpec.describe Master::CampaignsController, type: :controller do
       campaign = Campaign.create! valid_attributes
       get :index, {}, valid_session
       expect(assigns(:campaigns)).to eq([campaign])
+      expect(assigns(:teacher_campaigns)).to eq([campaign])
+      expect(assigns(:school_campaigns)).to eq([])
     end
   end
 
