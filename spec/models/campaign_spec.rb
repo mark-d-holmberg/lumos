@@ -267,4 +267,34 @@ RSpec.describe Campaign, type: :model do
     end
   end
 
+  describe "concerning the contributable? status of a campaign" do
+    it "should only allow active campaigns to be contributable?" do
+      expect(build(:campaign, goal_amount_cents: 500, active: true).contributable?).to eq(true)
+      expect(build(:school_based_campaign, goal_amount_cents: 500, active: true).contributable?).to eq(true)
+      expect(build(:campaign, goal_amount_cents: 500, active: false).contributable?).to eq(false)
+      expect(build(:school_based_campaign, goal_amount_cents: 500, active: false).contributable?).to eq(false)
+    end
+
+    it "should allow active school_based cmapaigns to always be contributable?" do
+      expect(build(:school_based_campaign, goal_amount_cents: 100000, active: true).contributable?).to eq(true)
+      expect(build(:school_based_campaign, goal_amount_cents: 100000, active: false).contributable?).to eq(false)
+    end
+
+    it "should allow active teacher based campaigns to be contributable? if they havent met their goal" do
+      campaign = create(:campaign, goal_amount_cents: 500, active: true)
+      contribution_1 = create(:contribution, amount_cents: 100, campaign: campaign)
+      expect(campaign.contributions.pluck(:amount_cents).sum).to eq(100)
+      expect(campaign.contributable?).to eq(true)
+    end
+
+    it "should NOT allow active teacher based campaigns to be contributable? if they have met their goal" do
+      campaign = create(:campaign, goal_amount_cents: 500, active: true)
+      contribution_1 = create(:contribution, amount_cents: 100, campaign: campaign)
+      contribution_2 = create(:contribution, amount_cents: 200, campaign: campaign)
+      contribution_3 = create(:contribution, amount_cents: 400, campaign: campaign)
+      expect(campaign.contributions.pluck(:amount_cents).sum).to eq(700)
+      expect(campaign.contributable?).to eq(false)
+    end
+  end
+
 end

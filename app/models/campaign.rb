@@ -57,6 +57,23 @@ class Campaign < ActiveRecord::Base
     slug
   end
 
+  def contributable?
+    if active?
+      # Make sure we're not archived
+      if school_wide?
+        # School Based
+        true # We have an infinite amount
+      else
+        # Teacher Based
+        contributions_amount_cents = contributions.pluck(:amount_cents).sum
+        (contributions_amount_cents < goal_amount_cents) ? true : false
+      end
+    else
+      # Inactive campaigns can never have more contributions placed for them
+      false
+    end
+  end
+
 
   private
 
