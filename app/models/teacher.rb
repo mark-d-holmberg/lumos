@@ -1,5 +1,15 @@
 class Teacher < ActiveRecord::Base
 
+  # Because sometimes you just gotta call it like it is, mister.
+  SUPERIORITY_PREFIXES = [
+    "Ms",
+    "Miss",
+    "Mrs",
+    "Mr",
+    "Doctor",
+    "Professor",
+  ]
+
   belongs_to :school
 
   has_many :campaigns, -> { where(school_wide: false) }, as: :campaignable
@@ -29,6 +39,10 @@ class Teacher < ActiveRecord::Base
 
   def full_name
     [first_name, last_name].join(" ")
+  end
+
+  def prestigious_name
+    [prefix, full_name].compact.join(" ")
   end
 
   def to_s

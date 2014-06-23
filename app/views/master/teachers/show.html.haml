@@ -1,8 +1,8 @@
-- title "Teacher : #{@teacher.full_name}", false
+- title "Teacher : #{@teacher.prestigious_name}", false
 
 .page-header
   %h3.sub-title.inline
-    Teacher : #{@teacher.full_name}
+    = @teacher.prestigious_name
     %span
       = link_to edit_teacher_path(@teacher), class: 'btn btn-warning btn-xs', title: "Edit Teacher" do
         %span.glyphicon.glyphicon-edit
@@ -17,6 +17,9 @@
         %tr
           %th= Teacher.human_attribute_name(:email)
           %td= mail_to @teacher.email
+        %tr
+          %th= Teacher.human_attribute_name(:prefix)
+          %td= @teacher.prefix
         %tr
           %th= Teacher.human_attribute_name(:school)
           %td

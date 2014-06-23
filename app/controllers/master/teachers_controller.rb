@@ -55,7 +55,7 @@ class Master::TeachersController < MasterController
   end
 
   def safe_params
-    params.require(:teacher).permit(:first_name, :last_name, :school_id, :email)
+    params.require(:teacher).permit(:first_name, :last_name, :school_id, :email, :prefix)
   end
 
 end

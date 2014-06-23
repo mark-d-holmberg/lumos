@@ -1,8 +1,10 @@
 = simple_form_for(@teacher) do |f|
   = f.error_notification
 
+  = f.input :prefix, as: :select, collection: Teacher::SUPERIORITY_PREFIXES, include_blank: 'Select Prefix'
   = f.input :first_name
   = f.input :last_name
+  = f.input :email
   = f.association :school, include_blank: false
 
   .form-group

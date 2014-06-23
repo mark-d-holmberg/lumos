@@ -103,4 +103,14 @@ RSpec.describe Teacher, type: :model do
       }.to_not change(Teacher, :count)
     end
   end
+
+  describe "concerning constants and prefixes" do
+    it "should know how to describe a rose by any other name" do
+      expect(Teacher::SUPERIORITY_PREFIXES).to match_array(["Ms", "Miss", "Mrs", "Mr", "Doctor", "Professor"])
+    end
+
+    it "should know how to describe the prestigious_name to all lesser mortals" do
+      expect(build(:teacher, first_name: 'Mark', last_name: 'Holmberg', prefix: 'Dark Lord').prestigious_name).to eql("Dark Lord Mark Holmberg")
+    end
+  end
 end
