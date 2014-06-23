@@ -4,13 +4,12 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # JSON API
-  constraints(subdomain: /api/) do
-    namespace :api, path: "" do
-      namespace :v1 do
-        # TODO: nesting?
-        resources :districts, only: [:index]
-        resources :schools, only: [:index]
-        resources :campaigns, only: [:index]
+  namespace :api, path: "api" do
+    namespace :v1 do
+      resources :districts, only: [:index] do
+        resources :schools, only: [:index] do
+          resources :campaigns, only: [:index]
+        end
       end
     end
   end

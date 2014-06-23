@@ -71,7 +71,7 @@ en:
       user: 'User'
   layouts:
     application:
-      brand: 'Lumos CFC'
+      brand: 'GoLumos Crowd Funding Campaign'
       copyright: "Lumos Technology %{year}"
       default_title: 'Lumos Crowd Funding Campaign'
       default_sub_title: ''

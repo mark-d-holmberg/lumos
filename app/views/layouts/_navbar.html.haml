@@ -1,11 +1,8 @@
 #navbar-collapse-1.collapse.navbar-collapse
-  %ul.nav.navbar-nav
+  %ul.nav.navbar-nav.navbar-right
     %li{class: is_active_link?(root_path, :exclusive) ? 'active' : nil}
       = active_link_to root_path, active: ["public"] do
-        %span.glyphicon.glyphicon-home
-        Home
-
-  %ul.nav.navbar-nav.navbar-right
+        %span.glyphicon.glyphicon-search
     %li
       = link_to '#', title: 'New Campaign' do
         %span.glyphicon.glyphicon-plus

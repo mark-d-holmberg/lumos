@@ -32,7 +32,7 @@ RSpec.describe Api::V1::CampaignsController, type: :controller do
   describe "GET index" do
     it "assigns all active campaigns as @campaigns" do
       campaign = Campaign.create! valid_attributes
-      get :index, {format: :json}, valid_session
+      get :index, {format: :json, district_id: @district.id, school_id: @school.id}, valid_session
       expect(assigns(:campaigns)).to eq([campaign])
     end
   end

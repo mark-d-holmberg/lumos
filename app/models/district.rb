@@ -12,6 +12,7 @@ class District < ActiveRecord::Base
   validates :state, presence: true
 
   scope :ordered, -> { order("districts.name ASC") }
+  scope :with_state, -> (state_abbr) { includes(:state).where("states.abbr = ?", state_abbr).references(:state) }
 
   before_destroy :avert_destruction
 
