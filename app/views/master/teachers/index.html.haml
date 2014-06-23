@@ -12,6 +12,7 @@
     %tr
       %th= sorty "last_name", Teacher.human_attribute_name(:last_name), true
       %th= sorty "first_name", Teacher.human_attribute_name(:first_name)
+      %th= sorty "email", Teacher.human_attribute_name(:email)
       %th= sorty "school", Teacher.human_attribute_name(:school)
       %th= sorty "created_at", Teacher.human_attribute_name(:created_at)
       %th= sorty "updated_at", Teacher.human_attribute_name(:updated_at)
@@ -22,6 +23,7 @@
       %tr
         %td= link_to teacher.last_name, teacher
         %td= teacher.first_name
+        %td= mail_to teacher.email
         %td
           - if teacher.school.present?
             = link_to teacher.school.name, teacher.school

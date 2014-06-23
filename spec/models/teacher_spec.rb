@@ -18,6 +18,34 @@ RSpec.describe Teacher, type: :model do
       expect(build(:teacher, school: nil)).to_not be_valid
     end
 
+    it "should require an email" do
+      expect(build(:teacher, email: nil)).to_not be_valid
+    end
+
+    it "should require a unique email regardless of case" do
+      expect(create(:teacher, email: "mark@example.com")).to be_valid
+      expect(build(:teacher, email: "mark@example.com")).to_not be_valid
+      expect(build(:teacher, email: "MARK@EXAMPLE.COM")).to_not be_valid
+    end
+
+    it "should not let the same email have a different name" do
+      expect(create(:teacher, first_name: "Mark", last_name: "Holmberg", email: "mark@example.com")).to be_valid
+      expect(build(:teacher, first_name: "Dixie", last_name: "Holmberg", email: "mark@example.com")).to_not be_valid
+    end
+
+    it "should accept accept properly formatted email addresses" do
+      %w[user@foo.com THE_USER@foo.bar.org first.last@foo.jp].each do |valid_email_address|
+        expect(build(:teacher, email: valid_email_address)).to be_valid
+      end
+    end
+
+    it "should reject invalid email addresses" do
+      expect(build(:teacher, email: "foo")).to_not be_valid
+      addresses = %w[user@foo,com user_at_foo.org example.user@foo.].each do |address|
+        expect(build(:teacher, email: address)).to_not be_valid
+      end
+    end
+
     it "should make sure to avoid duplicate teachers for the same school" do
       distrct_1 = create(:district, name: "Washington County")
       distrct_2 = create(:district, name: "Iron County")

@@ -15,6 +15,9 @@
           %th= Teacher.human_attribute_name(:full_name)
           %td= @teacher.full_name
         %tr
+          %th= Teacher.human_attribute_name(:email)
+          %td= mail_to @teacher.email
+        %tr
           %th= Teacher.human_attribute_name(:school)
           %td
             - if @teacher.school.present?

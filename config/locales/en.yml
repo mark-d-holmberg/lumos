@@ -47,6 +47,7 @@ en:
         abbr: 'Abbreviation'
         name: 'Name'
       teacher:
+        email: 'Email'
         first_name: 'First Name'
         full_name: 'Full Name'
         last_name: 'Last Name'

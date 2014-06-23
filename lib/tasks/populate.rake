@@ -77,7 +77,7 @@ namespace :populate do
       end
 
       # Create a new Teacher
-      teacher = Teacher.new(school: school, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name)
+      teacher = Teacher.new(school: school, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: Faker::Internet.email)
       if teacher.valid?
         teacher.save!
         puts "Created Teacher: #{teacher.full_name}, for School: #{teacher.school.name}"

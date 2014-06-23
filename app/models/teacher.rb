@@ -5,11 +5,14 @@ class Teacher < ActiveRecord::Base
   has_many :campaigns, -> { where(school_wide: false) }, as: :campaignable
   has_many :contributions, through: :campaigns
 
-  sorty on: [:first_name, :last_name, :created_at, :updated_at],
+  sorty on: [:first_name, :last_name, :email, :created_at, :updated_at],
     references: {school: "name"}
 
   validates :first_name, :last_name, :school, presence: true
   validates :last_name, uniqueness: { case_sensitive: false, scope: [:first_name, :school_id] }
+  validates :email, presence: true,
+    format: { with: Rails.application.config.email_regex },
+    uniqueness: { case_sensitive: false }
 
   scope :ordered, -> { order("teachers.last_name ASC") }
 
