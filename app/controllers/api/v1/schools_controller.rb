@@ -4,7 +4,7 @@ class Api::V1::SchoolsController < ApiController
   respond_to :json
 
   def index
-    @schools = @district.schools.ordered
+    @schools = @district.schools.with_campaigns.ordered
 
     respond_to do |format|
       format.html { render text: "Format not supported!" }

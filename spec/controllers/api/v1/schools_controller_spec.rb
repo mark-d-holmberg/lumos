@@ -21,8 +21,9 @@ RSpec.describe Api::V1::SchoolsController, type: :controller do
   describe "GET index" do
     it "assigns all schools as @schools" do
       school = School.create! valid_attributes
+      school.campaigns << create(:campaign, school: school, district: school.district, state: school.district.state)
       get :index, {format: :json, district_id: @district.id}, valid_session
-      expect(assigns(:schools)).to eq([school])
+      expect(assigns(:schools)).to match_array([school])
     end
   end
 

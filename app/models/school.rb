@@ -19,6 +19,10 @@ class School < ActiveRecord::Base
   before_destroy :avert_destruction
 
 
+  def self.with_campaigns
+    School.includes(:campaigns).where("campaigns.school_id IS NOT NULL").references(:campaigns).uniq
+  end
+
   def self.without_teachers
     existing_ids = Teacher.all.pluck(:school_id)
     if existing_ids.empty?

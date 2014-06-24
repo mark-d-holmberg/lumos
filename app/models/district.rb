@@ -17,6 +17,10 @@ class District < ActiveRecord::Base
   before_destroy :avert_destruction
 
 
+  def self.with_schools
+    District.includes(:schools).where("schools.district_id IS NOT NULL").references(:schools).uniq
+  end
+
   def self.without_schools
     existing_ids = School.all.pluck(:district_id)
     if existing_ids.empty?

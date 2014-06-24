@@ -3,7 +3,7 @@ class Api::V1::DistrictsController < ApiController
   respond_to :json
 
   def index
-    @districts = District.ordered
+    @districts = District.with_schools.ordered
 
     # Limit them by the state
     if params.try(:[], :state_abbr).present?

@@ -5,7 +5,7 @@
     %h1.page-header Campaign Search
     -# Search for existing campaigns
     = simple_form_for :search, url: '#', method: :get, wrapper: :nested, html: { id: 'campaign_search_form' } do |f|
-      = f.input :state, as: :select, collection: State.ordered.pluck(:name, :abbr), include_blank: 'Select a State', input_html: { class: 'col-lg-offset-1', data: {url: api_v1_districts_url}}, label: false
+      = f.input :state, as: :select, collection: State.with_districts.ordered.pluck(:name, :abbr), include_blank: 'Select a State', input_html: { class: 'col-lg-offset-1', data: {url: api_v1_districts_url}}, label: false
       = f.input :district, as: :select, collection: [], include_blank: 'Select a District', disabled: true, label: false, input_html: { class: 'col-lg-offset-1', data: {url: api_v1_district_schools_url(district_id: ':district_id')} }
       = f.input :school, as: :select, collection: [], include_blank: 'Select a School', disabled: true, label: false, input_html: { class: 'col-lg-offset-1', data: {url: api_v1_district_school_campaigns_url(district_id: ':district_id', school_id: ':school_id')} }
       = f.input :campaignable, as: :select, collection: [], include_blank: 'Select a Campaign', label: false, disabled: true, input_html: { class: 'col-lg-offset-1' }

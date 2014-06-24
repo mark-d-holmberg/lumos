@@ -29,6 +29,10 @@ class Teacher < ActiveRecord::Base
   before_destroy :avert_destruction
 
 
+  def self.with_campaigns
+    Teacher.includes(:campaigns).where("campaigns.campaignable_id IS NOT NULL").references(:campaigns).uniq
+  end
+
   def self.search(query)
     t = arel_table
     st = School.arel_table

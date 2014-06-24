@@ -13,6 +13,10 @@ class State < ActiveRecord::Base
   before_destroy :avert_destruction
 
 
+  def self.with_districts
+    State.includes(:districts).where("districts.state_id IS NOT NULL").references(:districts).uniq
+  end
+
   def self.without_districts
     existing_ids = District.all.pluck(:state_id)
     if existing_ids.empty?
