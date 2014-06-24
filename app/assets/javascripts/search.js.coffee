@@ -98,14 +98,15 @@ LumosApi =
 
           # Add each one
           $.each data, (index, element) ->
-            $campaign_element.append($('<option>').text(element.name).attr('value', element.slug));
+            $campaign_element.append($('<option>').text(element.name).attr('value', element.permalink));
           # Remove the disabled
           $campaign_element.prop('disabled', false)
 
   # Now that we have a campaign, redirect to the page for it.
-  RedirectToCampaign: (campaign_slug) ->
-    $my_landing_string = $("form#campaign_search_form select#search_campaignable").data("url")
-    $my_landing_url = $my_landing_string.replace(/\:slug/, campaign_slug)
+  RedirectToCampaign: (permalink) ->
+    # Get the actual permalink and inform the landing page that
+    # we are syndicated through searching
+    $my_landing_url = permalink + '?synd=search'
 
     # Redirect to the landing page for this campaign
     window.location.href = $my_landing_url

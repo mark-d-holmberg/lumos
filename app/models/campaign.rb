@@ -40,6 +40,8 @@ class Campaign < ActiveRecord::Base
   before_create { |record| generate_token(:slug) if slug.nil? }
   before_destroy :avert_destruction
 
+  # TODO: have this copy the Product.price_cents into Campaign.goal_amount_cents
+
 
   def self.search(query)
     t = arel_table
@@ -64,7 +66,11 @@ class Campaign < ActiveRecord::Base
   end
 
   def as_json(options)
-    super.slice("slug", "name", "campaignable_id", "campaignable_type", "school_wide", "goal_amount_cents")
+    {
+      name: name,
+      permalink: permalink,
+      goal_amount_cents: goal_amount_cents,
+    }
   end
 
   def to_param
@@ -86,6 +92,11 @@ class Campaign < ActiveRecord::Base
       # Inactive campaigns can never have more contributions placed for them
       false
     end
+  end
+
+  def permalink
+    default_host = Rails.application.config.action_mailer.default_url_options[:host]
+    Rails.application.routes.url_helpers.landing_campaign_url(self.slug, subdomain: "landing", host: default_host)
   end
 
 
