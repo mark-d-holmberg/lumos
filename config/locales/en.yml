@@ -40,6 +40,12 @@ en:
       district:
         name: 'Name'
         state: 'State'
+      product:
+        name: 'Name'
+        description: 'Description'
+        price: 'Price'
+        price_cents: 'Price (cents)'
+        price_dollars: 'Price (USD)'
       school:
         district: 'District'
         name: 'Name'
@@ -65,6 +71,7 @@ en:
       contribution: 'Contribution'
       contributor: 'Contributor'
       district: 'District'
+      product: 'Product'
       school: 'School'
       state: 'State'
       teacher: 'Teacher'

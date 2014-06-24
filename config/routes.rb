@@ -23,12 +23,12 @@ Rails.application.routes.draw do
     scope module: 'master' do
       # For adding new devise users the hard way
       resources :users
-
       resources :states
       resources :districts
       resources :schools
       resources :teachers
       resources :campaigns, param: 'slug'
+      resources :products
 
       # TODO: make this nested
       resources :contributors

@@ -1,0 +1,42 @@
+- title "Product : #{@product.name}", false
+
+.page-header
+  %h3.sub-title.inline
+    Product : #{@product.name}
+    %span
+      = link_to edit_product_path(@product), class: 'btn btn-warning btn-xs', title: "Edit Product" do
+        %span.glyphicon.glyphicon-edit
+.row
+  .col-lg-4
+    %h5.page-header General Information
+    %table.table.table-hover.table-striped.table-condensed
+      %tbody
+        %tr
+          %th= Product.human_attribute_name(:name)
+          %td= @product.name
+        %tr
+          %th= Product.human_attribute_name(:price)
+          %td= humanized_money_with_symbol(@product.price.dollars, no_cents_if_whole: false)
+        %tr
+          %th= Product.human_attribute_name(:created_at)
+          %td= l(@product.created_at, format: :short)
+        %tr
+          %th= Product.human_attribute_name(:updated_at)
+          %td= l(@product.updated_at, format: :short)
+  .col-lg-8
+    %ul.nav.nav-tabs
+      %li.active
+        = link_to '#description', data: {toggle: 'tab'} do
+          %span.glyphicon.glyphicon-question-sign
+          Description
+      %li
+        = link_to '#campaigns', data: {toggle: 'tab'} do
+          %span.glyphicon.glyphicon-fire
+          Campaigns
+    .tab-content
+      #description.tab-pane.active
+        %h5.page-header Product Description
+        = simple_format @product.description
+      #campaigns.tab-pane
+        %h5.page-header Campaigns
+        TODO: show all the campaigns who want this product
