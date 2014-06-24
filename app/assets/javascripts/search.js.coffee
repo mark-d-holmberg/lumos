@@ -91,11 +91,24 @@ LumosApi =
           # Reset the dropdowns
           LumosApi.ResetCampaigns()
 
+          # TODO: have this filter out the single school based campaign,
+          # From the many teacher based campaigns
+
+          # TODO: require the email
+
           # Add each one
           $.each data, (index, element) ->
-            $campaign_element.append($('<option>').text(element.name).attr('value', element.id));
+            $campaign_element.append($('<option>').text(element.name).attr('value', element.slug));
           # Remove the disabled
           $campaign_element.prop('disabled', false)
+
+  # Now that we have a campaign, redirect to the page for it.
+  RedirectToCampaign: (campaign_slug) ->
+    $my_landing_string = $("form#campaign_search_form select#search_campaignable").data("url")
+    $my_landing_url = $my_landing_string.replace(/\:slug/, campaign_slug)
+
+    # Redirect to the landing page for this campaign
+    window.location.href = $my_landing_url
 
 # Bind all the actual event handlers
 jQuery ->
@@ -144,3 +157,13 @@ jQuery ->
       # Make sure we're not on the blank option
       if $school_option_value.length and $district_option_value.length
         LumosApi.GetCampaigns($district_option_value, $school_option_value)
+
+  # Bind the Public campaign search form Campaigns dropdown
+  $("form#campaign_search_form select#search_campaignable").change ->
+    $campaign_option = $(this).find("option:selected")
+
+    if $campaign_option
+      $campaign_option_value = $campaign_option.val()
+      if $campaign_option_value.length
+        # Do the call
+        LumosApi.RedirectToCampaign($campaign_option_value)

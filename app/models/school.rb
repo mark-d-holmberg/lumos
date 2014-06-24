@@ -5,7 +5,7 @@ class School < ActiveRecord::Base
   has_one :state, through: :district
 
   has_many :teachers
-  has_many :campaigns, -> { where(school_wide: false) }
+  has_many :campaigns # This is an actual 1->1 non-polymorphic relation, for Teacher Based campaigns
   has_many :school_wide_campaigns, -> { where(school_wide: true) }, as: :campaignable, class_name: 'Campaign'
 
   sorty on: [:name, :created_at, :updated_at],
