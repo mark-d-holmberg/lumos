@@ -1,3 +1,7 @@
 - title @campaign.name
 
 This is the campaign landing page
+
+%ul
+  %li= link_to 'Reports', reports_campaign_path(@campaign.to_param)
+  %li= link_to 'Contributions', contributions_campaign_path(@campaign.to_param)

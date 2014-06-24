@@ -41,7 +41,13 @@ Rails.application.routes.draw do
 
   # The frontend
   constraints(subdomain: /landing/) do
-    resources :campaigns, only: [:show], param: 'slug', as: :campaign_landing
+    resources :campaigns, only: [], param: 'slug' do
+      member do
+        match :show, via: [:get], as: :landing
+        match :reports, via: [:get]
+        match :contributions, via: [:get]
+      end
+    end
   end
 
   # You can have the root of your site routed with "root"
