@@ -53,4 +53,23 @@ RSpec.describe Product, type: :model do
     end
   end
 
+  describe "concerning relations" do
+    it "should have many campaigns" do
+      product = create(:product, name: 'Hammer')
+      campaign_1 = create(:campaign, product: product, school_wide: false)
+      campaign_2 = create(:school_based_campaign, product: product, school_wide: true)
+      expect(product.campaigns).to match_array([campaign_1, campaign_2])
+    end
+  end
+
+  describe "concerning ActiveRecord callbacks" do
+    it "should not be destroyable if it is active?" do
+      product = create(:product, name: "Hammer")
+      campaign = create(:campaign, product: product)
+      expect {
+        product.destroy
+      }.to_not change(Product, :count)
+    end
+  end
+
 end

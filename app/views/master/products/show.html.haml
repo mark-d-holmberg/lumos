@@ -39,4 +39,18 @@
         = simple_format @product.description
       #campaigns.tab-pane
         %h5.page-header Campaigns
-        TODO: show all the campaigns who want this product
+        = paginate @campaigns, param_name: "campaigns_page", params: { anchor: "campaigns" }
+        %table.table.table-striped.table-hover.table-condensed
+          %thead
+            %tr
+              %th= Campaign.human_attribute_name(:name)
+              %th= Campaign.human_attribute_name(:school)
+              %th= Campaign.human_attribute_name(:school_wide)
+              %th= Campaign.human_attribute_name(:active)
+          %tbody
+            - @campaigns.each do |campaign|
+              %tr
+                %td= link_to campaign.name, campaign
+                %td= link_to campaign.school.name, campaign.school
+                %td= campaign.school_wide? ? "Yes" : "No"
+                %td= campaign.active? ? "Yes" : "No"

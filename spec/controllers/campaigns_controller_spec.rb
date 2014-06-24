@@ -6,6 +6,7 @@ RSpec.describe CampaignsController, type: :controller do
     @district = create(:district, name: 'Washington County', state: @state)
     @school = create(:school, name: 'Snow Canyon', district: @district)
     @teacher = create(:teacher, first_name: 'Mark', last_name: 'Holmberg', school: @school)
+    @product = create(:product, name: 'Hammer')
   end
 
   # This should return the minimal set of attributes required to create a valid
@@ -16,6 +17,7 @@ RSpec.describe CampaignsController, type: :controller do
       state_id: @state.id,
       district_id: @district.id,
       school_id: @school.id,
+      product_id: @product.id,
       campaignable_id: @teacher.id,
       campaignable_type: 'Teacher',
       goal_amount_dollars: 1.00,

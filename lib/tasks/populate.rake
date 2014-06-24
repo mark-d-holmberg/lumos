@@ -86,6 +86,22 @@ namespace :populate do
     puts "...done!"
   end
 
+  # Product Generation
+  desc "Creates some sample products"
+  task :products, [:repeat] => [:environment] do |t, args|
+    args.with_defaults(repeat: '2')
+    puts "Generating sample products..."
+    args.repeat.to_i.times do |n|
+      # Create a new Product
+      product = Product.new(name: Faker::Company.catch_phrase, description: Faker::Lorem.paragraph, price_cents: rand(10000..100000))
+      if product.valid?
+        product.save!
+        puts "Created Product: #{product.name}"
+      end
+    end
+    puts "...done!"
+  end
+
   namespace :campaigns do
     # TODO: fix me to only create a single, active school based campaign
     # School-Wide campaigns
@@ -104,6 +120,7 @@ namespace :populate do
           state: school.district.state,
           district: school.district,
           school: school,
+          product: Product.all.sample,
           campaignable: school,
           campaignable_type: 'School',
           goal_amount_cents: rand(100..100000),
@@ -132,6 +149,7 @@ namespace :populate do
           state: teacher.school.district.state,
           district: teacher.school.district,
           school: teacher.school,
+          product: Product.all.sample,
           campaignable: teacher,
           campaignable_type: 'Teacher',
           goal_amount_cents: rand(100..10000),

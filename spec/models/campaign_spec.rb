@@ -35,6 +35,10 @@ RSpec.describe Campaign, type: :model do
       }.to raise_error(ActiveRecord::RecordInvalid)
     end
 
+    it "should require the product" do
+      expect(build(:campaign, product: nil)).to_not be_valid
+    end
+
     it "should require the campaignable" do
       expect(build(:campaign, campaignable: nil)).to_not be_valid
     end
@@ -188,6 +192,12 @@ RSpec.describe Campaign, type: :model do
       contribution_1 = create(:contribution, campaign: campaign)
       contribution_2 = create(:contribution, campaign: campaign)
       expect(campaign.contributions).to match_array([contribution_1, contribution_2])
+    end
+
+    it "should belong to a product" do
+      product = create(:product, name: 'Hammer')
+      campaign = create(:campaign, product: product)
+      expect(campaign.product).to eql(product)
     end
   end
 

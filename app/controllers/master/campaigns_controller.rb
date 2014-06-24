@@ -27,7 +27,7 @@ class Master::CampaignsController < MasterController
   end
 
   def show
-    @contributions = @campaign.contributions.ordered.page(params[:page])
+    @contributions = @campaign.contributions.ordered.page(params[:contributions_page])
   end
 
   def new
@@ -68,7 +68,18 @@ class Master::CampaignsController < MasterController
   end
 
   def safe_params
-    params.require(:campaign).permit(:name, :state_id, :district_id, :school_id, :campaignable_id, :campaignable_type, :active, :goal_amount_dollars)
+    safe_attributes = [
+      :active,
+      :campaignable_id,
+      :campaignable_type,
+      :district_id,
+      :goal_amount_dollars,
+      :name,
+      :product_id,
+      :school_id,
+      :state_id,
+    ]
+    params.require(:campaign).permit(safe_attributes)
   end
 
 end

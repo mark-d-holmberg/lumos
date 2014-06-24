@@ -6,6 +6,7 @@ class Campaign < ActiveRecord::Base
   belongs_to :state
   belongs_to :district
   belongs_to :school
+  belongs_to :product
   belongs_to :campaignable, polymorphic: true
   belongs_to :teacher, -> { where("campaigns.campaignable_type = 'Teacher'") }, foreign_key: 'campaignable_id'
 
@@ -18,7 +19,7 @@ class Campaign < ActiveRecord::Base
     references: {state: "name", district: "name", school: "name", teacher: 'last_name'}
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
-  validates :state, :district, :school, presence: true
+  validates :state, :district, :school, :product, presence: true
   validates :campaignable, presence: true
   validates :slug, uniqueness: { case_sensitive: false }
   validates :school_wide, inclusion: { in: [true, false] }

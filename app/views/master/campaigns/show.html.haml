@@ -6,15 +6,43 @@
     %span
       = link_to edit_campaign_path(@campaign), class: 'btn btn-warning btn-xs', title: "Edit Campaign" do
         %span.glyphicon.glyphicon-edit
-.row
-  .col-lg-4
+
+%ul.nav.nav-tabs
+  %li.active
+    = link_to '#general', data: {toggle: 'tab'} do
+      %span.glyphicon.glyphicon-file
+      General
+  %li
+    = link_to '#contributions', data: {toggle: 'tab'} do
+      %span.glyphicon.glyphicon-shopping-cart
+      Contributions
+
+.tab-content
+  #general.tab-pane.active
     %h5.page-header General Information
     %table.table.table-hover.table-striped.table-condensed
       %tbody
         %tr
           %th= Campaign.human_attribute_name(:name)
           %td= @campaign.name
+          %th= Campaign.human_attribute_name(:campaignable)
+          %td
+            - if @campaign.campaignable.present?
+              = link_to @campaign.campaignable.to_s, @campaign.campaignable
+            - else
+              N/A
         %tr
+          %th= Campaign.human_attribute_name(:product)
+          %td
+            - if @campaign.product.present?
+              = link_to @campaign.product.name, @campaign.product
+            - else
+              N/A
+          %th= Campaign.human_attribute_name(:goal_amount)
+          %td= humanized_money_with_symbol(@campaign.goal_amount.dollars, no_cents_if_whole: false)
+        %tr
+          %th= Campaign.human_attribute_name(:slug)
+          %td= link_to @campaign.slug, landing_campaign_url(@campaign.to_param, subdomain: 'landing')
           %th= Campaign.human_attribute_name(:state)
           %td
             - if @campaign.state.present?
@@ -28,7 +56,6 @@
               = link_to @campaign.district.name, @campaign.district
             - else
               N/A
-        %tr
           %th= Campaign.human_attribute_name(:school)
           %td
             - if @campaign.school.present?
@@ -36,33 +63,19 @@
             - else
               N/A
         %tr
-          %th= Campaign.human_attribute_name(:campaignable)
-          %td
-            - if @campaign.campaignable.present?
-              = link_to @campaign.campaignable.to_s, @campaign.campaignable
-            - else
-              N/A
-        %tr
-          %th= Campaign.human_attribute_name(:goal_amount)
-          %td= humanized_money_with_symbol(@campaign.goal_amount.dollars, no_cents_if_whole: false)
-        %tr
-          %th= Campaign.human_attribute_name(:slug)
-          %td= link_to @campaign.slug, landing_campaign_url(@campaign.to_param, subdomain: 'landing')
-        %tr
           %th= Campaign.human_attribute_name(:school_wide)
           %td= @campaign.school_wide? ? "Yes" : "No"
-        %tr
           %th= Campaign.human_attribute_name(:active)
           %td= @campaign.active? ? "Yes" : "No"
         %tr
           %th= Campaign.human_attribute_name(:created_at)
           %td= l(@campaign.created_at, format: :short)
-        %tr
           %th= Campaign.human_attribute_name(:updated_at)
           %td= l(@campaign.updated_at, format: :short)
-  .col-lg-8
+
+  #contributions.tab-pane
     %h5.page-header Contributions
-    = paginate @contributions
+    = paginate @contributions, param_name: "contributions_page", params: { anchor: "contributions" }
     %table.table.table-striped.table-hover.table-condensed
       %thead
         %tr

@@ -2,11 +2,18 @@ class Master::ProductsController < MasterController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
   def index
-    @products = Product.ordered
+    @products = Product.all
+    @products = @products.search(params[:search][:query]) if params[:search].try(:[], :query).present?
+    if params[:search].try(:[], :sorty).present?
+      @products = @products.sorty_order(sort_column, sort_direction)
+    else
+      @products = @products.ordered
+    end
     @products = @products.page(params[:page])
   end
 
   def show
+    @campaigns = @product.campaigns.ordered.page(params[:campaigns_page])
   end
 
   def new

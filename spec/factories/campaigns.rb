@@ -9,6 +9,7 @@ FactoryGirl.define do
     active true
     goal_amount 1
     goal_amount_dollars nil
+    product { |k| k.association(:product) }
   end
 
   # School based campaign

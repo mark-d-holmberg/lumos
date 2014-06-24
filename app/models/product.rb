@@ -2,8 +2,12 @@ class Product < ActiveRecord::Base
 
   include Dollars
 
+  has_many :campaigns
+
   monetize :price_cents
   has_dollar_field :price
+
+  sorty on: [:name, :price_cents, :created_at, :updated_at]
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :description, presence: true
@@ -11,6 +15,23 @@ class Product < ActiveRecord::Base
 
   scope :ordered, -> { order("products.name ASC") }
 
-  # TODO: Don't let products associated with campaigns get deleted!
+  before_destroy :avert_destruction
+
+
+  def self.search(query)
+    t = arel_table
+    conditions = t[:name].matches("%#{query}%")
+    where(conditions)
+  end
+
+
+  private
+
+  def avert_destruction
+    if campaigns.present?
+      self.errors.add(:base, "cannot remove a Product with associated Campaigns")
+      false
+    end
+  end
 
 end

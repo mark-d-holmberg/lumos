@@ -22,7 +22,7 @@ en:
         goal_amount_dollars: 'Goal Amount (USD)'
         name: 'Name'
         school: 'School'
-        school_wide: 'School Wide'
+        school_wide: 'School Based'
         slug: 'Slug'
         state: 'State'
         teacher: 'Teacher'
