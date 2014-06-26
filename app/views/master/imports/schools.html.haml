@@ -1,0 +1,19 @@
+- title "Import School Data"
+
+%h5.page-header Sample
+%pre.prettyprint
+  :preserve
+    # School Name, State, School Proper Name, District
+    Snow Canyon High School, UT, Snow Canyon High School, Washington County School District
+
+%h5.page-header Upload File
+= simple_form_for :imports, url: schools_imports_url, method: :post, html: { multipart: true } do |f|
+  = f.error_notification
+
+  = f.input :file, as: :file, label: 'CSV Data File'
+
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.button :submit, 'Upload CSV File', class: 'btn btn-primary'
+      = link_to 'Cancel', master_root_path, class: 'btn btn-link'
+

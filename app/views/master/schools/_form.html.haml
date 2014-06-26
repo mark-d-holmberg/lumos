@@ -2,7 +2,7 @@
   = f.error_notification
 
   = f.input :name
-  = f.association :district, include_blank: false
+  = f.association :district, include_blank: false, collection: District.ordered
 
   .form-group
     .col-sm-offset-2.col-sm-10

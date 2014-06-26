@@ -30,6 +30,13 @@ Rails.application.routes.draw do
       resources :campaigns, param: 'slug'
       resources :products
 
+      # Importing data
+      resources :imports, only: [] do
+        collection do
+          match :schools, via: [:get, :post]
+        end
+      end
+
       # TODO: make this nested
       resources :contributors
       resources :contributions

@@ -21,6 +21,17 @@ RSpec.describe School, type: :model do
       expect(build(:school, name: 'Snow Canyon', district: district_1)).to_not be_valid
       expect(build(:school, name: 'Snow Canyon', district: district_2)).to be_valid
     end
+
+    it "should allow something" do
+      state = create(:state, name: 'New Mexico', abbr: 'NM')
+      district_1 = create(:district, name: 'ALBUQUERQUE PUBLIC SCHOOLS', state: state)
+      district_2 = create(:district, name: 'CLOVIS MUNICIPAL SCHOOLS', state: state)
+      create(:school, name: 'ZIA ELEMENTARY', district: district_1)
+      expect(build(:school, name: 'ZIA ELEMENTARY', district: district_1)).to_not be_valid
+      expect(build(:school, name: 'ZIA ELEMENTARY', district: district_2)).to be_valid
+      # ZIA ELEMENTARY,New Mexico,ZIA ELEMENTARY,ALBUQUERQUE PUBLIC SCHOOLS
+      # ZIA ELEMENTARY,New Mexico,ZIA ELEMENTARY,CLOVIS MUNICIPAL SCHOOLS
+    end
   end
 
   describe "concerning relations" do
