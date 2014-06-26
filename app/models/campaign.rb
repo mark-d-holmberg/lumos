@@ -39,9 +39,8 @@ class Campaign < ActiveRecord::Base
   scope :school_based, -> { where(school_wide: true) }
 
   before_create { |record| generate_token(:slug) if slug.nil? }
+  before_create :set_goal_amount
   before_destroy :avert_destruction
-
-  # TODO: have this copy the Product.price_cents into Campaign.goal_amount_cents
 
 
   def self.search(query)
@@ -102,6 +101,10 @@ class Campaign < ActiveRecord::Base
 
 
   private
+
+  def set_goal_amount
+    self.goal_amount_cents = self.product.price_cents
+  end
 
   def avert_destruction
     if active?

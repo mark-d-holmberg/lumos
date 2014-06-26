@@ -232,6 +232,14 @@ RSpec.describe Campaign, type: :model do
         campaign.destroy
       }.to_not change(Campaign, :count)
     end
+
+    it "should copy over the goal_amount_cents from the product" do
+      product = create(:product, price_dollars: 13.37)
+      campaign = build(:campaign, name: 'Campaign', product: product, goal_amount_cents: 1)
+      campaign.save
+      campaign.reload
+      expect(campaign.goal_amount.cents).to eql(1337)
+    end
   end
 
   describe "concerning scopes" do
@@ -262,7 +270,7 @@ RSpec.describe Campaign, type: :model do
     end
 
     it "can set the amount in dollars using goal_amount_dollars=" do
-      campaign = build(:campaign)
+      campaign = create(:campaign)
       campaign.goal_amount_dollars = 13.37
       campaign.save
       expect(campaign.goal_amount.dollars).to eq(13.37)
@@ -301,7 +309,8 @@ RSpec.describe Campaign, type: :model do
     end
 
     it "should allow active teacher based campaigns to be contributable? if they havent met their goal" do
-      campaign = create(:campaign, goal_amount_cents: 500, active: true)
+      product = create(:product, price_cents: 500)
+      campaign = create(:campaign, product: product, active: true)
       contribution_1 = create(:contribution, amount_cents: 100, campaign: campaign)
       expect(campaign.contributions.pluck(:amount_cents).sum).to eq(100)
       expect(campaign.contributable?).to eq(true)
