@@ -10,6 +10,11 @@ FactoryGirl.define do
     goal_amount 1
     goal_amount_dollars nil
     product { |k| k.association(:product) }
+    physical_address { Faker::Address.street_address }
+    physical_address_ext { Faker::Address.secondary_address}
+    physical_city { Faker::Address.city }
+    physical_state { Faker::Address.state }
+    physical_postal_code { Faker::Address.zip_code }
   end
 
   # School based campaign

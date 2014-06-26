@@ -21,6 +21,12 @@ en:
         goal_amount_cents: 'Goal Amount (cents)'
         goal_amount_dollars: 'Goal Amount (USD)'
         name: 'Name'
+        physical_address: "Address"
+        physical_address_ext: "Address Ext."
+        physical_city: "City"
+        physical_postal_code: "ZIP Code"
+        physical_state: "State"
+        product: 'Product'
         school: 'School'
         school_wide: 'School Based'
         slug: 'Slug'

@@ -84,6 +84,12 @@ RSpec.describe Campaign, type: :model do
       expect(build(:campaign, slug: '12345')).to_not be_valid
     end
 
+    it "should require the physical address fields" do
+      [:physical_address, :physical_address_ext, :physical_city, :physical_state, :physical_postal_code].each do |attribute|
+        expect(build(:campaign, "#{attribute}" => nil)).to_not be_valid
+      end
+    end
+
     it "should validate that the district is associated with the proper state" do
       utah = create(:state, name: 'Utah', abbr: 'UT')
       nevada = create(:state, name: 'Nevada', abbr: 'NV')

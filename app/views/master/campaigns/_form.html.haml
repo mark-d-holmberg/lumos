@@ -3,9 +3,14 @@
 
   = f.input :name
   = f.association :state, include_blank: false
-  = f.association :district, include_blank: false
-  = f.association :school, include_blank: false
+  = f.association :district, include_blank: false, collection: @campaign.new_record? ? District.ordered : @campaign.state.districts.ordered
+  = f.association :school, include_blank: false, collection: @campaign.new_record? ? School.all : @campaign.school.district.schools.ordered
   = f.association :product, include_blank: false
+  = f.input :physical_address
+  = f.input :physical_address_ext
+  = f.input :physical_city
+  = f.input :physical_state
+  = f.input :physical_postal_code
   = f.input :school_wide, as: :select, include_blank: false
   = f.input :campaignable, as: :select, include_blank: false, collection: Teacher.ordered
   = f.input :campaignable_type, as: :select, include_blank: false, collection: Campaign.campaignable_types

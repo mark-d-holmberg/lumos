@@ -124,6 +124,11 @@ namespace :populate do
           campaignable: school,
           campaignable_type: 'School',
           goal_amount_cents: rand(100..100000),
+          physical_address: Faker::Address.street_address,
+          physical_address_ext: Faker::Address.secondary_addres,
+          physical_city: Faker::Address.city,
+          physical_state: Faker::Address.state,
+          physical_postal_code: Faker::Address.zip_code,
         })
         if campaign.valid?
           campaign.save!
@@ -141,7 +146,6 @@ namespace :populate do
       args.repeat.to_i.times do |n|
         # Randomly pick a school
         teacher = Teacher.all.sample
-
         campaign = Campaign.new({
           name: "#{Faker::Company.catch_phrase} Campaign",
           school_wide: false,
@@ -153,6 +157,11 @@ namespace :populate do
           campaignable: teacher,
           campaignable_type: 'Teacher',
           goal_amount_cents: rand(100..10000),
+          physical_address: Faker::Address.street_address,
+          physical_address_ext: Faker::Address.secondary_addres,
+          physical_city: Faker::Address.city,
+          physical_state: Faker::Address.state,
+          physical_postal_code: Faker::Address.zip_code,
         })
         if campaign.valid?
           campaign.save!

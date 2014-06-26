@@ -78,6 +78,11 @@ class Master::CampaignsController < MasterController
       :product_id,
       :school_id,
       :state_id,
+      :physical_address,
+      :physical_address_ext,
+      :physical_city,
+      :physical_state,
+      :physical_postal_code,
     ]
     params.require(:campaign).permit(safe_attributes)
   end
