@@ -1,0 +1,20 @@
+= simple_form_for @campaign, html: { id: 'landing_new_campaign_form' } do |f|
+  = f.error_notification
+
+  = f.input :name
+  = f.association :state, collection: State.ordered.map { |k| [k.name, k.id, {data: {abbr: k.abbr}}] }, include_blank: 'Select a State', input_html: {data: {url: api_v1_districts_url}}
+  = f.association :district, include_blank: 'Select a District', collection: [], disabled: true, input_html: { data: {url: api_v1_district_schools_url(district_id: ':district_id')} }
+  = f.association :school, include_blank: 'Select a School', collection: [], disabled: true
+  = f.input :campaignable_type, as: :select, include_blank: false, collection: Campaign.campaignable_types
+  = f.input :campaignable, as: :select, include_blank: false, collection: []
+  = f.association :product, include_blank: false, collection: Product.all.map { |k| [k.pretty_name, k.id] }
+  = f.input :physical_address
+  = f.input :physical_address_ext
+  = f.input :physical_city
+  = f.input :physical_state
+  = f.input :physical_postal_code
+
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.button :submit, class: 'btn btn-primary'
+

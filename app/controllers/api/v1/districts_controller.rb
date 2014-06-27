@@ -3,12 +3,14 @@ class Api::V1::DistrictsController < ApiController
   respond_to :json
 
   def index
-    @districts = District.with_schools.ordered
+    @districts = District.ordered
+
+    if params.try(:[], :scoped).present?
+      @districts = @districts.with_schools
+    end
 
     # Limit them by the state
-    if params.try(:[], :state_abbr).present?
-      @districts = @districts.with_state(params[:state_abbr])
-    end
+    @districts = @districts.with_state(params[:state_abbr]) if params.try(:[], :state_abbr).present?
 
     respond_to do |format|
       format.html { render text: "Format not supported!" }

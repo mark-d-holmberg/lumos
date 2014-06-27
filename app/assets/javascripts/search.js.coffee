@@ -28,6 +28,7 @@ LumosApi =
       url: $districts_api_url
       data:
         state_abbr: state_abbr,
+        scoped: true,
       dataType: "json"
       success: (data) ->
         # If we have data, then loop over it and put it in the form
@@ -57,6 +58,8 @@ LumosApi =
     $request = $.ajax
       type: "GET"
       url: $schools_api_url
+      data:
+        scoped: true
       dataType: "json"
       success: (data) ->
         # If we have data, then loop over it and put it in the form
