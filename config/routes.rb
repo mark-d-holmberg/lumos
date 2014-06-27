@@ -53,6 +53,10 @@ Rails.application.routes.draw do
   # The frontend
   constraints(subdomain: /landing/) do
     resources :campaigns, only: [], param: 'slug' do
+      collection do
+        match :new, via: [:get], as: :landing_new, path: 'new'
+        match :create, via: [:post]
+      end
       member do
         match :show, via: [:get], as: :landing
         match :partner, via: [:get]

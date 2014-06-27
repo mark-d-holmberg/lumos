@@ -4,7 +4,12 @@ class Api::V1::SchoolsController < ApiController
   respond_to :json
 
   def index
-    @schools = @district.schools.with_campaigns.ordered
+    @schools = @district.schools.ordered
+
+    # Scope this
+    if params.try(:[], :scoped).present?
+      @schools = @schools.with_campaigns
+    end
 
     respond_to do |format|
       format.html { render text: "Format not supported!" }

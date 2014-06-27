@@ -24,6 +24,10 @@ class Product < ActiveRecord::Base
     where(conditions)
   end
 
+  def pretty_name
+    [name, price.to_s].join(" $")
+  end
+
 
   private
 

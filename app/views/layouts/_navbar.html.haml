@@ -3,6 +3,6 @@
     %li{class: is_active_link?(root_path, :exclusive) ? 'active' : nil}
       = active_link_to root_path, active: ["public"] do
         %span.glyphicon.glyphicon-search
-    %li
-      = link_to '#', title: 'New Campaign' do
+    %li{class: is_active_link?(landing_new_campaigns_path, :exclusive) ? 'active' : nil}
+      = link_to landing_new_campaigns_url(subdomain: 'landing'), title: 'New Campaign' do
         %span.glyphicon.glyphicon-plus

@@ -4,6 +4,14 @@ RSpec.describe CampaignsController, type: :routing do
   describe "routing" do
     let(:url) { "http://landing.lvh.me" }
 
+    it "routes to #new" do
+      expect(get: "#{url}/campaigns/new").to route_to("campaigns#new")
+    end
+
+    it "routes to #create" do
+      expect(post: "#{url}/campaigns").to route_to("campaigns#create")
+    end
+
     it "routes to #show" do
       expect(get: "#{url}/campaigns/12345abc").to route_to("campaigns#show", slug: "12345abc")
     end
