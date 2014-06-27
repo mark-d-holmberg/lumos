@@ -54,4 +54,12 @@ RSpec.describe CampaignsController, type: :controller do
     end
   end
 
+  describe "GET partner" do
+    it "assigns the requested campaign as @campaign" do
+      campaign = Campaign.create! valid_attributes
+      get :partner, {slug: campaign.slug}, valid_session
+      expect(assigns(:campaign)).to eq(campaign)
+    end
+  end
+
 end

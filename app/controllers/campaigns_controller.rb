@@ -12,6 +12,9 @@ class CampaignsController < ApplicationController
     @contributions = @campaign.contributions.ordered.page(params[:page])
   end
 
+  def partner
+  end
+
 
   private
 
