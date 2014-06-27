@@ -73,6 +73,40 @@ body { font-family: 'Abel', sans-serif; font-size: 18px; }
 .c-main {
 	padding-bottom: 200px;
 }
+.btn-primary {
+	background-color: #19BE02;
+	border: 0;
+}
+.btn-primary:hover {
+	background-color: #16A202;
+	border: 0;
+}
+.p-info {
+	margin: 50px auto;	
+	padding: 0 30px;
+	text-align: center;
+}
+.p-info p, .p-info ul {
+	text-align: left;
+	color: #838383;
+}
+.heavy {
+	display: block;
+	margin-bottom: 14px;
+	font-size: 22px;
+	font-weight: bold;
+	color: #000;
+}
+.heavy2 {
+	display: block;
+	margin-bottom: 14px;
+	font-size: 28px;
+	font-weight: bold;
+	color: #000;
+}
+.img-bg {
+	width: 80%;
+}
 footer {
 	background: #91a0a7;
 	padding: 20px 0 10px 0;
