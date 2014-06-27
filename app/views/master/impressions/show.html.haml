@@ -1,0 +1,16 @@
+- title "Impression"
+
+= link_to 'Edit', edit_campaign_impression_path(@impression.campaign, @impression)
+
+%p
+  %b Campaign:
+  = link_to @impression.campaign.name, @impression.campaign
+%p
+  %b Email:
+  = mail_to @impression.email
+%p
+  %b Referral kind:
+  = @impression.referral_kind
+%p
+  %b Token:
+  = @impression.token

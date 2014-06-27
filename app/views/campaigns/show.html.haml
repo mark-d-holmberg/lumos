@@ -6,14 +6,14 @@
   %li= link_to 'Reports', reports_campaign_path(@campaign.to_param)
   %li= link_to 'Contributions', contributions_campaign_path(@campaign.to_param)
   %li= link_to 'Partner', partner_campaign_path(@campaign.to_param)
-
+  %li= link_to 'Thank You', thank_you_campaign_path(@campaign.to_param)
 
 %h5.page-header Contribute
-= simple_form_for :impressions, url: '#', method: :post do |f|
+= simple_form_for :impression, url: campaign_landing_impressions_url(@campaign.to_param), method: :post do |f|
   = f.error_notification
 
   = f.input :email, as: :string
-  = f.input :campaign, as: :hidden, input_html: { value: @campaign.slug }
+  = f.input :referral_kind, as: :hidden, input_html: { value: params.try(:[], :synd) }
 
   .form-group
     .col-sm-offset-2.col-sm-10

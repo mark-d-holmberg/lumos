@@ -15,10 +15,4 @@ RSpec.describe Master::ImportsController, type: :controller do
     end
   end
 
-  describe "POST schools" do
-    it "doesn't work yet" do
-      skip
-    end
-  end
-
 end

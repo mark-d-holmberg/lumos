@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140626224632) do
+ActiveRecord::Schema.define(version: 20140627161745) do
 
   create_table "campaigns", force: true do |t|
     t.string   "name"
@@ -71,6 +71,17 @@ ActiveRecord::Schema.define(version: 20140626224632) do
   end
 
   add_index "districts", ["state_id"], name: "index_districts_on_state_id", using: :btree
+
+  create_table "impressions", force: true do |t|
+    t.string   "email"
+    t.integer  "campaign_id"
+    t.string   "referral_kind"
+    t.string   "token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "impressions", ["campaign_id"], name: "index_impressions_on_campaign_id", using: :btree
 
   create_table "products", force: true do |t|
     t.string   "name"

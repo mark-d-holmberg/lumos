@@ -205,6 +205,13 @@ RSpec.describe Campaign, type: :model do
       campaign = create(:campaign, product: product)
       expect(campaign.product).to eql(product)
     end
+
+    it "should have many impressions" do
+      campaign = create(:campaign)
+      impression_1 = create(:impression, campaign: campaign)
+      impression_2 = create(:impression, campaign: campaign)
+      expect(campaign.impressions).to match_array([impression_1, impression_2])
+    end
   end
 
   describe "concerning instance methods" do

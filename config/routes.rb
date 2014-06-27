@@ -30,7 +30,9 @@ Rails.application.routes.draw do
       resources :districts
       resources :schools
       resources :teachers
-      resources :campaigns, param: 'slug'
+      resources :campaigns, param: 'slug' do
+        resources :impressions
+      end
 
       # Importing data
       resources :imports, only: [] do
@@ -56,7 +58,9 @@ Rails.application.routes.draw do
         match :partner, via: [:get]
         match :reports, via: [:get]
         match :contributions, via: [:get]
+        match :thank_you, via: [:get, :post]
       end
+      resources :impressions, only: [:create], as: :landing_impressions
     end
   end
 

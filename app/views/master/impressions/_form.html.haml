@@ -1,0 +1,13 @@
+= simple_form_for([@campaign, @impression]) do |f|
+  = f.error_notification
+
+  = f.input :email
+  - if @impression.new_record?
+    = f.association :campaign, include_blank: false
+  = f.input :referral_kind
+  = f.input :token
+
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.button :submit, class: 'btn btn-primary'
+      /= link_to 'Cancel', campaign_impressions_path(@campaign.to_param), class: 'btn btn-link'

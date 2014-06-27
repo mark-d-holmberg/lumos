@@ -1,0 +1,8 @@
+- title "Thank You"
+
+Thank you for contributing.
+
+Would you like to contribute to a new campaign?
+
+- if current_impression
+  = link_to 'Clear', thank_you_campaign_url(@campaign.to_param, subdomain: 'landing'), method: :post

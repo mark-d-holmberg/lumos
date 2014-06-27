@@ -1,0 +1,32 @@
+- title "Campaign #{@campaign.name} - Impressions"
+
+- content_for(:toolbar) do
+  = link_to new_campaign_impression_path(@campaign.to_param), title: "New Impression", class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+
+= paginate @impressions
+
+%table.table.table-striped.table-hover.table-condensed
+  %thead
+    %tr
+      %th Campaign
+      %th Email
+      %th Referral kind
+      %th Token
+      %th
+      %th
+  %tbody
+    - @impressions.each do |impression|
+      %tr
+        %td= link_to impression.campaign.name, [impression.campaign, impression]
+        %td= mail_to impression.email
+        %td= impression.referral_kind
+        %td= impression.token
+        %td
+          = link_to edit_campaign_impression_path(impression.campaign, impression), class: 'btn btn-warning btn-xs', title: 'Edit Impression' do
+            %span.glyphicon.glyphicon-edit
+        %td
+          = link_to [impression.campaign, impression], method: :delete, data: { confirm: 'Are you sure?' }, id: "impression_destroy_#{impression.id}", title: "Remove Impression", class: 'btn btn-danger btn-xs' do
+            %span.glyphicon.glyphicon-remove
+
+= paginate @impressions

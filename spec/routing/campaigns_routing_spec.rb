@@ -20,5 +20,9 @@ RSpec.describe CampaignsController, type: :routing do
       expect(get: "#{url}/campaigns/12345abc/partner").to route_to("campaigns#partner", slug: "12345abc")
     end
 
+    it "routes to #thank_you" do
+      expect(get: "#{url}/campaigns/12345abc/thank_you").to route_to("campaigns#thank_you", slug: "12345abc")
+    end
+
   end
 end

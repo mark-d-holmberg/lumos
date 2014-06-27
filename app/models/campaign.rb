@@ -11,6 +11,7 @@ class Campaign < ActiveRecord::Base
   belongs_to :teacher, -> { where("campaigns.campaignable_type = 'Teacher'") }, foreign_key: 'campaignable_id'
 
   has_many :contributions
+  has_many :impressions
 
   monetize :goal_amount_cents
   has_dollar_field :goal_amount

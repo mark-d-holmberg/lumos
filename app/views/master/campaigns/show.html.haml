@@ -16,6 +16,10 @@
     = link_to '#contributions', data: {toggle: 'tab'} do
       %span.glyphicon.glyphicon-shopping-cart
       Contributions
+  %li
+    = link_to campaign_impressions_path(@campaign.to_param) do
+      %span.glyphicon.glyphicon-question-sign
+      Impressions
 
 .tab-content
   #general.tab-pane.active

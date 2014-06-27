@@ -15,6 +15,16 @@ class CampaignsController < ApplicationController
   def partner
   end
 
+  def thank_you
+    if request.post?
+      # Clear your crap here
+      cookies.delete(:impression_token)
+      redirect_to landing_campaign_path(@campaign.to_param, subdomain: 'landing')
+    else
+      # GET stuff here
+    end
+  end
+
 
   private
 
