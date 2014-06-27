@@ -1,6 +1,8 @@
 - title @campaign.name
 
-= image_tag(Gchart.pie_3d(data: [5,95], slice_colors: '0000FF,FF0000', title: 'Information Provided vs. Code Expected', size: '400x200', labels: ['Provided', 'Expected']))
+.container
+  .col-lg-6
+    = image_tag(Gchart.pie_3d(data: [5,95], slice_colors: '00d6ea,cfd0d0', title: 'Information Provided vs. Code Expected', size: '400x200', labels: ['Provided', 'Expected']))
 
 %ul
   %li= link_to 'Reports', reports_campaign_path(@campaign.to_param)

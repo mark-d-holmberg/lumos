@@ -16,3 +16,82 @@
  */
 
 @import "bootstrap";
+
+.logo-main {
+float: left;
+margin: 12px 0 4px 0;
+font-size: 18px;
+line-height: 20px;
+height: 55px;
+width: 200px;
+display: block;
+background: asset-url('sprite-home.png') 0 0 no-repeat;
+}
+.navbar-brand {
+margin: 10px 10px 0px 45px;
+}
+@media (min-width: 768px) {
+	.navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
+		margin-left: 45px;
+	}
+}
+body { font-family: 'Abel', sans-serif; font-size: 18px; }
+.navbar-default .navbar-nav > li > a {
+	padding: 24px;
+	font-size: 20px;
+}
+
+footer {
+	background: #91a0a7;
+	padding: 20px 0 10px 0;
+	margin-top: 60px;
+	position: absolute;
+	width: 100%;
+	bottom: 0px;
+	}
+footer .navbar-nav {
+	margin-top: 0px;
+	}
+footer .navbar-nav>li>a {
+color: #fff;
+}
+footer .navbar-nav>li>a:hover {
+color: #666565;
+background-color: transparent;
+}
+.footer-social {
+	margin: 0px;
+	}
+.footer-social ul>li {
+float: left;
+padding: 0px;
+display: block;
+}
+.footer-social ul>li>a {
+background-image: asset-url('sprite-home.png') 0 0 no-repeat;
+background-repeat: none;
+background-color: transparent;
+color: #fff;
+opacity: 0.5;
+display: block;
+width: 40px;
+height: 40px;
+}
+.footer-social ul>li>a:hover { opacity: 1; }
+.f-facebook { background-position: -3px -356px; }
+.f-linkedin { background-position: -43px -356px; }
+.f-pinterest { background-position: -83px -356px; }
+.f-plus { background-position: -123px -356px; }
+.f-twitter { background-position: -163px -356px; }
+.footer-logo {
+height: 55px;
+width: 200px;
+margin: 16px 0 10px 0;
+display: inline-block;
+background: asset-url('sprite-home.png') no-repeat 0 -72px;
+}
+.footer-copy {
+    color: #cdd8dd;
+	font-size: 14px;
+    }
+.footer-info { text-align: right; }
