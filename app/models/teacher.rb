@@ -53,6 +53,24 @@ class Teacher < ActiveRecord::Base
     full_name
   end
 
+  def active_campaign_permalink
+    active_campaign = campaigns.active.first
+    if active_campaign.present?
+      active_campaign.permalink
+    end
+  end
+
+
+  def as_json(options)
+    {
+      id: id,
+      prestigious_name: prestigious_name,
+      email: email,
+      school_id: school_id,
+      permalink: active_campaign_permalink,
+    }
+  end
+
 
   private
 

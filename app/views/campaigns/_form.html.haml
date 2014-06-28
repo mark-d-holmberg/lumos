@@ -1,12 +1,19 @@
 = simple_form_for @campaign, html: { id: 'landing_new_campaign_form' } do |f|
   = f.error_notification
 
-  = f.input :name
   = f.association :state, collection: State.ordered.map { |k| [k.name, k.id, {data: {abbr: k.abbr}}] }, include_blank: 'Select a State', input_html: {data: {url: api_v1_districts_url}}
   = f.association :district, include_blank: 'Select a District', collection: [], disabled: true, input_html: { data: {url: api_v1_district_schools_url(district_id: ':district_id')} }
-  = f.association :school, include_blank: 'Select a School', collection: [], disabled: true
-  = f.input :campaignable_type, as: :select, include_blank: false, collection: Campaign.campaignable_types
-  = f.input :campaignable, as: :select, include_blank: false, collection: []
+  = f.association :school, include_blank: 'Select a School', collection: [], disabled: true, input_html: { data: {url: api_v1_district_school_campaigns_url(district_id: ':district_id', school_id: ':school_id')} }
+  = f.input :campaignable_type, as: :select, include_blank: 'Select Campaign Type', collection: Campaign.campaignable_types, label: 'Campaign Type'
+
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = link_to new_school_teacher_path(school_id: ':school_id'), id: 'new_teacher_link', class: 'btn btn-link btn-xs', role: "button", data: {toggle: "modal", target: '#newCampaignModal', remote: true}, title: "Add New Teacher", disabled: true do
+        %span.glyphicon.glyphicon-plus
+        Add New Teacher
+
+  = f.input :campaignable_id, as: :select, include_blank: false, collection: [], disabled: true
+  = f.input :name, label: 'Campaign Name'
   = f.association :product, include_blank: false, collection: Product.all.map { |k| [k.pretty_name, k.id] }
   = f.input :physical_address
   = f.input :physical_address_ext
@@ -18,3 +25,11 @@
     .col-sm-offset-2.col-sm-10
       = f.button :submit, class: 'btn btn-primary'
 
+.modal.fade#newCampaignModal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} &times;
+        %h3.modal-title
+      .modal-body
+        %p

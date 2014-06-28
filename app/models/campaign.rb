@@ -100,6 +100,20 @@ class Campaign < ActiveRecord::Base
     Rails.application.routes.url_helpers.landing_campaign_url(self.slug, subdomain: "landing", host: default_host)
   end
 
+  def formatted_address
+    [[physical_city, physical_state].join(", "), physical_postal_code].join(" ")
+  end
+
+  def setup_campaign
+    # Dirty, DIRTY shortcut
+    self.goal_amount_cents = 1
+    if self.campaignable_type == 'Teacher'
+      self.school_wide = false
+    else
+      self.school_wide = true
+    end
+  end
+
 
   private
 

@@ -1,18 +1,11 @@
 - title @campaign.name
 
 .container
-  .row 
+  .row
     .col-lg-6
-      .c-name Mrs Gina Henderson
-      .c-location Washington, UT 84770
-      .c-location2 Washington Elementary
-
-      -# %ul
-        -# %li= link_to 'Reports', reports_campaign_path(@campaign.to_param)
-        -# %li= link_to 'Contributions', contributions_campaign_path(@campaign.to_param)
-        -# %li= link_to 'Partner', partner_campaign_path(@campaign.to_param)
-        -# %li= link_to 'Thank You', thank_you_campaign_path(@campaign.to_param)
-
+      .c-name= @campaign.campaignable.to_s
+      .c-location= @campaign.formatted_address
+      .c-location2= @campaign.school.to_s
 
       %h5.page-header Contribute
       = simple_form_for :impression, url: campaign_landing_impressions_url(@campaign.to_param), method: :post, html: { class: "inline-search-form form form-inline" }, wrapper: :inline do |f|
@@ -26,53 +19,54 @@
             = f.button :submit, 'Contribute', class: 'btn btn-primary'
 
     .col-lg-6.c-graphs
-      = image_tag(Gchart.pie_3d(data: [5,95], slice_colors: '00d6ea,cfd0d0', title: 'Information Provided vs. Code Expected', size: '400x200', labels: ['Provided', 'Expected']))
+      = image_tag(Gchart.pie_3d(data: [0,100], slice_colors: '00d6ea,cfd0d0', title: 'Goal vs. Raised', size: '400x200', labels: ['Raised', 'Goal']))
 
 .container.funds
   .row
-    .c-funds 
-      .c-funds-goal Goal: $400
-      .c-funds-raised Raised: $90
+    .c-funds
+      .c-funds-goal Goal: #{humanized_money_with_symbol(@campaign.goal_amount.dollars, no_cents_if_whole: false)}
+      .c-funds-raised Raised: $0
 
 .container.p-info
   .row
     .col-lg-6
       :plain
         <p>We understand that today’s classroom presents a unique challenge, with technology ranging from decades old projectors to highly sophisticated tablets and computers. Not to mention a confusing mass of wires and lack of simple connectivity between devices. That in itself presents a dilemma. Incorporating technology separated by decades of innovation can be frustratingly time consuming for even the most tech savvy teacher. Time most teachers just don’t have.</p>
-    .col-lg-6  
-      <img src="https://images.indiegogo.com/file_attachments/674131/files/20140625065839-01-meet-lumos-title.png?1403704719" style="width: 616.8000000000001px; height: 108px;">
-      <img class="img-bg" src="https://images.indiegogo.com/file_attachments/677027/files/20140626093304-SHOT-01.JPG?1403800384">
-      <img src="https://images.indiegogo.com/file_attachments/674134/files/20140625065923-03-overhead-projector-title.png?1403704763">
-      <p>With today's rapid evolution of technology and teaching methods you need more than just a simple whiteboard and overhead projector.  Our schools are trying to keep up with technology like media projectors, interactive whiteboards, modern Wi-Fi, and classroom audio systems.  Just when you think you've got it all figured out we throw in iPads, Android tablets, and Chromebooks into the mix.  At first, it's incredibly exciting, but that excitement soon wears off when you try to use all of these independent technologies together on a daily basis.  Our team at LUMOS has spent years working with technology in education and know firsthand that if you're not battling Wi-Fi, you're dealing with dead batteries in your microphone, lost remote controls, or trying to figure out which input you need or wire to plug in to display what you want.  Often times it seems like half the class is spent fiddling with the technology that is supposed to make your teaching more dynamic and impactful.  These frustrations led to the development of the SmartHub.</p>
-      <img class="img-bg" src="https://images.indiegogo.com/file_attachments/674135/files/20140625070024-04-enlighten-education.jpg?1403704824">
-      <p>To help get you back to teaching, we created a device to control all of the technology you use on a daily basis to instruct in your classroom. We then developed an app for Android and iOS  that allows you to control it at just the touch of a screen. So how does it work?</p>
-      <img src="https://images.indiegogo.com/file_attachments/674142/files/20140625070226-07-effortlessly-integrate.jpg?1403704946" style="width: 60%">
-      <p>From a teachers standpoint, it works great! Let me explain why... to start off, we know you have a stack of equipment needing to be projected to your screen. We've got you covered with 1 VGA and 2 HMDI inputs allowing you to connect both new and old devices to the SmartHub. Next we added a VGA and HDMI outputs so it can be connected to your existing projector, no matter how old it is. We followed that up by adding a dedicated Wi-Fi hotspot for the teacher so that no students or even teachers from other classrooms will bog down your connection. We've also included a sleek and modern wireless microphone and outputs for up to four speakers.  If you don't have speakers in your class already, don't worry, we can give you those too.  I know you're thinking "now that's all great and dandy.... but you said this thing was smart".  To control all of this wizardry we put in an Android operating system and built custom software allowing you to wirelessly mirror or extend you screen from any mobile device to the projector.  We figured it's 2014, you should be able to share your screen without having to plug in a cable!  Last but not least, we are developing an app giving you complete control of the system at the touch of a finger.  How much easier can it get then opening an app, selecting the device you want to display and then starting your lesson without having to think about it again?</p>
-      <img class="img-bg" src="https://images.indiegogo.com/file_attachments/674136/files/20140625070048-05-list.png?1403704848">
-      <img class="img-bg" src="https://images.indiegogo.com/file_attachments/674139/files/20140625070115-06-Technology-title.png?1403704875">
-      <p>In the hands of an engaged educator, technology is a tool that can open a window to a wealth of knowledge and opportunity. It creates a learning environment that can grab each students attention and open their eyes to the true power of technology. The power to develop more than just their hand-eye coordination. The solution is having the right formula of technology to create that experience.
-        <ul>
-          <li>Creates an interactive learning experience
-          <li>More opportunities for one-to-one teaching
-          <li>Introduces students to the modern, innovating world
-        </ul>
-      </p>
-      <img src="https://images.indiegogo.com/file_attachments/674147/files/20140625070311-09-lumos-simplifies.png?1403704991">
-      <p>LUMOS is an innovative and custom tailored hub for all the technology in a classroom. With LUMOS, less time will be wasted fixing simple issues, by creating an uncomplicated, effective classroom experience paired with simplicity, organization, and connectivity.</p>
-      <img src="https://images.indiegogo.com/file_attachments/674149/files/20140625070358-10-learn-more-link.png?1403705038">
-      <p>You may be wondering what your funds will be used for.  We plan on using every dollar pledged to place a SmartHub into the hands of a teacher in our nationwide crowdfunded pilot program.  Teachers are some of the brightest and most innovative people in the country, and we want their ideas and suggestions as we continue to develop the features and abilities of the SmartHub.  Teachers across the nation are being encouraged to set up micro campaigns on our website and then use the power of the crowd to get their friends, family, and fellow educators to help fund their micro campaign. You too can donate to a teacher's micro campaign at  <a href="https://www.indiegogo.com/projects/lumos-smarthub/www.golumos.com/fundateacher">www.golumos.com/fundateacher</a> or you can simply pledge and we will apply your donation to a teacher who tried but was unable to reach the needed amount to get a SmartHub. We all know that teachers are the unsung and underpaid heroes of our education system, so let's lend a hand and give them the tools they both need and deserve.  So help a teacher out and get some swag and fuzzy feelings for doing it.</p>
-      <img src="https://images.indiegogo.com/file_attachments/674152/files/20140625070427-11-perks-title.png?1403705067">
-      <p>The number one perk you will receive is the warm fuzzy feeling you get from knowing you are helping a students education. But here's the tangible stuff you get also:</p>
+    .col-lg-6
+      :plain
+        <img src="https://images.indiegogo.com/file_attachments/674131/files/20140625065839-01-meet-lumos-title.png?1403704719" style="width: 616.8000000000001px; height: 108px;">
+        <img class="img-bg" src="https://images.indiegogo.com/file_attachments/677027/files/20140626093304-SHOT-01.JPG?1403800384">
+        <img src="https://images.indiegogo.com/file_attachments/674134/files/20140625065923-03-overhead-projector-title.png?1403704763">
+        <p>With today's rapid evolution of technology and teaching methods you need more than just a simple whiteboard and overhead projector.  Our schools are trying to keep up with technology like media projectors, interactive whiteboards, modern Wi-Fi, and classroom audio systems.  Just when you think you've got it all figured out we throw in iPads, Android tablets, and Chromebooks into the mix.  At first, it's incredibly exciting, but that excitement soon wears off when you try to use all of these independent technologies together on a daily basis.  Our team at LUMOS has spent years working with technology in education and know firsthand that if you're not battling Wi-Fi, you're dealing with dead batteries in your microphone, lost remote controls, or trying to figure out which input you need or wire to plug in to display what you want.  Often times it seems like half the class is spent fiddling with the technology that is supposed to make your teaching more dynamic and impactful.  These frustrations led to the development of the SmartHub.</p>
+        <img class="img-bg" src="https://images.indiegogo.com/file_attachments/674135/files/20140625070024-04-enlighten-education.jpg?1403704824">
+        <p>To help get you back to teaching, we created a device to control all of the technology you use on a daily basis to instruct in your classroom. We then developed an app for Android and iOS  that allows you to control it at just the touch of a screen. So how does it work?</p>
+        <img src="https://images.indiegogo.com/file_attachments/674142/files/20140625070226-07-effortlessly-integrate.jpg?1403704946" style="width: 60%">
+        <p>From a teachers standpoint, it works great! Let me explain why... to start off, we know you have a stack of equipment needing to be projected to your screen. We've got you covered with 1 VGA and 2 HMDI inputs allowing you to connect both new and old devices to the SmartHub. Next we added a VGA and HDMI outputs so it can be connected to your existing projector, no matter how old it is. We followed that up by adding a dedicated Wi-Fi hotspot for the teacher so that no students or even teachers from other classrooms will bog down your connection. We've also included a sleek and modern wireless microphone and outputs for up to four speakers.  If you don't have speakers in your class already, don't worry, we can give you those too.  I know you're thinking "now that's all great and dandy.... but you said this thing was smart".  To control all of this wizardry we put in an Android operating system and built custom software allowing you to wirelessly mirror or extend you screen from any mobile device to the projector.  We figured it's 2014, you should be able to share your screen without having to plug in a cable!  Last but not least, we are developing an app giving you complete control of the system at the touch of a finger.  How much easier can it get then opening an app, selecting the device you want to display and then starting your lesson without having to think about it again?</p>
+        <img class="img-bg" src="https://images.indiegogo.com/file_attachments/674136/files/20140625070048-05-list.png?1403704848">
+        <img class="img-bg" src="https://images.indiegogo.com/file_attachments/674139/files/20140625070115-06-Technology-title.png?1403704875">
+        <p>In the hands of an engaged educator, technology is a tool that can open a window to a wealth of knowledge and opportunity. It creates a learning environment that can grab each students attention and open their eyes to the true power of technology. The power to develop more than just their hand-eye coordination. The solution is having the right formula of technology to create that experience.
+          <ul>
+            <li>Creates an interactive learning experience
+            <li>More opportunities for one-to-one teaching
+            <li>Introduces students to the modern, innovating world
+          </ul>
+        </p>
+        <img src="https://images.indiegogo.com/file_attachments/674147/files/20140625070311-09-lumos-simplifies.png?1403704991">
+        <p>LUMOS is an innovative and custom tailored hub for all the technology in a classroom. With LUMOS, less time will be wasted fixing simple issues, by creating an uncomplicated, effective classroom experience paired with simplicity, organization, and connectivity.</p>
+        <img src="https://images.indiegogo.com/file_attachments/674149/files/20140625070358-10-learn-more-link.png?1403705038">
+        <p>You may be wondering what your funds will be used for.  We plan on using every dollar pledged to place a SmartHub into the hands of a teacher in our nationwide crowdfunded pilot program.  Teachers are some of the brightest and most innovative people in the country, and we want their ideas and suggestions as we continue to develop the features and abilities of the SmartHub.  Teachers across the nation are being encouraged to set up micro campaigns on our website and then use the power of the crowd to get their friends, family, and fellow educators to help fund their micro campaign. You too can donate to a teacher's micro campaign at  <a href="https://www.indiegogo.com/projects/lumos-smarthub/www.golumos.com/fundateacher">www.golumos.com/fundateacher</a> or you can simply pledge and we will apply your donation to a teacher who tried but was unable to reach the needed amount to get a SmartHub. We all know that teachers are the unsung and underpaid heroes of our education system, so let's lend a hand and give them the tools they both need and deserve.  So help a teacher out and get some swag and fuzzy feelings for doing it.</p>
+        <img src="https://images.indiegogo.com/file_attachments/674152/files/20140625070427-11-perks-title.png?1403705067">
+        <p>The number one perk you will receive is the warm fuzzy feeling you get from knowing you are helping a students education. But here's the tangible stuff you get also:</p>
 
-      <p><span class="heavy">Insider: $10</span>You'll get the inside scoop on everything we do here at Lumos through Indiegogo and email updates. You'll get invites to the shows we attend, as well as be eligible for our random giveaways to our loyal followers.</p>
-      <p><span class="heavy">Stick To iT: $30</span>Since you ponied up more then our insider we are going to give you more. Not only will get what the insider does but you also get a sweet *top secret* bumper sticker to proudly show off. You may not get sneak peek now, but once you have it you'll know you did the right thing.</p>
-      <p><span class="heavy">Shout It Out: $50</span>Next level donating means a next level item. Obviously you're all about the SmartHub so we are going to help you shout it from the roof tops with this awesome shirt! Lets be honest, you've never seen a shirt this sweet.</p>
-      <img class="img-bg" src="https://images.indiegogo.com/file_attachments/674153/files/20140625070450-11-tshirts.jpg?1403705090">
-      <p><span class="heavy">Cap It All Off: $100</span>Hat's off to you!  This will go a long way to help a teacher you may or may not know receive a SmartHub for their classroom. For showing the love you will also receive a top secret item, the Lumos hat.</p>
-      <p><span class="heavy">You Deserve A Hug: $250</span>We all know that teachers are the underpaid and unsung heroes of our education system.  Your contribution will go a long way to help a teacher receive a SmartHub for their classroom. Don't worry though, we won't let you walk away empty handed, for your contribution you will also receive a Lumos T-Shirt, Hat, and Bumper Sticker!</p>
-      <p><span class="heavy">Early Bird: $400</span>You my friends are the early adopters!  Always on the hunt for the latest and greatest that technology has to offer.  Willing to sleep on a sidewalk for days for the opportunity to be among the first  to get your hands on technology's best.  For that, we salute you!  Not only will you get a SmartHub for a ridiculously low pledge, we will also give you a limited edition SmartHub Replica signed by the Lumos team.  Can we say "Heirloom in the making"?</p>
+        <p><span class="heavy">Insider: $10</span>You'll get the inside scoop on everything we do here at Lumos through Indiegogo and email updates. You'll get invites to the shows we attend, as well as be eligible for our random giveaways to our loyal followers.</p>
+        <p><span class="heavy">Stick To iT: $30</span>Since you ponied up more then our insider we are going to give you more. Not only will get what the insider does but you also get a sweet *top secret* bumper sticker to proudly show off. You may not get sneak peek now, but once you have it you'll know you did the right thing.</p>
+        <p><span class="heavy">Shout It Out: $50</span>Next level donating means a next level item. Obviously you're all about the SmartHub so we are going to help you shout it from the roof tops with this awesome shirt! Lets be honest, you've never seen a shirt this sweet.</p>
+        <img class="img-bg" src="https://images.indiegogo.com/file_attachments/674153/files/20140625070450-11-tshirts.jpg?1403705090">
+        <p><span class="heavy">Cap It All Off: $100</span>Hat's off to you!  This will go a long way to help a teacher you may or may not know receive a SmartHub for their classroom. For showing the love you will also receive a top secret item, the Lumos hat.</p>
+        <p><span class="heavy">You Deserve A Hug: $250</span>We all know that teachers are the underpaid and unsung heroes of our education system.  Your contribution will go a long way to help a teacher receive a SmartHub for their classroom. Don't worry though, we won't let you walk away empty handed, for your contribution you will also receive a Lumos T-Shirt, Hat, and Bumper Sticker!</p>
+        <p><span class="heavy">Early Bird: $400</span>You my friends are the early adopters!  Always on the hunt for the latest and greatest that technology has to offer.  Willing to sleep on a sidewalk for days for the opportunity to be among the first  to get your hands on technology's best.  For that, we salute you!  Not only will you get a SmartHub for a ridiculously low pledge, we will also give you a limited edition SmartHub Replica signed by the Lumos team.  Can we say "Heirloom in the making"?</p>
 
-      <p><span class="heavy">All The Rest Of The Perks: $500, $600 and $650</span></p>
-      <p>You're getting a full blown SmartHub! But there are limited quantities at each price point so don't waste time get one while the gettin's good. </p>
-      <p><span class="heavy2">Now go ahead and contribute, don't leave teachers hanging with a headache from their current technology.</p>
+        <p><span class="heavy">All The Rest Of The Perks: $500, $600 and $650</span></p>
+        <p>You're getting a full blown SmartHub! But there are limited quantities at each price point so don't waste time get one while the gettin's good. </p>
+        <p><span class="heavy2">Now go ahead and contribute, don't leave teachers hanging with a headache from their current technology.</p>
 

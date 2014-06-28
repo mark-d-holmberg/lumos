@@ -1,0 +1,8 @@
+<% if @teacher.valid? %>
+  $('form#new_teacher').remove();
+  $(".modal").modal('hide');
+  $("form#landing_new_campaign_form select#campaign_campaignable_id").append("<option value=\"<%= @teacher.id %>\"><%= @teacher.prestigious_name %></option>");
+<% else %>
+  $('form#new_teacher').replaceWith('<%= j render("form") %>');
+<% end %>
+$(".flash-message").html('<%= j render("shared/flash_messages") %>');

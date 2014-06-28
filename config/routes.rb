@@ -52,6 +52,11 @@ Rails.application.routes.draw do
 
   # The frontend
   constraints(subdomain: /landing/) do
+    # Creating new teachers on the fly
+    resources :schools, only: [] do
+      resources :teachers, only: [:new, :create]
+    end
+
     resources :campaigns, only: [], param: 'slug' do
       collection do
         match :new, via: [:get], as: :landing_new, path: 'new'

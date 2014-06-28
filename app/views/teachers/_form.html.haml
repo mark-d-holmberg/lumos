@@ -1,0 +1,12 @@
+= simple_form_for [@school, @teacher], url: school_teachers_path(@school), remote: true, wrapper: :modal, html: { id: 'new_teacher' } do |f|
+
+  = f.error_notification
+
+  = f.input :prefix, as: :select, collection: Teacher::SUPERIORITY_PREFIXES, include_blank: 'Select Prefix'
+  = f.input :first_name
+  = f.input :last_name
+  = f.input :email
+
+  .form-group
+    .col-sm-offset-3.col-sm-9
+      = f.button :submit, "Add New Teacher", class: 'btn btn-primary'

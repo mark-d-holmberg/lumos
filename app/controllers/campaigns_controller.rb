@@ -8,9 +8,7 @@ class CampaignsController < ApplicationController
 
   def create
     @campaign = Campaign.new(safe_params)
-
-    # Dirty, DIRTY shortcut
-    @campaign.goal_amount_cents = 1
+    @campaign.setup_campaign
 
     if @campaign.save
       redirect_to landing_campaign_url(@campaign.to_param, subdomain: 'landing'), notice: 'Campaign was successfully created.'
