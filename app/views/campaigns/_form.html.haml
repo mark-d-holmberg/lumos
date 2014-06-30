@@ -12,7 +12,7 @@
         %span.glyphicon.glyphicon-plus
         Add New Teacher
 
-  = f.input :campaignable_id, as: :select, include_blank: false, collection: [], disabled: true
+  = f.input :campaignable_id, as: :select, include_blank: 'Select a Teacher/School', collection: [], disabled: true, label: 'Select a Teacher/School'
   = f.input :name, label: 'Campaign Name'
   = f.association :product, include_blank: false, collection: Product.all.map { |k| [k.pretty_name, k.id] }
   = f.input :physical_address

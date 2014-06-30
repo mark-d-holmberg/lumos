@@ -11,7 +11,7 @@ LumosApi =
 
   ResetCampaigns: ->
     $campaign_element = $("form#landing_new_campaign_form select#campaign_campaignable_id")
-    $campaign_element.html('<option value="">Select a Campaignable</option>')
+    $campaign_element.html('<option value="">Select a Teacher/School</option>')
     $campaign_element.prop('disabled', true)
 
  # Do an AJAX request to get the list of districts for this state

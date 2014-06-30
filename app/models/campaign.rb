@@ -21,7 +21,7 @@ class Campaign < ActiveRecord::Base
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :state, :district, :school, :product, presence: true
-  validates :physical_address, :physical_address_ext, :physical_city, :physical_state, :physical_postal_code, presence: true
+  validates :physical_address, :physical_city, :physical_state, :physical_postal_code, presence: true
   validates :campaignable, presence: true
   validates :slug, uniqueness: { case_sensitive: false }
   validates :school_wide, inclusion: { in: [true, false] }

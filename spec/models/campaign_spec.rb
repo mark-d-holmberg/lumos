@@ -85,7 +85,7 @@ RSpec.describe Campaign, type: :model do
     end
 
     it "should require the physical address fields" do
-      [:physical_address, :physical_address_ext, :physical_city, :physical_state, :physical_postal_code].each do |attribute|
+      [:physical_address, :physical_city, :physical_state, :physical_postal_code].each do |attribute|
         expect(build(:campaign, "#{attribute}" => nil)).to_not be_valid
       end
     end
