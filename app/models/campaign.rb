@@ -100,6 +100,10 @@ class Campaign < ActiveRecord::Base
     Rails.application.routes.url_helpers.landing_campaign_url(self.slug, subdomain: "landing", host: default_host)
   end
 
+  def sharing_link
+    [permalink, "synd=social"].join("?")
+  end
+
   def formatted_address
     [[physical_city, physical_state].join(", "), physical_postal_code].join(" ")
   end

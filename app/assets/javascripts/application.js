@@ -16,4 +16,5 @@
 //= require bootstrap
 //= require bootstrap-datepicker
 //= require turbolinks
+//= require social-share-button
 //= require_tree .

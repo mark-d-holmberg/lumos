@@ -27,6 +27,8 @@
       .c-funds-goal Goal: #{humanized_money_with_symbol(@campaign.goal_amount.dollars, no_cents_if_whole: false)}
       .c-funds-raised Raised: $0
 
+= social_share_button_tag(@campaign.name, url: @campaign.sharing_link)
+
 .container.p-info
   .row
     .col-lg-6

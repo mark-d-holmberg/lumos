@@ -42,6 +42,7 @@ gem 'money-rails', git: 'https://github.com/RubyMoney/money-rails.git'
 gem 'bootstrap-datepicker-rails', require: 'bootstrap-datepicker-rails', git: 'git://github.com/Nerian/bootstrap-datepicker-rails.git'
 gem 'jquery-turbolinks'
 gem 'googlecharts', git: 'https://github.com/mattetti/googlecharts.git'
+gem 'social-share-button', git: 'https://github.com/huacnlee/social-share-button.git'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
