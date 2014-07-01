@@ -61,51 +61,11 @@ RSpec.describe Master::CampaignsController, type: :controller do
     end
   end
 
-  describe "GET new" do
-    it "assigns a new campaign as @campaign" do
-      get :new, {}, valid_session
-      expect(assigns(:campaign)).to be_a_new(Campaign)
-    end
-  end
-
   describe "GET edit" do
     it "assigns the requested campaign as @campaign" do
       campaign = Campaign.create! valid_attributes
       get :edit, {slug: campaign.to_param}, valid_session
       expect(assigns(:campaign)).to eq(campaign)
-    end
-  end
-
-  describe "POST create" do
-    describe "with valid params" do
-      it "creates a new Campaign" do
-        expect {
-          post :create, {campaign: valid_attributes}, valid_session
-        }.to change(Campaign, :count).by(1)
-      end
-
-      it "assigns a newly created campaign as @campaign" do
-        post :create, {campaign: valid_attributes}, valid_session
-        expect(assigns(:campaign)).to be_a(Campaign)
-        expect(assigns(:campaign)).to be_persisted
-      end
-
-      it "redirects to the created campaign" do
-        post :create, {campaign: valid_attributes}, valid_session
-        expect(response).to redirect_to(Campaign.last)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved campaign as @campaign" do
-        post :create, {campaign: invalid_attributes}, valid_session
-        expect(assigns(:campaign)).to be_a_new(Campaign)
-      end
-
-      it "re-renders the 'new' template" do
-        post :create, {campaign: invalid_attributes}, valid_session
-        expect(response).to render_template("new")
-      end
     end
   end
 

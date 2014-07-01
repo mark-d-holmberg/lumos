@@ -1,13 +1,12 @@
-= simple_form_for(@teacher) do |f|
+= simple_form_for [@school, @teacher] do |f|
   = f.error_notification
 
   = f.input :prefix, as: :select, collection: Teacher::SUPERIORITY_PREFIXES, include_blank: 'Select Prefix'
   = f.input :first_name
   = f.input :last_name
   = f.input :email
-  = f.association :school, include_blank: false, collection: @teacher.new_record? ? School.all : @teacher.school.district.schools.ordered
 
   .form-group
     .col-sm-offset-2.col-sm-10
       = f.button :submit, class: 'btn btn-primary'
-      = link_to 'Cancel', teachers_path, class: 'btn btn-link'
+      = link_to 'Cancel', @teacher.new_record? ? school_teachers_path(@school) : school_teacher_path(@school, @teacher), class: 'btn btn-link'

@@ -1,17 +1,37 @@
-- title "Schools"
+- title "#{@district.name} : Schools", false
 
-- content_for(:toolbar) do
-  = link_to new_school_path, title: "New School", class: 'btn btn-primary' do
-    %span.glyphicon.glyphicon-plus
-  = render "schools_search_filter"
+.page-header
+  %h3.sub-title.inline
+    #{@district.name} : Schools
+    %span
+      = link_to state_district_path(@district.state, @district, anchor: 'general'), class: 'btn btn-default btn-xs', title: "Back to #{@district.name}" do
+        %span.glyphicon.glyphicon-arrow-left
+
+%ul.nav.nav-tabs
+  %li
+    = link_to state_district_path(@district.state, @district, anchor: 'general') do
+      %span.glyphicon.glyphicon-file
+      General
+  %li.active
+    = link_to district_schools_path(@district) do
+      %span.glyphicon.glyphicon-bell
+      Schools (#{@schools.total_count})
+  %li
+    = link_to state_district_path(@district.state, @district, anchor: 'campaigns') do
+      %span.glyphicon.glyphicon-fire
+      All Campaigns (#{@campaigns.total_count})
 
 = paginate @schools
+
+%div#button-toolbar
+  = link_to new_district_school_path(@district), title: "New #{@district.name} School", class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+  = render "schools_search_filter"
 
 %table.table.table-striped.table-hover.table-condensed
   %thead
     %tr
       %th= sorty "name", School.human_attribute_name(:name), true
-      %th= sorty "district", School.human_attribute_name(:district)
       %th= sorty "created_at", School.human_attribute_name(:created_at)
       %th= sorty "updated_at", School.human_attribute_name(:updated_at)
       %th
@@ -19,19 +39,14 @@
   %tbody
     - @schools.each do |school|
       %tr
-        %td= link_to school.name, school
-        %td
-          - if school.district.present?
-            = link_to school.district.name, school.district
-          - else
-            N/A
+        %td= link_to school.name, [school.district, school]
         %td= l(school.created_at, format: :short)
         %td= l(school.updated_at, format: :short)
         %td
-          = link_to edit_school_path(school), class: 'btn btn-warning btn-xs', title: 'Edit School' do
+          = link_to edit_district_school_path(school.district, school), class: 'btn btn-warning btn-xs', title: 'Edit School' do
             %span.glyphicon.glyphicon-edit
         %td
-          = link_to school, method: :delete, data: { confirm: 'Are you sure?' }, id: "school_destroy_#{school.id}", title: "Remove School", class: 'btn btn-danger btn-xs' do
+          = link_to [school.district, school], method: :delete, data: { confirm: 'Are you sure?' }, id: "school_destroy_#{school.id}", title: "Remove School", class: 'btn btn-danger btn-xs' do
             %span.glyphicon.glyphicon-remove
 
 = paginate @schools

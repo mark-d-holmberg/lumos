@@ -1,11 +1,11 @@
-- title "Campaign : #{@campaign.name}", false
+- title @campaign.name, false
 
 .page-header
   %h3.sub-title.inline
-    Campaign : #{@campaign.name}
+    = @campaign.name
     %span
-      = link_to edit_campaign_path(@campaign), class: 'btn btn-warning btn-xs', title: "Edit Campaign" do
-        %span.glyphicon.glyphicon-edit
+      = link_to campaigns_path(@campaign), class: 'btn btn-default btn-xs', title: "Back to All Campaigns" do
+        %span.glyphicon.glyphicon-arrow-left
 
 %ul.nav.nav-tabs
   %li.active
@@ -18,21 +18,23 @@
       Contributions
   %li
     = link_to campaign_impressions_path(@campaign.to_param) do
-      %span.glyphicon.glyphicon-question-sign
+      %span.glyphicon.glyphicon-map-marker
       Impressions
 
 .tab-content
   #general.tab-pane.active
-    %h5.page-header General Information
     %table.table.table-hover.table-striped.table-condensed
       %tbody
         %tr
           %th= Campaign.human_attribute_name(:name)
           %td= @campaign.name
-          %th= Campaign.human_attribute_name(:campaignable)
+          %th= @campaign.school_wide? ? 'Campaign School' : 'Campaign Teacher'
           %td
             - if @campaign.campaignable.present?
-              = link_to @campaign.campaignable.to_s, @campaign.campaignable
+              - if @campaign.school_wide?
+                = link_to @campaign.campaignable.to_s, [@campaign.campaignable.district, @campaign.campaignable]
+              - else
+                = link_to @campaign.campaignable.to_s, [@campaign.campaignable.school, @campaign.campaignable]
             - else
               N/A
         %tr
@@ -57,13 +59,13 @@
           %th= Campaign.human_attribute_name(:district)
           %td
             - if @campaign.district.present?
-              = link_to @campaign.district.name, @campaign.district
+              = link_to @campaign.district.name, [@campaign.district.state, @campaign.district]
             - else
               N/A
           %th= Campaign.human_attribute_name(:school)
           %td
             - if @campaign.school.present?
-              = link_to @campaign.school.name, @campaign.school
+              = link_to @campaign.school.name, [@campaign.school.district, @campaign.school]
             - else
               N/A
         %tr
@@ -84,8 +86,12 @@
         %tr
           %th= Campaign.human_attribute_name(:physical_postal_code)
           %td= @campaign.physical_postal_code
-          %th
+          %th Actions
           %td
+            %span
+              = link_to edit_campaign_path(@campaign), class: 'btn btn-warning btn-xs', title: "Edit Campaign" do
+                %span.glyphicon.glyphicon-edit
+                Edit Campaign
         %tr
           %th= Campaign.human_attribute_name(:created_at)
           %td= l(@campaign.created_at, format: :short)
@@ -93,7 +99,6 @@
           %td= l(@campaign.updated_at, format: :short)
 
   #contributions.tab-pane
-    %h5.page-header Contributions
     = paginate @contributions, param_name: "contributions_page", params: { anchor: "contributions" }
     %table.table.table-striped.table-hover.table-condensed
       %thead

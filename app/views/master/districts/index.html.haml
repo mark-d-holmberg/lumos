@@ -1,17 +1,37 @@
-- title "Districts"
+- title "#{@state.name} : Districts", false
 
-- content_for(:toolbar) do
-  = link_to new_district_path, title: "New District", class: 'btn btn-primary' do
-    %span.glyphicon.glyphicon-plus
-  = render "districts_search_filter"
+.page-header
+  %h3.sub-title.inline
+    #{@state.name} : Districts
+    %span
+      = link_to state_path(@state, anchor: 'general'), class: 'btn btn-default btn-xs', title: "Back to #{@state.name}" do
+        %span.glyphicon.glyphicon-arrow-left
+
+%ul.nav.nav-tabs
+  %li
+    = link_to state_path(@state, anchor: 'general') do
+      %span.glyphicon.glyphicon-file
+      General
+  %li.active
+    = link_to state_districts_path(@state) do
+      %span.glyphicon.glyphicon-fullscreen
+      Districts (#{@districts.total_count})
+  %li
+    = link_to state_path(@state, anchor: 'campaigns') do
+      %span.glyphicon.glyphicon-fire
+      Campaigns (#{@campaigns.total_count})
 
 = paginate @districts
+
+%div#button-toolbar
+  = link_to new_state_district_path(@state), title: "New #{@state.name} District", class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+  = render "districts_search_filter"
 
 %table.table.table-striped.table-hover.table-condensed
   %thead
     %tr
       %th= sorty "name", District.human_attribute_name(:name), true
-      %th= sorty "state", District.human_attribute_name(:state)
       %th= sorty "created_at", District.human_attribute_name(:created_at)
       %th= sorty "updated_at", District.human_attribute_name(:updated_at)
       %th
@@ -19,19 +39,14 @@
   %tbody
     - @districts.each do |district|
       %tr
-        %td= link_to district.name, district
-        %td
-          - if district.state.present?
-            = link_to district.state.name, district.state
-          - else
-            N/A
+        %td= link_to district.name, [district.state, district]
         %td= l(district.created_at, format: :short)
         %td= l(district.updated_at, format: :short)
         %td
-          = link_to edit_district_path(district), class: 'btn btn-warning btn-xs', title: 'Edit District' do
+          = link_to edit_state_district_path(district.state, district), class: 'btn btn-warning btn-xs', title: 'Edit District' do
             %span.glyphicon.glyphicon-edit
         %td
-          = link_to district, method: :delete, data: { confirm: 'Are you sure?' }, id: "district_destroy_#{district.id}", title: "Remove District", class: 'btn btn-danger btn-xs' do
+          = link_to [district.state, district], method: :delete, data: { confirm: 'Are you sure?' }, id: "district_destroy_#{district.id}", title: "Remove District", class: 'btn btn-danger btn-xs' do
             %span.glyphicon.glyphicon-remove
 
 = paginate @districts

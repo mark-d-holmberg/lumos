@@ -1,11 +1,11 @@
 - title "States"
 
-- content_for(:toolbar) do
+= paginate @states
+
+%div#button-toolbar
   = link_to new_state_path, title: "New State", class: 'btn btn-primary' do
     %span.glyphicon.glyphicon-plus
   = render "states_search_filter"
-
-= paginate @states
 
 %table.table.table-striped.table-hover.table-condensed
   %thead

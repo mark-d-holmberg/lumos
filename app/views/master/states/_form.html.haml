@@ -7,4 +7,4 @@
   .form-group
     .col-sm-offset-2.col-sm-10
       = f.button :submit, class: 'btn btn-primary'
-      = link_to 'Cancel', states_path, class: 'btn btn-link'
+      = link_to 'Cancel', @state.new_record? ? states_path : state_path(@state), class: 'btn btn-link'

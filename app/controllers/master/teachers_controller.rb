@@ -1,15 +1,17 @@
 class Master::TeachersController < MasterController
+  before_action :set_school
   before_action :set_teacher, only: [:show, :edit, :update, :destroy]
 
   def index
-    @teachers = Teacher.all
+    @teachers = @school.teachers
     @teachers = @teachers.search(params[:search][:query]) if params[:search].try(:[], :query).present?
     if params[:search].try(:[], :sorty).present?
       @teachers = @teachers.sorty_order(sort_column, sort_direction)
     else
       @teachers = @teachers.ordered
     end
-    @teachers = @teachers.page(params[:page])
+    @teachers = @teachers.page(params[:teachers_page])
+    @school_based_campaigns = @school.school_wide_campaigns.ordered.page(params[:campaigns_page])
   end
 
   def show
@@ -18,17 +20,17 @@ class Master::TeachersController < MasterController
   end
 
   def new
-    @teacher = Teacher.new
+    @teacher = @school.teachers.new
   end
 
   def edit
   end
 
   def create
-    @teacher = Teacher.new(safe_params)
+    @teacher = @school.teachers.new(safe_params)
 
     if @teacher.save
-      redirect_to teachers_url, notice: 'Teacher was successfully created.'
+      redirect_to school_teacher_url(@school, @teacher), notice: 'Teacher was successfully created.'
     else
       render :new
     end
@@ -36,7 +38,7 @@ class Master::TeachersController < MasterController
 
   def update
     if @teacher.update(safe_params)
-      redirect_to teachers_url, notice: 'Teacher was successfully updated.'
+      redirect_to school_teacher_url(@school, @teacher), notice: 'Teacher was successfully updated.'
     else
       render :edit
     end
@@ -44,18 +46,22 @@ class Master::TeachersController < MasterController
 
   def destroy
     @teacher.destroy
-    redirect_to teachers_url, notice: 'Teacher was successfully removed.'
+    redirect_to school_teachers_url, notice: 'Teacher was successfully removed.'
   end
 
 
   private
 
+  def set_school
+    @school = School.find(params[:school_id])
+  end
+
   def set_teacher
-    @teacher = Teacher.find(params[:id])
+    @teacher = @school.teachers.find(params[:id])
   end
 
   def safe_params
-    params.require(:teacher).permit(:first_name, :last_name, :school_id, :email, :prefix)
+    params.require(:teacher).permit(:first_name, :last_name, :email, :prefix)
   end
 
 end

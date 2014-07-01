@@ -1,8 +1,9 @@
 class Master::SchoolsController < MasterController
+  before_action :set_district
   before_action :set_school, only: [:show, :edit, :update, :destroy]
 
   def index
-    @schools = School.all
+    @schools = @district.schools
     @schools = @schools.search(params[:search][:query]) if params[:search].try(:[], :query).present?
     if params[:search].try(:[], :sorty).present?
       @schools = @schools.sorty_order(sort_column, sort_direction)
@@ -10,6 +11,7 @@ class Master::SchoolsController < MasterController
       @schools = @schools.ordered
     end
     @schools = @schools.page(params[:page])
+    @campaigns = @district.campaigns.ordered.page(params[:campaigns_page])
   end
 
   def show
@@ -18,17 +20,17 @@ class Master::SchoolsController < MasterController
   end
 
   def new
-    @school = School.new
+    @school = @district.schools.new
   end
 
   def edit
   end
 
   def create
-    @school = School.new(safe_params)
+    @school = @district.schools.new(safe_params)
 
     if @school.save
-      redirect_to schools_url, notice: 'School was successfully created.'
+      redirect_to district_school_url(@district, @school), notice: 'School was successfully created.'
     else
       render :new
     end
@@ -36,7 +38,7 @@ class Master::SchoolsController < MasterController
 
   def update
     if @school.update(safe_params)
-      redirect_to schools_url, notice: 'School was successfully updated.'
+      redirect_to district_school_url(@district, @school), notice: 'School was successfully updated.'
     else
       render :edit
     end
@@ -44,18 +46,22 @@ class Master::SchoolsController < MasterController
 
   def destroy
     @school.destroy
-    redirect_to schools_url, notice: 'School was successfully removed.'
+    redirect_to district_schools_url(@district), notice: 'School was successfully removed.'
   end
 
 
   private
 
+  def set_district
+    @district = District.find(params[:district_id])
+  end
+
   def set_school
-    @school = School.find(params[:id])
+    @school = @district.schools.find(params[:id])
   end
 
   def safe_params
-    params.require(:school).permit(:name, :district_id)
+    params.require(:school).permit(:name)
   end
 
 end

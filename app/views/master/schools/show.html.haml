@@ -1,24 +1,43 @@
-- title "School : #{@school.name}", false
+- title @school.name, false
 
 .page-header
   %h3.sub-title.inline
-    School : #{@school.name}
+    = @school.name
     %span
-      = link_to edit_school_path(@school), class: 'btn btn-warning btn-xs', title: "Edit School" do
-        %span.glyphicon.glyphicon-edit
-.row
-  .col-lg-4
-    %h5.page-header General Information
+      = link_to state_district_path(@district.state, @district), class: 'btn btn-default btn-xs', title: "Back to #{@district.name}" do
+        %span.glyphicon.glyphicon-arrow-left
+
+%ul.nav.nav-tabs
+  %li.active
+    = link_to '#general', data: {toggle: 'tab'} do
+      %span.glyphicon.glyphicon-file
+      General
+  %li
+    = link_to school_teachers_path(@school) do
+      %span.glyphicon.glyphicon-briefcase
+      Teachers (#{@teachers.total_count})
+  %li
+    = link_to '#school_based_campaigns', data: {toggle: 'tab'} do
+      %span.glyphicon.glyphicon-fire
+      School Based Campaigns (#{@school_based_campaigns.total_count})
+
+.tab-content
+  #general.tab-pane.active
     %table.table.table-hover.table-striped.table-condensed
       %tbody
         %tr
           %th= School.human_attribute_name(:name)
-          %td= @school.name
+          %td
+            = @school.name
+            %span.pull-right
+              = link_to edit_district_school_path(@district, @school), class: 'btn btn-warning btn-xs', title: "Edit School" do
+                %span.glyphicon.glyphicon-edit
+                Edit
         %tr
           %th= School.human_attribute_name(:district)
           %td
             - if @school.district.present?
-              = link_to @school.district.name, @school.district
+              = link_to @school.district.name, [@school.district.state, @school.district]
             - else
               N/A
         %tr
@@ -27,44 +46,29 @@
         %tr
           %th= School.human_attribute_name(:updated_at)
           %td= l(@school.updated_at, format: :short)
-  .col-lg-8
-    %ul.nav.nav-tabs
-      %li.active
-        = link_to '#teachers', data: {toggle: 'tab'} do
-          %span.glyphicon.glyphicon-briefcase
-          Teachers
-      %li
-        = link_to '#school_based_campaigns', data: {toggle: 'tab'} do
-          %span.glyphicon.glyphicon-fire
-          School Based Campaigns
-    .tab-content
-      #teachers.tab-pane.active
-        %h5.page-header Teachers
-        = paginate @teachers, param_name: "teachers_page", params: { anchor: "teachers" }
-        %table.table.table-striped.table-hover.table-condensed
-          %thead
-            %tr
-              %th= Teacher.human_attribute_name(:last_name)
-              %th= Teacher.human_attribute_name(:first_name)
-          %tbody
-            - @teachers.each do |teacher|
-              %tr
-                %td= link_to teacher.last_name, teacher
-                %td= teacher.first_name
-      #school_based_campaigns.tab-pane
-        %h5.page-header School Based Campaigns
-        = paginate @school_based_campaigns, param_name: "campaigns_page", params: { anchor: "school_based_campaigns" }
-        %table.table.table-striped.table-hover.table-condensed
-          %thead
-            %tr
-              %th= Campaign.human_attribute_name(:name)
-              %th= Campaign.human_attribute_name(:district)
-              %th= Campaign.human_attribute_name(:school_wide)
-              %th= Campaign.human_attribute_name(:active)
-          %tbody
-            - @school_based_campaigns.each do |campaign|
-              %tr
-                %td= link_to campaign.name, campaign
-                %td= link_to campaign.district.name, campaign.district
-                %td= campaign.school_wide? ? "Yes" : "No"
-                %td= campaign.active? ? "Yes" : "No"
+
+  #school_based_campaigns.tab-pane
+    %div#button-toolbar
+      = link_to new_master_ajax_school_campaign_path(@school), id: 'new_school_campaign_link', class: 'btn btn-primary', role: "button", data: {toggle: "modal", target: '#newCampaignModal', remote: true}, title: "Add New School Campaign" do
+        %span.glyphicon.glyphicon-plus
+
+    = paginate @school_based_campaigns, param_name: "campaigns_page", params: { anchor: "school_based_campaigns" }
+    %table.table.table-striped.table-hover.table-condensed#school_based_campaigns_table
+      %thead
+        %tr
+          %th= Campaign.human_attribute_name(:name)
+          %th= Campaign.human_attribute_name(:district)
+          %th= Campaign.human_attribute_name(:school_wide)
+          %th= Campaign.human_attribute_name(:active)
+      %tbody
+        - @school_based_campaigns.each do |campaign|
+          = render 'master_ajax/schools/campaigns/campaign', campaign: campaign
+
+.modal.fade#newCampaignModal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} &times;
+        %h3.modal-title
+      .modal-body
+        %p

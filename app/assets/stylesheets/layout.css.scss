@@ -13,6 +13,7 @@ td.action-button {
 
 #button-toolbar {
   margin-bottom: 2em;
+  margin-top: 1em;
 }
 
 .navbar-inverse .nav .active>a, .navbar-inverse .nav .active>a:hover, .navbar-inverse .nav .active>a:focus {
@@ -30,4 +31,8 @@ td.action-button {
 
 form.form-inline.inline-search-form {
   display: inline;
+}
+
+.tab-content > .active {
+  margin-top: 1em;
 }

@@ -1,19 +1,41 @@
-- title "Teachers"
+- title "#{@school.name} : Teachers", false
 
-- content_for(:toolbar) do
-  = link_to new_teacher_path, title: "New Teacher", class: 'btn btn-primary' do
-    %span.glyphicon.glyphicon-plus
-  = render "teachers_search_filter"
+.page-header
+  %h3.sub-title.inline
+    #{@school.name} : Teachers
+    %span
+      = link_to district_school_path(@school.district, @school, anchor: 'general'), class: 'btn btn-default btn-xs', title: "Back to #{@school.name}" do
+        %span.glyphicon.glyphicon-arrow-left
+
+%ul.nav.nav-tabs
+  %li
+    = link_to district_school_path(@school.district, @school, anchor: 'general') do
+      %span.glyphicon.glyphicon-file
+      General
+  %li.active
+    = link_to '#teachers', data: {toggle: 'tab'} do
+      %span.glyphicon.glyphicon-briefcase
+      Teachers (#{@teachers.total_count})
+  %li
+    = link_to district_school_path(@school.district, @school, anchor: 'school_based_campaigns') do
+      %span.glyphicon.glyphicon-fire
+      School Based Campaigns (#{@school_based_campaigns.total_count})
 
 = paginate @teachers
+
+%div#button-toolbar
+  = link_to new_school_teacher_path(@school), title: "New Teacher", class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+  = render "teachers_search_filter"
 
 %table.table.table-striped.table-hover.table-condensed
   %thead
     %tr
+      %th= Teacher.human_attribute_name(:prestigious_name)
       %th= sorty "last_name", Teacher.human_attribute_name(:last_name), true
       %th= sorty "first_name", Teacher.human_attribute_name(:first_name)
       %th= sorty "email", Teacher.human_attribute_name(:email)
-      %th= sorty "school", Teacher.human_attribute_name(:school)
+      %th= sorty "prefix", Teacher.human_attribute_name(:prefix)
       %th= sorty "created_at", Teacher.human_attribute_name(:created_at)
       %th= sorty "updated_at", Teacher.human_attribute_name(:updated_at)
       %th
@@ -21,21 +43,18 @@
   %tbody
     - @teachers.each do |teacher|
       %tr
-        %td= link_to teacher.last_name, teacher
+        %td= link_to teacher.prestigious_name, [teacher.school, teacher]
+        %td= teacher.last_name
         %td= teacher.first_name
         %td= mail_to teacher.email
-        %td
-          - if teacher.school.present?
-            = link_to teacher.school.name, teacher.school
-          - else
-            N/A
+        %td= teacher.prefix
         %td= l(teacher.created_at, format: :short)
         %td= l(teacher.updated_at, format: :short)
         %td
-          = link_to edit_teacher_path(teacher), class: 'btn btn-warning btn-xs', title: 'Edit Teacher' do
+          = link_to edit_school_teacher_path(teacher.school, teacher), class: 'btn btn-warning btn-xs', title: 'Edit Teacher' do
             %span.glyphicon.glyphicon-edit
         %td
-          = link_to teacher, method: :delete, data: { confirm: 'Are you sure?' }, id: "teacher_destroy_#{teacher.id}", title: "Remove Teacher", class: 'btn btn-danger btn-xs' do
+          = link_to [teacher.school, teacher], method: :delete, data: { confirm: 'Are you sure?' }, id: "teacher_destroy_#{teacher.id}", title: "Remove Teacher", class: 'btn btn-danger btn-xs' do
             %span.glyphicon.glyphicon-remove
 
 = paginate @teachers

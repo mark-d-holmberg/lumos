@@ -24,9 +24,8 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.navbar-brand{href: root_path}
-            %span.glyphicon.glyphicon-tower
-            = t(".brand")
+          = link_to root_path do
+            .logo-main
         = render "layouts/master/navbar"
 
     .container
@@ -54,7 +53,7 @@
             - if content_for?(:toolbar)
               %div#button-toolbar= yield(:toolbar)
             %div= yield
-      %footer
-        %p
-          &copy;
-          = t(".copyright", year: Date.today.year)
+    -# %footer
+    -#   %p
+    -#     &copy;
+    -#     = t(".copyright", year: Date.today.year)

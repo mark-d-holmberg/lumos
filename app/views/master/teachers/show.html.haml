@@ -1,19 +1,38 @@
-- title "Teacher : #{@teacher.prestigious_name}", false
+- title @teacher.prestigious_name, false
 
 .page-header
   %h3.sub-title.inline
     = @teacher.prestigious_name
     %span
-      = link_to edit_teacher_path(@teacher), class: 'btn btn-warning btn-xs', title: "Edit Teacher" do
-        %span.glyphicon.glyphicon-edit
-.row
-  .col-lg-4
-    %h5.page-header General Information
+      = link_to school_teachers_path(@school), class: 'btn btn-default btn-xs', title: "Back to #{@school.name}" do
+        %span.glyphicon.glyphicon-arrow-left
+
+%ul.nav.nav-tabs
+  %li.active
+    = link_to '#general', data: {toggle: 'tab'} do
+      %span.glyphicon.glyphicon-file
+      General
+  %li
+    = link_to '#campaigns', data: {toggle: 'tab'} do
+      %span.glyphicon.glyphicon-fire
+      Teacher Based Campaigns (#{@campaigns.total_count})
+  %li
+    = link_to '#contributions', data: {toggle: 'tab'} do
+      %span.glyphicon.glyphicon-briefcase
+      Contributions (#{@contributions.total_count})
+
+.tab-content
+  #general.tab-pane.active
     %table.table.table-hover.table-striped.table-condensed
       %tbody
         %tr
           %th= Teacher.human_attribute_name(:full_name)
-          %td= @teacher.full_name
+          %td
+            = @teacher.full_name
+            %span.pull-right
+              = link_to edit_school_teacher_path(@school, @teacher), class: 'btn btn-warning btn-xs', title: "Edit Teacher" do
+                %span.glyphicon.glyphicon-edit
+                Edit
         %tr
           %th= Teacher.human_attribute_name(:email)
           %td= mail_to @teacher.email
@@ -21,60 +40,51 @@
           %th= Teacher.human_attribute_name(:prefix)
           %td= @teacher.prefix
         %tr
-          %th= Teacher.human_attribute_name(:school)
-          %td
-            - if @teacher.school.present?
-              = link_to @teacher.school.name, @teacher.school
-            - else
-              N/A
+          %th= Teacher.human_attribute_name(:first_name)
+          %td= @teacher.first_name
+        %tr
+          %th= Teacher.human_attribute_name(:last_name)
+          %td= @teacher.last_name
+        %tr
+          %th= Teacher.human_attribute_name(:prestigious_name)
+          %td= @teacher.prestigious_name
         %tr
           %th= Teacher.human_attribute_name(:created_at)
           %td= l(@teacher.created_at, format: :short)
         %tr
           %th= Teacher.human_attribute_name(:updated_at)
           %td= l(@teacher.updated_at, format: :short)
-  .col-lg-8
-    %ul.nav.nav-tabs
-      %li.active
-        = link_to '#campaigns', data: {toggle: 'tab'} do
-          %span.glyphicon.glyphicon-fire
-          Teacher Based Campaigns
-      %li
-        = link_to '#contributions', data: {toggle: 'tab'} do
-          %span.glyphicon.glyphicon-briefcase
-          Contributions
-    .tab-content
-      #campaigns.tab-pane.active
-        %h5.page-header Teacher Based Campaigns
-        = paginate @campaigns, param_name: "campaigns_page", params: { anchor: "campaigns" }
-        %table.table.table-striped.table-hover.table-condensed
-          %thead
-            %tr
-              %th= Campaign.human_attribute_name(:name)
-              %th= Campaign.human_attribute_name(:school)
-              %th= Campaign.human_attribute_name(:school_wide)
-              %th= Campaign.human_attribute_name(:active)
-          %tbody
-            - @campaigns.each do |campaign|
-              %tr
-                %td= link_to campaign.name, campaign
-                %td= link_to campaign.school.name, campaign.school
-                %td= campaign.school_wide? ? "Yes" : "No"
-                %td= campaign.active? ? "Yes" : "No"
-      #contributions.tab-pane
-        %h5.page-header Contributions
-        = paginate @contributions, param_name: "contributions_page", params: { anchor: "contributions" }
-        %table.table.table-striped.table-hover.table-condensed
-          %thead
-            %tr
-              %th= Contribution.human_attribute_name(:pledge_id)
-              %th= Contribution.human_attribute_name(:amount)
-              %th= Contribution.human_attribute_name(:contributor)
-              %th= Contribution.human_attribute_name(:pledged_at)
-          %tbody
-            - @contributions.each do |contribution|
-              %tr
-                %td= link_to contribution.pledge_id, contribution
-                %td= humanized_money_with_symbol(contribution.amount.dollars, no_cents_if_whole: false)
-                %td= link_to contribution.contributor.name, contribution.contributor
-                %td= l(contribution.pledged_at, format: :short)
+
+  #campaigns.tab-pane
+    = paginate @campaigns, param_name: "campaigns_page", params: { anchor: "campaigns" }
+    %table.table.table-striped.table-hover.table-condensed
+      %thead
+        %tr
+          %th= Campaign.human_attribute_name(:name)
+          %th= Campaign.human_attribute_name(:school)
+          %th= Campaign.human_attribute_name(:school_wide)
+          %th= Campaign.human_attribute_name(:active)
+      %tbody
+        - @campaigns.each do |campaign|
+          %tr
+            %td= link_to campaign.name, campaign
+            %td= link_to campaign.school.name, campaign.school
+            %td= campaign.school_wide? ? "Yes" : "No"
+            %td= campaign.active? ? "Yes" : "No"
+
+  #contributions.tab-pane
+    = paginate @contributions, param_name: "contributions_page", params: { anchor: "contributions" }
+    %table.table.table-striped.table-hover.table-condensed
+      %thead
+        %tr
+          %th= Contribution.human_attribute_name(:pledge_id)
+          %th= Contribution.human_attribute_name(:amount)
+          %th= Contribution.human_attribute_name(:contributor)
+          %th= Contribution.human_attribute_name(:pledged_at)
+      %tbody
+        - @contributions.each do |contribution|
+          %tr
+            %td= link_to contribution.pledge_id, contribution
+            %td= humanized_money_with_symbol(contribution.amount.dollars, no_cents_if_whole: false)
+            %td= link_to contribution.contributor.name, contribution.contributor
+            %td= l(contribution.pledged_at, format: :short)

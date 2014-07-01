@@ -19,18 +19,32 @@ Rails.application.routes.draw do
     # Setup Devise Authentication
     devise_for :users, path: 'u', controllers: { sessions: "master/sessions" }
 
+    # Master AJAX backend controllers
+    namespace :master_ajax do
+      resources :schools, only: [] do
+        resources :campaigns, only: [:new, :create], to: 'schools/campaigns'
+      end
+    end
+
     # Master scope
     scope module: 'master' do
       # For adding new devise users the hard way
       resources :users
       resources :products
 
-      # TODO: make these nested
-      resources :states
-      resources :districts
-      resources :schools
-      resources :teachers
-      resources :campaigns, param: 'slug' do
+      resources :states do
+        resources :districts
+      end
+
+      resources :districts, only: [] do
+        resources :schools
+      end
+
+      resources :schools do
+        resources :teachers
+      end
+
+      resources :campaigns, param: 'slug', except: [:new, :create] do
         resources :impressions
       end
 

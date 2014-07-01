@@ -30,21 +30,7 @@ class Master::CampaignsController < MasterController
     @contributions = @campaign.contributions.ordered.page(params[:contributions_page])
   end
 
-  def new
-    @campaign = Campaign.new
-  end
-
   def edit
-  end
-
-  def create
-    @campaign = Campaign.new(safe_params)
-
-    if @campaign.save
-      redirect_to @campaign, notice: 'Campaign was successfully created.'
-    else
-      render :new
-    end
   end
 
   def update

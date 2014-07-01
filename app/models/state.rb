@@ -32,6 +32,10 @@ class State < ActiveRecord::Base
     where(conditions)
   end
 
+  def to_param
+    abbr
+  end
+
 
   private
 

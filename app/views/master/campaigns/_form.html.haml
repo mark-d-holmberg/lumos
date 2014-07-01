@@ -22,4 +22,4 @@
   .form-group
     .col-sm-offset-2.col-sm-10
       = f.button :submit, class: 'btn btn-primary'
-      = link_to 'Cancel', campaigns_path, class: 'btn btn-link'
+      = link_to 'Cancel', @campaign.new_record? ? campaigns_path : campaign_path(@campaign), class: 'btn btn-link'

@@ -6,7 +6,6 @@ class School < ActiveRecord::Base
 
   has_many :teachers
   has_many :campaigns # This is an actual 1->1 non-polymorphic relation, for Teacher Based campaigns
-  has_many :school_wide_campaigns, -> { where(school_wide: true) }, as: :campaignable, class_name: 'Campaign'
 
   sorty on: [:name, :created_at, :updated_at],
     references: {district: "name"}
@@ -34,12 +33,8 @@ class School < ActiveRecord::Base
 
   def self.search(query)
     t = arel_table
-    dt = District.arel_table
-    st = State.arel_table
     conditions = t[:name].matches("#{query}%")
-    conditions = conditions.or(dt[:name].matches("#{query}%"))
-    conditions = conditions.or(st[:name].matches("#{query}%"))
-    includes([:state, :district]).where(conditions).references([:state, :district])
+    where(conditions)
   end
 
   def to_s
@@ -48,6 +43,10 @@ class School < ActiveRecord::Base
 
   def as_json(options)
     {id: id, name: name}
+  end
+
+  def school_wide_campaigns
+    campaigns.where(school_wide: true, campaignable_type: 'School')
   end
 
 

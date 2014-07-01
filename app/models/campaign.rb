@@ -118,6 +118,14 @@ class Campaign < ActiveRecord::Base
     end
   end
 
+  def setup_school_campaign
+    self.campaignable      = school
+    self.school_wide       = true
+    self.district          = school.district
+    self.state             = school.state
+    self.goal_amount_cents = self.product.price.cents if self.product.present?
+  end
+
 
   private
 

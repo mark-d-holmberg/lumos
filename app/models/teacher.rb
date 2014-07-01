@@ -15,7 +15,7 @@ class Teacher < ActiveRecord::Base
   has_many :campaigns, -> { where(school_wide: false) }, as: :campaignable
   has_many :contributions, through: :campaigns
 
-  sorty on: [:first_name, :last_name, :email, :created_at, :updated_at],
+  sorty on: [:first_name, :last_name, :email, :prefix, :created_at, :updated_at],
     references: {school: "name"}
 
   validates :first_name, :last_name, :school, presence: true

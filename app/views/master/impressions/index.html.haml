@@ -1,10 +1,24 @@
-- title "Campaign #{@campaign.name} - Impressions"
+- title "#{@campaign.name} : Impressions"
 
-- content_for(:toolbar) do
-  = link_to new_campaign_impression_path(@campaign.to_param), title: "New Impression", class: 'btn btn-primary' do
-    %span.glyphicon.glyphicon-plus
+%ul.nav.nav-tabs
+  %li
+    = link_to campaign_path(@campaign, anchor: 'general') do
+      %span.glyphicon.glyphicon-file
+      General
+  %li
+    = link_to campaign_path(@campaign, anchor: 'contributions') do
+      %span.glyphicon.glyphicon-shopping-cart
+      Contributions
+  %li.active
+    = link_to campaign_impressions_path(@campaign.to_param) do
+      %span.glyphicon.glyphicon-map-marker
+      Impressions (#{@impressions.total_count})
 
 = paginate @impressions
+
+%div#button-toolbar
+  = link_to new_campaign_impression_path(@campaign.to_param), title: "New Impression", class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
 
 %table.table.table-striped.table-hover.table-condensed
   %thead

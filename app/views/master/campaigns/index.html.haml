@@ -1,8 +1,8 @@
 - title "Campaigns"
 
 - content_for(:toolbar) do
-  = link_to new_campaign_path, title: "New Campaign", class: 'btn btn-primary' do
-    %span.glyphicon.glyphicon-plus
+  -# = link_to new_campaign_path, title: "New Campaign", class: 'btn btn-primary' do
+  -#   %span.glyphicon.glyphicon-plus
   = render "campaigns_search_filter"
 
 %ul.nav.nav-tabs
@@ -35,22 +35,25 @@
             %td= link_to campaign.name, campaign
             %td
               - if campaign.state.present?
-                = link_to campaign.state.name, campaign.state
+                = link_to campaign.state.abbr, campaign.state
               - else
                 N/A
             %td
               - if campaign.district.present?
-                = link_to campaign.district.name, campaign.district
+                = link_to campaign.district.name, [campaign.district.state, campaign.district]
               - else
                 N/A
             %td
               - if campaign.school.present?
-                = link_to campaign.school.name, campaign.school
+                = link_to campaign.school.name, [campaign.school.district, campaign.school]
               - else
                 N/A
             %td
               - if campaign.campaignable.present?
-                = link_to campaign.campaignable.to_s, campaign.campaignable
+                - if campaign.school_wide?
+                  = link_to campaign.campaignable.to_s, [campaign.campaignable.district, campaign.campaignable]
+                - else
+                  = link_to campaign.campaignable.to_s, [campaign.campaignable.school, campaign.campaignable]
               - else
                 N/A
             %td= link_to(humanized_money_with_symbol(campaign.goal_amount.dollars, no_cents_if_whole: false), campaign)
@@ -79,17 +82,17 @@
             %td= link_to campaign.name, campaign
             %td
               - if campaign.state.present?
-                = link_to campaign.state.name, campaign.state
+                = link_to campaign.state.abbr, campaign.state
               - else
                 N/A
             %td
               - if campaign.district.present?
-                = link_to campaign.district.name, campaign.district
+                = link_to campaign.district.name, [campaign.district.state, campaign.district]
               - else
                 N/A
             %td
               - if campaign.school.present?
-                = link_to campaign.school.name, campaign.school
+                = link_to campaign.school.name, [campaign.school.district, campaign.school]
               - else
                 N/A
             %td= link_to(humanized_money_with_symbol(campaign.goal_amount.dollars, no_cents_if_whole: false), campaign)

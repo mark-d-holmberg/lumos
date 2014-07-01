@@ -1,0 +1,5 @@
+%tr{id: "campaign_#{campaign.id}"}
+  %td= link_to campaign.name, campaign
+  %td= link_to campaign.district.name, [campaign.district.state, campaign.district]
+  %td= campaign.school_wide? ? "Yes" : "No"
+  %td= campaign.active? ? "Yes" : "No"

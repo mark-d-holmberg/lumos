@@ -1,10 +1,9 @@
-= simple_form_for(@district) do |f|
+= simple_form_for [@state, @district] do |f|
   = f.error_notification
 
   = f.input :name
-  = f.association :state, include_blank: false
 
   .form-group
     .col-sm-offset-2.col-sm-10
       = f.button :submit, class: 'btn btn-primary'
-      = link_to 'Cancel', districts_path, class: 'btn btn-link'
+      = link_to 'Cancel', @district.new_record? ? state_districts_path(@state) : state_district_path(@state, @district), class: 'btn btn-link'

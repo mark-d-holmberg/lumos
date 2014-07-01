@@ -13,7 +13,8 @@ class Master::StatesController < MasterController
   end
 
   def show
-    @districts = @state.districts.ordered.page(params[:page])
+    @districts = @state.districts.ordered.page(params[:districts_page])
+    @campaigns = @state.campaigns.ordered.page(params[:campaigns_page])
   end
 
   def new
@@ -27,7 +28,7 @@ class Master::StatesController < MasterController
     @state = State.new(safe_params)
 
     if @state.save
-      redirect_to states_url, notice: 'State was successfully created.'
+      redirect_to state_url(@state), notice: 'State was successfully created.'
     else
       render :new
     end
@@ -35,7 +36,7 @@ class Master::StatesController < MasterController
 
   def update
     if @state.update(safe_params)
-      redirect_to states_url, notice: 'State was successfully updated.'
+      redirect_to state_url(@state), notice: 'State was successfully updated.'
     else
       render :edit
     end
@@ -50,7 +51,7 @@ class Master::StatesController < MasterController
   private
 
   def set_state
-    @state = State.find(params[:id])
+    @state = State.find_by(abbr: params[:id])
   end
 
   def safe_params

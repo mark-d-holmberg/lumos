@@ -5,8 +5,7 @@ class District < ActiveRecord::Base
   has_many :schools
   has_many :campaigns
 
-  sorty on: [:name, :created_at, :updated_at],
-    references: {state: "name"}
+  sorty on: [:name, :created_at, :updated_at]
 
   validates :name, presence: true, uniqueness: { case_sensitive: false, scope: [:state_id] }
   validates :state, presence: true
@@ -32,10 +31,8 @@ class District < ActiveRecord::Base
 
   def self.search(query)
     t = arel_table
-    st = State.arel_table
     conditions = t[:name].matches("#{query}%")
-    conditions = conditions.or(st[:name].matches("#{query}%"))
-    includes(:state).where(conditions).references(:state)
+    where(conditions)
   end
 
   def as_json(options)

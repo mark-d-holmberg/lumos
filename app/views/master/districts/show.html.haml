@@ -1,20 +1,38 @@
-- title "District : #{@district.name}", false
+- title @district.name, false
 
 .page-header
   %h3.sub-title.inline
-    District : #{@district.name}
+    = @district.name
     %span
-      = link_to edit_district_path(@district), class: 'btn btn-warning btn-xs', title: "Edit District" do
-        %span.glyphicon.glyphicon-edit
+      = link_to state_path(@state), class: 'btn btn-default btn-xs', title: "Back to #{@state.name}" do
+        %span.glyphicon.glyphicon-arrow-left
 
-.row
-  .col-lg-4
-    %h5.page-header General Information
+%ul.nav.nav-tabs
+  %li.active
+    = link_to '#general', data: {toggle: 'tab'} do
+      %span.glyphicon.glyphicon-file
+      General
+  %li
+    = link_to district_schools_path(@district) do
+      %span.glyphicon.glyphicon-bell
+      Schools (#{@schools.total_count})
+  %li
+    = link_to '#campaigns', data: {toggle: 'tab'} do
+      %span.glyphicon.glyphicon-fire
+      All Campaigns (#{@campaigns.total_count})
+
+.tab-content
+  #general.tab-pane.active
     %table.table.table-hover.table-striped.table-condensed
       %tbody
         %tr
           %th= District.human_attribute_name(:name)
-          %td= @district.name
+          %td
+            = @district.name
+            %span.pull-right
+              = link_to edit_state_district_path(@state, @district), class: 'btn btn-warning btn-xs', title: "Edit District" do
+                %span.glyphicon.glyphicon-edit
+                Edit
         %tr
           %th= District.human_attribute_name(:state)
           %td
@@ -28,14 +46,20 @@
         %tr
           %th= District.human_attribute_name(:updated_at)
           %td= l(@district.updated_at, format: :short)
-  .col-lg-8
-    %h5.page-header Schools
-    = paginate @schools
+
+  #campaigns.tab-pane
+    = paginate @campaigns, param_name: "campaigns_page", params: { anchor: "campaigns" }
     %table.table.table-striped.table-hover.table-condensed
       %thead
         %tr
-          %th= School.human_attribute_name(:name)
+          %th= Campaign.human_attribute_name(:name)
+          %th= Campaign.human_attribute_name(:school)
+          %th= Campaign.human_attribute_name(:school_wide)
+          %th= Campaign.human_attribute_name(:active)
       %tbody
-        - @schools.each do |school|
+        - @campaigns.each do |campaign|
           %tr
-            %td= link_to school.name, school
+            %td= link_to campaign.name, campaign
+            %td= link_to campaign.school.name, [campaign.school.district, campaign.school]
+            %td= campaign.school_wide? ? "Yes" : "No"
+            %td= campaign.active? ? "Yes" : "No"
