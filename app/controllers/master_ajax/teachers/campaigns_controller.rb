@@ -1,17 +1,17 @@
-class MasterAjax::Schools::CampaignsController < MasterAjaxController
+class MasterAjax::Teachers::CampaignsController < MasterAjaxController
 
-  before_action :set_school
+  before_action :set_teacher
 
   def new
-    @campaign = @school.campaigns.new(school_wide: true)
+    @campaign = @teacher.campaigns.new(school_wide: false)
   end
 
   def create
-    @campaign = @school.campaigns.new(safe_params)
-    @campaign.setup_school_campaign
+    @campaign = @teacher.campaigns.new(safe_params)
+    @campaign.setup_teacher_campaign(@teacher)
 
     if @campaign.save
-      flash.now[:notice] = "School Based Campaign was created successfully"
+      flash.now[:notice] = "Teacher Based Campaign was created successfully"
     else
       flash.now[:error] = "Error: #{@campaign.errors.full_messages.to_sentence}"
     end
@@ -20,8 +20,8 @@ class MasterAjax::Schools::CampaignsController < MasterAjaxController
 
   private
 
-  def set_school
-    @school = School.find(params[:school_id])
+  def set_teacher
+    @teacher = Teacher.find(params[:teacher_id])
   end
 
   def safe_params

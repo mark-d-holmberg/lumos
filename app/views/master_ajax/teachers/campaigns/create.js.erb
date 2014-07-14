@@ -1,0 +1,8 @@
+<% if @campaign.valid? %>
+  $('form#new_campaign').remove();
+  $(".modal").modal('hide');
+  $("table#teacher_based_campaigns_table").append('<%= j render(partial: "master_ajax/teachers/campaigns/campaign", locals: { campaign: @campaign }) %>');
+<% else %>
+  $('form#new_campaign').replaceWith('<%= j render("form") %>');
+<% end %>
+$(".flash-message").html('<%= j render("shared/flash_messages") %>');

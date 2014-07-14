@@ -1,7 +1,7 @@
 - flash.each do |key, message|
-  - key = :danger if key == :error
-  - key = :danger if key == :alert
-  - key = :success if key == :notice
+  - key = :danger if key == :error.to_s
+  - key = :danger if key == :alert.to_s
+  - key = :success if key == :notice.to_s
   %div{class: "alert alert-#{key}"}
     %button.close{data: {dismiss: "alert"}} &times;
     = message

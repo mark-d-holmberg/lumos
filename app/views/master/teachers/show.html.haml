@@ -56,8 +56,12 @@
           %td= l(@teacher.updated_at, format: :short)
 
   #campaigns.tab-pane
+    %div#button-toolbar
+      = link_to new_master_ajax_teacher_campaign_path(@teacher), id: 'new_teacher_campaign_link', class: 'btn btn-primary', role: "button", data: {toggle: "modal", target: '#newCampaignModal', remote: true}, title: "Add New Teacher Campaign" do
+        %span.glyphicon.glyphicon-plus
+
     = paginate @campaigns, param_name: "campaigns_page", params: { anchor: "campaigns" }
-    %table.table.table-striped.table-hover.table-condensed
+    %table.table.table-striped.table-hover.table-condensed#teacher_based_campaigns_table
       %thead
         %tr
           %th= Campaign.human_attribute_name(:name)
@@ -88,3 +92,12 @@
             %td= humanized_money_with_symbol(contribution.amount.dollars, no_cents_if_whole: false)
             %td= link_to contribution.contributor.name, contribution.contributor
             %td= l(contribution.pledged_at, format: :short)
+
+.modal.fade#newCampaignModal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} &times;
+        %h3.modal-title
+      .modal-body
+        %p

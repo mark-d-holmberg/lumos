@@ -21,8 +21,14 @@ Rails.application.routes.draw do
 
     # Master AJAX backend controllers
     namespace :master_ajax do
+      # School based campaigns AJAX controller
       resources :schools, only: [] do
         resources :campaigns, only: [:new, :create], to: 'schools/campaigns'
+      end
+
+      # Teacher based campaigns AJAX controller
+      resources :teachers, only: [] do
+        resources :campaigns, only: [:new, :create], to: 'teachers/campaigns'
       end
     end
 
