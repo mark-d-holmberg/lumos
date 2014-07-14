@@ -68,7 +68,7 @@
         - @campaigns.each do |campaign|
           %tr
             %td= link_to campaign.name, campaign
-            %td= link_to campaign.school.name, campaign.school
+            %td= link_to campaign.school.name, [campaign.school.district, campaign.school]
             %td= campaign.school_wide? ? "Yes" : "No"
             %td= campaign.active? ? "Yes" : "No"
 
