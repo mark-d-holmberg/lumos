@@ -35,10 +35,8 @@ class Teacher < ActiveRecord::Base
 
   def self.search(query)
     t = arel_table
-    st = School.arel_table
     conditions = t[:last_name].matches("%#{query}%").or(t[:first_name].matches("#{query}%"))
-    conditions = conditions.or(st[:name].matches("#{query}%"))
-    includes(:school).where(conditions).references(:school)
+    where(conditions)
   end
 
   def full_name

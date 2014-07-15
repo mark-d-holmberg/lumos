@@ -19,6 +19,13 @@
           %span.glyphicon.glyphicon-signal
           Reports
 
+  -# Searching
+  = simple_form_for :search, url: searches_path, method: :get, html: { id: "lumos_search_filter", class: "navbar-form navbar-left" }, wrapper: :modal do |f|
+    = f.input :query, as: :string, input_html: { value: (params[:search].try(:[], :query) if params[:search].present?), class: 'search-query', id: "inline_search" }, placeholder: "Search Term", autocomplete: 'off', label: false
+    - if params[:search].present?
+      = link_to master_root_path, class: 'btn btn-danger', title: 'Clear Filter' do
+        %span.glyphicon.glyphicon-remove
+
   -# Sidebar menu
   %ul.nav.navbar-nav.navbar-right
     - if user_signed_in?
@@ -33,19 +40,6 @@
             = link_to states_path do
               %span.glyphicon.glyphicon-globe
               States
-          -# %li
-          -#   = link_to districts_path do
-          -#     %span.glyphicon.glyphicon-fullscreen
-          -#     Districts
-          -# %li
-          -#   = link_to schools_path do
-          -#     %span.glyphicon.glyphicon-bell
-          -#     Schools
-          -# %li
-          -#   = link_to teachers_path do
-          -#     %span.glyphicon.glyphicon-briefcase
-          -#     Teachers
-          -# %li.divider
           %li
             = link_to products_path do
               %span.glyphicon.glyphicon-gift

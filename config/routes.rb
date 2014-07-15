@@ -66,6 +66,9 @@ Rails.application.routes.draw do
       resources :contributions
       resource :tos, only: [:show, :edit, :update]
 
+      # Searching
+      resources :searches, only: [:index]
+
       match '/', to: 'campaigns#index', via: [:get], as: :master_root
     end
   end
