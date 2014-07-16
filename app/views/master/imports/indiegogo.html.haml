@@ -1,0 +1,18 @@
+- title "Import Indiegogo Contribution Data"
+
+%h5.page-header Sample
+%pre.prettyprint
+  :preserve
+    # Pledge ID, Created At, Name, Email, Amount (USD)
+    1234567, 4/17/2014, John Doe, john.doe@example.com, $13.37
+
+%h5.page-header Upload File
+= simple_form_for :imports, url: indiegogo_imports_url, method: :post, html: { multipart: true } do |f|
+  = f.error_notification
+
+  = f.input :file, as: :file, label: 'CSV Data File'
+
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.button :submit, 'Upload CSV File', class: 'btn btn-primary'
+      = link_to 'Cancel', master_root_path, class: 'btn btn-link'

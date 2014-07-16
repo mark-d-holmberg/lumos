@@ -47,4 +47,10 @@ class Import
     result.merge(result[:count].zero? ? {message: 'no new unique records found'} : {success: true})
   end
 
+  def self.import_indiegogo_data(file)
+    result = {count: 0, success: false, warnings: []}
+    return result.merge(message: 'No File Found!') if file.nil?
+    result.merge(result[:count].zero? ? {message: 'no new unique records found'} : {success: true})
+  end
+
 end

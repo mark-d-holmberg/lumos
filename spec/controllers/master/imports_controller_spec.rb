@@ -15,4 +15,11 @@ RSpec.describe Master::ImportsController, type: :controller do
     end
   end
 
+  describe "GET indiegogo" do
+    it "returns HTTP success" do
+      get :indiegogo, {}, valid_session
+      expect(response).to be_success
+    end
+  end
+
 end

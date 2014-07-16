@@ -14,6 +14,20 @@ class Master::ImportsController < MasterController
     end
   end
 
+  def indiegogo
+    if request.post?
+      result = Import.import_indiegogo_data(safe_params.try(:[], :file))
+      if result[:success]
+        flash[:notice] = "Successfully imported indiegogo data, count: #{result.try(:[], :count)}"
+      else
+        flash[:error] = "Failed to import: #{result.try(:[], :message)}"
+      end
+      redirect_to indiegogo_imports_url
+    else
+      # GET stuff here
+    end
+  end
+
 
   private
 

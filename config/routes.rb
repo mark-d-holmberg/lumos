@@ -58,6 +58,7 @@ Rails.application.routes.draw do
       resources :imports, only: [] do
         collection do
           match :schools, via: [:get, :post]
+          match :indiegogo, via: [:get, :post]
         end
       end
 
