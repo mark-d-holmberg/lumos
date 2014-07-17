@@ -282,6 +282,17 @@ RSpec.describe Campaign, type: :model do
       campaign.save
       expect(campaign.goal_amount.dollars).to eq(13.37)
     end
+
+    it "can calculate the contributions_total properly" do
+      campaign = create(:campaign)
+      campaign.goal_amount_dollars = 150.55
+      campaign.save
+      expect(campaign.goal_amount.dollars).to eq(150.55)
+      contribution_1 = create(:contribution, campaign: campaign, amount_dollars: 5.00)
+      contribution_2 = create(:contribution, campaign: campaign, amount_dollars: 13.37)
+      expect(campaign.contributions_total(dollars: true)).to eq(18.37)
+      expect(campaign.contributions_total(dollars: false)).to eql(1837)
+    end
   end
 
   describe "concerning being converted to JSON" do

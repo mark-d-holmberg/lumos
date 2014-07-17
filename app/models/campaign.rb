@@ -135,6 +135,16 @@ class Campaign < ActiveRecord::Base
     self.goal_amount_cents = self.product.price.cents if self.product.present?
   end
 
+  def contributions_total(options={})
+    if options.try(:[], :dollars).present?
+      # Dollars
+      contributions.map { |k| k.amount }.sum.dollars
+    else
+      # Cents
+      contributions.map { |k| k.amount }.sum.cents
+    end
+  end
+
 
   private
 
