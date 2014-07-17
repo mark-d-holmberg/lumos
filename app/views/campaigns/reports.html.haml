@@ -1,3 +1,23 @@
-- title "#{@campaign.name} : Reports"
+- title "#{@campaign.name} : Reports", false
 
-= link_to 'Back', landing_campaign_path(@campaign.to_param)
+.page-header
+  %h3.sub-title.inline
+    #{@campaign.name} : Reports
+    %span
+      = link_to landing_campaign_path(@campaign.to_param), class: 'btn btn-default btn-xs', title: "Back to #{@campaign.name}" do
+        %span.glyphicon.glyphicon-arrow-left
+
+.container
+  .row
+    .col-lg-6
+      .c-name= @campaign.campaignable.to_s
+      .c-location= @campaign.formatted_address
+      .c-location2= @campaign.school.to_s
+    .col-lg-6.c-graphs
+      = image_tag(Gchart.pie_3d(data: [@campaign.contributions_total(dollars: false), @campaign.goal_amount.cents], slice_colors: '00d6ea,cfd0d0', title: 'Goal vs. Raised', size: '400x200', labels: ['Raised', 'Goal']))
+
+.container.funds
+  .row
+    .c-funds
+      .c-funds-goal Goal: #{humanized_money_with_symbol(@campaign.goal_amount.dollars, no_cents_if_whole: false)}
+      .c-funds-raised Raised: #{humanized_money_with_symbol(@campaign.contributions_total(dollars: true), no_cents_if_whole: false)}

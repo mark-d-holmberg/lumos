@@ -1,3 +1,29 @@
-- title "#{@campaign.name} : Contributions"
+- title "#{@campaign.name} : Contributions", false
 
-= link_to 'Back', landing_campaign_path(@campaign.to_param)
+.page-header
+  %h3.sub-title.inline
+    #{@campaign.name} : Contributions
+    %span
+      = link_to landing_campaign_path(@campaign.to_param), class: 'btn btn-default btn-xs', title: "Back to #{@campaign.name}" do
+        %span.glyphicon.glyphicon-arrow-left
+
+= paginate @contributions
+
+%table.table.table-striped.table-hover.table-condensed
+  %thead
+    %tr
+      %th= sorty "amount_cents", Contribution.human_attribute_name(:amount)
+      %th= sorty "contributor", Contribution.human_attribute_name(:contributor)
+      %th= sorty "pledged_at", Contribution.human_attribute_name(:pledged_at)
+  %tbody
+    - @contributions.each do |contribution|
+      %tr
+        %td= link_to(humanized_money_with_symbol(contribution.amount.dollars, no_cents_if_whole: false), contribution)
+        %td
+          - if contribution.contributor.present?
+            = contribution.contributor.name
+          - else
+            N/A
+        %td= l(contribution.pledged_at, format: :short)
+
+= paginate @contributions
