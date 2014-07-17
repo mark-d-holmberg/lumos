@@ -8,7 +8,7 @@
   %li
     = link_to campaign_path(@campaign, anchor: 'contributions') do
       %span.glyphicon.glyphicon-shopping-cart
-      Contributions
+      Contributions (#{@contributions.total_count})
   %li.active
     = link_to campaign_impressions_path(@campaign.to_param) do
       %span.glyphicon.glyphicon-map-marker
@@ -23,16 +23,14 @@
 %table.table.table-striped.table-hover.table-condensed
   %thead
     %tr
-      %th Campaign
-      %th Email
-      %th Referral kind
-      %th Token
+      %th= Impression.human_attribute_name(:email)
+      %th= Impression.human_attribute_name(:referral_kind)
+      %th= Impression.human_attribute_name(:token)
       %th
       %th
   %tbody
     - @impressions.each do |impression|
       %tr
-        %td= link_to impression.campaign.name, [impression.campaign, impression]
         %td= mail_to impression.email
         %td= impression.referral_kind
         %td= impression.token

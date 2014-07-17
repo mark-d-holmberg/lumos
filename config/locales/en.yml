@@ -40,12 +40,19 @@ en:
         contributor: 'Contributor'
         pledge_id: 'Pledge ID'
         pledged_at: 'Pledged At'
+        impression_token: 'Impression Token'
+        imported_at: 'Imported At'
       contributor:
         email: 'Email'
         name: 'Name'
       district:
         name: 'Name'
         state: 'State'
+      impression:
+        campaign: 'Campaign'
+        email: 'Email'
+        referral_kind: 'Referral Kind'
+        token: 'Token'
       product:
         name: 'Name'
         description: 'Description'

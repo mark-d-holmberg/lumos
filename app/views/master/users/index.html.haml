@@ -10,7 +10,7 @@
 %table.table.table-striped.table-hover#users_index_table
   %thead
     %tr
-      %th= sorty "email", User.human_attribute_name(:email), true
+      %th= sorty "email", User.human_attribute_name(:email), {default: true}
       %th= sorty "sign_in_count", User.human_attribute_name(:sign_in_count)
       %th= sorty "created_at", User.human_attribute_name(:created_at)
       %th= sorty "updated_at", User.human_attribute_name(:updated_at)

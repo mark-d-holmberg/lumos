@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140627161745) do
+ActiveRecord::Schema.define(version: 20140717193836) do
 
   create_table "campaigns", force: true do |t|
     t.string   "name"
@@ -47,10 +47,12 @@ ActiveRecord::Schema.define(version: 20140627161745) do
     t.date     "pledged_at"
     t.integer  "contributor_id"
     t.integer  "campaign_id"
-    t.integer  "amount_cents",    default: 0,     null: false
-    t.string   "amount_currency", default: "USD", null: false
+    t.integer  "amount_cents",     default: 0,     null: false
+    t.string   "amount_currency",  default: "USD", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "impression_token"
+    t.datetime "imported_at"
   end
 
   add_index "contributions", ["campaign_id"], name: "index_contributions_on_campaign_id", using: :btree

@@ -5,13 +5,14 @@ class Contribution < ActiveRecord::Base
   belongs_to :contributor
   belongs_to :campaign
 
-  sorty on: [:pledge_id, :pledged_at, :amount_cents, :created_at, :updated_at],
+  sorty on: [:pledge_id, :pledged_at, :amount_cents, :imported_at],
     references: {contributor: "name", campaign: "name"}
 
   validates :pledge_id, presence: true, numericality: { only_integer: true }, uniqueness: true
   validates :pledged_at, presence: true
   validates :campaign, :contributor, presence: true
   validates :amount, numericality: { greater_than: 0 }, presence: true
+  validates :impression_token, uniqueness: { case_sensitive: false }
 
   monetize :amount_cents
   has_dollar_field :amount

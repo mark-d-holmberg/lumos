@@ -4,6 +4,7 @@ class Master::ImpressionsController < MasterController
 
   def index
     @impressions = @campaign.impressions.ordered.page(params[:page])
+    @contributions = @campaign.contributions.ordered.page(params[:contributions_page])
   end
 
   def show

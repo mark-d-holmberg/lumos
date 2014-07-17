@@ -6,5 +6,6 @@ FactoryGirl.define do
     campaign { |k| k.association(:campaign) }
     amount 1
     amount_dollars nil
+    sequence(:impression_token) { |k| "impression_token-#{k}" }
   end
 end

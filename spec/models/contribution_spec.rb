@@ -36,6 +36,11 @@ RSpec.describe Contribution, type: :model do
       expect(build(:contribution, amount: -1)).to_not be_valid
       expect(build(:contribution, amount: 'abc')).to_not be_valid
     end
+
+    it "should require a unique impression token" do
+      expect(create(:contribution, impression_token: 12345)).to be_valid
+      expect(build(:contribution, impression_token: 12345)).to_not be_valid
+    end
   end
 
   describe "concerning the nightmare of handling US Dollars" do

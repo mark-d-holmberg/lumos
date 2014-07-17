@@ -9,6 +9,7 @@ class Impression < ActiveRecord::Base
   belongs_to :campaign
 
   scope :ordered, -> { order("impressions.created_at ASC") }
+  scope :with_date, -> (date) { where("impressions.created_at >= ? AND impressions.created_at < ?", date.beginning_of_day, date.end_of_day) }
 
   before_create { |record| generate_token(:token) if token.nil? }
 

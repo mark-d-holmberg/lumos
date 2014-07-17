@@ -209,4 +209,24 @@ namespace :populate do
     puts "...done!"
   end
 
+  # Impressions
+  desc "Creates some sample impressions"
+  task :impressions, [:repeat] => [:environment] do |t, args|
+    args.with_defaults(repeat: '5')
+    puts "Generating sample impressions..."
+    args.repeat.to_i.times do |n|
+      impression = Impression.new({
+        email: Faker::Internet.email,
+        campaign: Campaign.active.sample,
+        referral_kind: 'social',
+      })
+
+      if impression.valid?
+        impression.save!
+        puts "Created Impression: #{impression.email}, for Campaign: #{impression.campaign.name}"
+      end
+    end
+    puts "...done!"
+  end
+
 end

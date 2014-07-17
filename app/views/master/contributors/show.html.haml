@@ -1,14 +1,24 @@
-- title "Contributor : #{@contributor.name}", false
+- title @contributor.name, false
 
 .page-header
   %h3.sub-title.inline
-    Contributor : #{@contributor.name}
+    = @contributor.name
     %span
-      = link_to edit_contributor_path(@contributor), class: 'btn btn-warning btn-xs', title: "Edit Contributor" do
-        %span.glyphicon.glyphicon-edit
-.row
-  .col-lg-4
-    %h5.page-header General Information
+      = link_to contributors_path, class: 'btn btn-default btn-xs', title: "All Contributors" do
+        %span.glyphicon.glyphicon-arrow-left
+
+%ul.nav.nav-tabs
+  %li.active
+    = link_to '#general', data: {toggle: 'tab'} do
+      %span.glyphicon.glyphicon-file
+      General
+  %li
+    = link_to '#contributions', data: {toggle: 'tab'} do
+      %span.glyphicon.glyphicon-usd
+      Contributions
+
+.tab-content
+  #general.tab-pane.active
     %table.table.table-hover.table-striped.table-condensed
       %tbody
         %tr
@@ -23,20 +33,30 @@
         %tr
           %th= Contributor.human_attribute_name(:updated_at)
           %td= l(@contributor.updated_at, format: :short)
-  .col-lg-8
-    %h5.page-header Contributions
+        %tr
+          %th Actions
+          %td
+            %span
+              = link_to edit_contributor_path(@contributor), class: 'btn btn-warning btn-xs', title: "Edit Contributor" do
+                %span.glyphicon.glyphicon-edit
+                Edit
+  #contributions.tab-pane
     = paginate @contributions
     %table.table.table-striped.table-hover.table-condensed
       %thead
         %tr
+          %th= Contribution.human_attribute_name(:amount)
+          %th= Contribution.human_attribute_name(:campaign)
           %th= Contribution.human_attribute_name(:pledge_id)
           %th= Contribution.human_attribute_name(:pledged_at)
-          %th= Contribution.human_attribute_name(:campaign)
-          %th= Contribution.human_attribute_name(:amount)
+          %th= Contribution.human_attribute_name(:impression_token)
+          %th= Contribution.human_attribute_name(:imported_at)
       %tbody
         - @contributions.each do |contribution|
           %tr
+            %td= humanized_money_with_symbol(contribution.amount.dollars, no_cents_if_whole: false)
+            %td= link_to contribution.campaign.name, contribution.campaign
             %td= link_to contribution.pledge_id, contribution
             %td= l(contribution.pledged_at, format: :short)
-            %td= link_to contribution.campaign.name, contribution.campaign
-            %td= humanized_money_with_symbol(contribution.amount.dollars, no_cents_if_whole: false)
+            %td= contribution.impression_token
+            %td= l(contribution.imported_at, format: :short)

@@ -32,7 +32,7 @@
   %thead
     %tr
       %th= Teacher.human_attribute_name(:prestigious_name)
-      %th= sorty "last_name", Teacher.human_attribute_name(:last_name), true
+      %th= sorty "last_name", Teacher.human_attribute_name(:last_name), {default: true}
       %th= sorty "first_name", Teacher.human_attribute_name(:first_name)
       %th= sorty "email", Teacher.human_attribute_name(:email)
       %th= sorty "prefix", Teacher.human_attribute_name(:prefix)

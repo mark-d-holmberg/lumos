@@ -28,6 +28,7 @@ class Master::CampaignsController < MasterController
 
   def show
     @contributions = @campaign.contributions.ordered.page(params[:contributions_page])
+    @impressions = @campaign.impressions.ordered.page(params[:impressions_page])
   end
 
   def edit
