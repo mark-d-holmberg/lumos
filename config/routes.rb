@@ -70,6 +70,12 @@ Rails.application.routes.draw do
       # Searching
       resources :searches, only: [:index]
 
+      resources :reports, only: [:index] do
+        collection do
+          match :pending_impressions, via: [:get]
+        end
+      end
+
       match '/', to: 'campaigns#index', via: [:get], as: :master_root
     end
   end

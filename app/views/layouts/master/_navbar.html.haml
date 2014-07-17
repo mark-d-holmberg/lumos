@@ -14,8 +14,8 @@
         = active_link_to contributors_path, active: ["master/contributors"] do
           %span.glyphicon.glyphicon-shopping-cart
           Contributors
-      %li
-        = link_to '#' do
+      %li{class: is_active_link?(reports_path, :inclusive) ? 'active' : nil}
+        = active_link_to reports_path, active: ["master/reports"] do
           %span.glyphicon.glyphicon-signal
           Reports
 
