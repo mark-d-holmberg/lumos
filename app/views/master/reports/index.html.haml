@@ -1,7 +1,10 @@
 - title "Reports"
 
-.col-lg-3
-  .well
-    = link_to pending_impressions_reports_path do
-      %span.glyphicon.glyphicon-map-marker
-      Pending Impressions
+.col-lg-4
+  .well.dashboard-box
+    %h3.text-center.dashboard-box-title
+      = link_to pending_impressions_reports_path do
+        %span.glyphicon.glyphicon-map-marker
+        Pending Impressions
+      .dashboard-box-content
+        Lists all pending impressions.

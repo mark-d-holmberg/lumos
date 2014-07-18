@@ -5,9 +5,9 @@
   - if @impression.new_record?
     = f.association :campaign, include_blank: false
   = f.input :referral_kind
-  = f.input :token
+  = f.input :token, disabled: !@impression.new_record?
 
   .form-group
     .col-sm-offset-2.col-sm-10
       = f.button :submit, class: 'btn btn-primary'
-      /= link_to 'Cancel', campaign_impressions_path(@campaign.to_param), class: 'btn btn-link'
+      = link_to 'Cancel', campaign_impressions_path(@campaign.to_param), class: 'btn btn-link'

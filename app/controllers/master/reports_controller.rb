@@ -4,6 +4,7 @@ class Master::ReportsController < MasterController
   end
 
   def pending_impressions
+    @impressions = Impression.ordered.page(params[:page])
   end
 
 end
