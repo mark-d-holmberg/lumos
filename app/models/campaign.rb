@@ -136,12 +136,17 @@ class Campaign < ActiveRecord::Base
   end
 
   def contributions_total(options={})
-    if options.try(:[], :dollars).present?
-      # Dollars
-      contributions.map { |k| k.amount }.sum.dollars
+    if contributions.present?
+      if options.try(:[], :dollars).present?
+        # Dollars
+        contributions.map { |k| k.amount }.sum.dollars
+      else
+        # Cents
+        contributions.map { |k| k.amount }.sum.cents
+      end
     else
-      # Cents
-      contributions.map { |k| k.amount }.sum.cents
+      # No contributions
+      0.to_money
     end
   end
 
