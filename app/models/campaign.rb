@@ -146,7 +146,7 @@ class Campaign < ActiveRecord::Base
       end
     else
       # No contributions
-      0.to_money
+      0
     end
   end
 
