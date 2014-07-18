@@ -240,6 +240,14 @@ RSpec.describe Campaign, type: :model do
       }.to_not change(Campaign, :count)
     end
 
+    it "should not be destroyable if it has impressions" do
+      campaign = create(:campaign, name: 'Campaign', active: false)
+      impression = create(:impression, campaign: campaign)
+      expect {
+        campaign.destroy
+      }.to_not change(Campaign, :count)
+    end
+
     it "should copy over the goal_amount_cents from the product" do
       product = create(:product, price_dollars: 13.37)
       campaign = build(:campaign, name: 'Campaign', product: product, goal_amount_cents: 1)

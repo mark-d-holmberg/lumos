@@ -159,6 +159,9 @@ class Campaign < ActiveRecord::Base
     elsif contributions.present?
       self.errors.add(:base, "cannot remove a Campaign with associated Contributions")
       false
+    elsif impressions.present?
+      self.errors.add(:base, "cannot remove a Campaign with associated Impressions")
+      false
     end
   end
 
