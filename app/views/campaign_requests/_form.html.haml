@@ -1,0 +1,15 @@
+= simple_form_for(@campaign_request) do |f|
+  = f.error_notification
+
+  = f.association :state, collection: State.ordered
+  = f.input :district_name, label: 'District Name'
+  = f.input :school_name, label: 'School Name'
+  = f.input :teacher_name, label: 'Teacher Name'
+  = f.input :campaign_name, label: 'Campaign Name'
+  = f.input :school_wide, as: :select, include_blank: false
+  = f.input :email
+
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.button :submit, 'Create Campaign Request', class: 'btn btn-primary'
+      = link_to 'Cancel', landing_new_campaigns_url, class: 'btn btn-link'

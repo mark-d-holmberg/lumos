@@ -41,6 +41,9 @@ LumosApi =
           $.each data, (index, element) ->
             $district_element.append($('<option>').text(element.name).attr('value', element.id));
 
+          # Add a 'Not Listed' step
+          $district_element.append($('<option>').text("District Not Listed").attr('value', '-1'));
+
           # Remove the disabled
           $district_element.prop('disabled', false)
 
@@ -153,9 +156,13 @@ jQuery ->
       # See if there's actually a value
       $district_option_value = $district_option.val()
 
-      # Make sure we're not on the blank option
-      if $district_option_value.length
-        LumosApi.GetSchools($district_option_value)
+      if $district_option_value is '-1'
+        window.location = $(this).data("new-campaign-request-url")
+      else
+        # Make sure we're not on the blank option
+        if $district_option_value.length
+          LumosApi.GetSchools($district_option_value)
+
 
   # Bind the stuff for creating a new campaign
   $("form#landing_new_campaign_form select#campaign_campaignable_type").change ->

@@ -1,0 +1,35 @@
+- title @campaign_request.campaign_name
+
+%ul.nav.nav-tabs
+  %li.active
+    = link_to '#general', data: {toggle: 'tab'} do
+      %span.glyphicon.glyphicon-file
+      General
+
+.tab-content
+  #general.tab-pane.active
+    %table.table.table-hover.table-striped.table-condensed
+      %tbody
+        %tr
+          %th= CampaignRequest.human_attribute_name(:campaign_name)
+          %td= @campaign_request.campaign_name
+          %th= CampaignRequest.human_attribute_name(:email)
+          %td= @campaign_request.email
+        %tr
+          %th= CampaignRequest.human_attribute_name(:state)
+          %td= @campaign_request.state.name
+          %th= CampaignRequest.human_attribute_name(:district_name)
+          %td= @campaign_request.district_name
+        %tr
+          %th= CampaignRequest.human_attribute_name(:school_name)
+          %td= @campaign_request.school_name
+          %th= CampaignRequest.human_attribute_name(:teacher_name)
+          %td= @campaign_request.teacher_name
+        %tr
+          %th= CampaignRequest.human_attribute_name(:school_wide)
+          %td= @campaign_request.school_wide? ? 'Yes' : 'No'
+          %th= CampaignRequest.human_attribute_name(:slug)
+          %td
+            = link_to landing_campaign_request_url(@campaign_request.to_param, subdomain: 'landing'), class: 'btn btn-link', title: 'View Public Campaign Request' do
+              = @campaign_request.slug
+              %span.glyphicon.glyphicon-share-alt

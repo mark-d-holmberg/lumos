@@ -1,0 +1,35 @@
+- title "Campaign Requests"
+
+= paginate @campaign_requests
+
+%table.table.table-striped.table-hover.table-condensed
+  %thead
+    %tr
+      %th= CampaignRequest.human_attribute_name(:campaign_name)
+      %th= CampaignRequest.human_attribute_name(:email)
+      %th= CampaignRequest.human_attribute_name(:state)
+      %th= CampaignRequest.human_attribute_name(:district_name)
+      %th= CampaignRequest.human_attribute_name(:school_name)
+      %th= CampaignRequest.human_attribute_name(:teacher_name)
+      %th= CampaignRequest.human_attribute_name(:school_wide)
+      %th
+      %th
+
+  %tbody
+    - @campaign_requests.each do |campaign_request|
+      %tr
+        %td= link_to campaign_request.campaign_name, campaign_request
+        %td= mail_to campaign_request.email
+        %td= link_to campaign_request.state.name, campaign_request.state
+        %td= campaign_request.district_name
+        %td= campaign_request.school_name
+        %td= campaign_request.teacher_name
+        %td= campaign_request.school_wide? ? 'Yes' : 'No'
+        %td
+          = link_to edit_campaign_request_path(campaign_request), class: 'btn btn-warning btn-xs', title: 'Edit Campaign Request' do
+            %span.glyphicon.glyphicon-edit
+        %td
+          = link_to campaign_request, method: :delete, data: { confirm: 'Are you sure?' }, id: "campaign_request_destroy_#{campaign_request.id}", title: "Remove Campaign Request", class: 'btn btn-danger btn-xs' do
+            %span.glyphicon.glyphicon-remove
+
+= paginate @campaign_requests

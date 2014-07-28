@@ -2,7 +2,7 @@
   = f.error_notification
 
   = f.association :state, collection: State.ordered.map { |k| [k.name, k.id, {data: {abbr: k.abbr}}] }, include_blank: 'Select a State', input_html: {data: {url: api_v1_districts_url}}
-  = f.association :district, include_blank: 'Select a District', collection: [], disabled: true, input_html: { data: {url: api_v1_district_schools_url(district_id: ':district_id')} }
+  = f.association :district, include_blank: 'Select a District', collection: [], disabled: true, input_html: { data: {new_campaign_request_url: new_campaign_request_url, url: api_v1_district_schools_url(district_id: ':district_id')} }
   = f.association :school, include_blank: 'Select a School', collection: [], disabled: true, input_html: { data: {url: api_v1_district_school_campaigns_url(district_id: ':district_id', school_id: ':school_id')} }
   = f.input :campaignable_type, as: :select, include_blank: 'Select Campaign Type', collection: Campaign.campaignable_types, label: 'Campaign Type'
 

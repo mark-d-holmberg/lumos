@@ -80,6 +80,8 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :campaign_requests, except: [:new, :create], param: 'slug'
+
       match '/', to: 'campaigns#index', via: [:get], as: :master_root
     end
   end
@@ -104,6 +106,14 @@ Rails.application.routes.draw do
         match :thank_you, via: [:get, :post]
       end
       resources :impressions, only: [:create], as: :landing_impressions
+    end
+
+    # New/create have to come before 'show'
+    resources :campaign_requests, only: [:new, :create], param: 'slug'
+    resources :campaign_requests, only: [], param: 'slug' do
+      member do
+        match :show, via: [:get], as: :landing
+      end
     end
   end
 

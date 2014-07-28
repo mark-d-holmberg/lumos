@@ -48,7 +48,10 @@
           %td= humanized_money_with_symbol(@campaign.goal_amount.dollars, no_cents_if_whole: false)
         %tr
           %th= Campaign.human_attribute_name(:slug)
-          %td= link_to @campaign.slug, landing_campaign_url(@campaign.to_param, subdomain: 'landing')
+          %td
+            = link_to landing_campaign_url(@campaign.to_param, subdomain: 'landing'), class: 'btn btn-link', title: 'View Public Campaign' do
+              = @campaign.slug
+              %span.glyphicon.glyphicon-share-alt
           %th= Campaign.human_attribute_name(:state)
           %td
             - if @campaign.state.present?

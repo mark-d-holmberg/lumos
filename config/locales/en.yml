@@ -32,6 +32,15 @@ en:
         slug: 'Slug'
         state: 'State'
         teacher: 'Teacher'
+      campaign_request:
+        campaign_name: 'Campaign'
+        district_name: 'District'
+        email: 'Email'
+        school_name: 'School'
+        school_wide: 'School Based'
+        slug: 'Slug'
+        state: 'State'
+        teacher_name: 'Teacher'
       contribution:
         amount: 'Amount'
         amount_cents: 'Amount (cents)'

@@ -1,0 +1,54 @@
+- title @campaign_request.campaign_name, false
+
+.page-header
+  %h3.sub-title.inline
+    = @campaign_request.campaign_name
+    %span
+      = link_to campaign_requests_path, class: 'btn btn-default btn-xs', title: "All Campaign Requests" do
+        %span.glyphicon.glyphicon-arrow-left
+
+%ul.nav.nav-tabs
+  %li.active
+    = link_to '#general', data: {toggle: 'tab'} do
+      %span.glyphicon.glyphicon-file
+      General
+
+.tab-content
+  #general.tab-pane.active
+    %table.table.table-hover.table-striped.table-condensed
+      %tbody
+        %tr
+          %th= CampaignRequest.human_attribute_name(:campaign_name)
+          %td= @campaign_request.campaign_name
+          %th= CampaignRequest.human_attribute_name(:email)
+          %td= mail_to @campaign_request.email
+        %tr
+          %th= CampaignRequest.human_attribute_name(:state)
+          %td= link_to @campaign_request.state.name, @campaign_request.state
+          %th= CampaignRequest.human_attribute_name(:district_name)
+          %td= @campaign_request.district_name
+        %tr
+          %th= CampaignRequest.human_attribute_name(:school_name)
+          %td= @campaign_request.school_name
+          %th= CampaignRequest.human_attribute_name(:teacher_name)
+          %td= @campaign_request.teacher_name
+        %tr
+          %th= CampaignRequest.human_attribute_name(:school_wide)
+          %td= @campaign_request.school_wide? ? 'Yes' : 'No'
+          %th= CampaignRequest.human_attribute_name(:slug)
+          %td
+            = link_to landing_campaign_request_url(@campaign_request.to_param, subdomain: 'landing'), class: 'btn btn-link', title: 'View Public Campaign Request' do
+              = @campaign_request.slug
+              %span.glyphicon.glyphicon-share-alt
+        %tr
+          %th= CampaignRequest.human_attribute_name(:created_at)
+          %td= l(@campaign_request.created_at, format: :short)
+          %th= CampaignRequest.human_attribute_name(:updated_at)
+          %td= l(@campaign_request.updated_at, format: :short)
+        %tr
+          %th Actions
+          %td
+            %span
+              = link_to edit_campaign_request_path(@campaign_request), class: 'btn btn-warning btn-xs', title: "Edit Campaign Request" do
+                %span.glyphicon.glyphicon-edit
+                Edit
