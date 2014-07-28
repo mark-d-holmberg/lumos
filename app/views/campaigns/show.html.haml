@@ -19,7 +19,7 @@
             = f.button :submit, 'Contribute', class: 'btn btn-primary'
 
     .col-lg-6.c-graphs
-      = image_tag(Gchart.pie_3d(data: [@campaign.contributions_total(dollars: false), @campaign.goal_amount.cents], slice_colors: '00d6ea,cfd0d0', title: 'Goal vs. Raised', size: '400x200', labels: ['Raised', 'Goal']))
+      = image_tag(Gchart.pie_3d(data: [@campaign.contributions_total(dollars: false), @campaign.goal_amount.cents], slice_colors: '00d6ea,cfd0d0', title: 'Goal Amount Raised', size: '400x200'))
 
 .container.funds
   .row
