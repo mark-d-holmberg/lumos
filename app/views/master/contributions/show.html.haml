@@ -15,7 +15,11 @@
       %td= @contribution.pledge_id
     %tr
       %th= Contribution.human_attribute_name(:pledged_at)
-      %td= l(@contribution.pledged_at, format: :short)
+      %td
+        - if @contribution.pledged_at.present?
+          = l(@contribution.pledged_at, format: :short)
+        - else
+          N/A
     %tr
       %th= Contribution.human_attribute_name(:contributor)
       %td

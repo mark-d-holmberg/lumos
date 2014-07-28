@@ -34,9 +34,17 @@
           - else
             N/A
         %td= link_to contribution.pledge_id, contribution
-        %td= l(contribution.pledged_at, format: :short)
+        %td
+          - if contribution.pledged_at.present?
+            = l(contribution.pledged_at, format: :short)
+          - else
+            N/A
         %td= contribution.impression_token
-        %td= l(contribution.imported_at, format: :short)
+        %td
+          - if contribution.imported_at.present?
+            = l(contribution.imported_at, format: :short)
+          - else
+            N/A
         %td
           = link_to edit_contribution_path(contribution), class: 'btn btn-warning btn-xs', title: 'Edit Contribution' do
             %span.glyphicon.glyphicon-edit

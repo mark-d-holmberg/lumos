@@ -24,6 +24,10 @@
             = contribution.contributor.name
           - else
             N/A
-        %td= l(contribution.pledged_at, format: :short)
+        %td
+          - if contribution.pledged_at.present?
+            = l(contribution.pledged_at, format: :short)
+          - else
+            N/A
 
 = paginate @contributions

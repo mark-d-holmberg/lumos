@@ -115,6 +115,14 @@
             %td= humanized_money_with_symbol(contribution.amount.dollars, no_cents_if_whole: false)
             %td= link_to contribution.contributor.name, contribution.contributor
             %td= link_to contribution.pledge_id, contribution
-            %td= l(contribution.pledged_at, format: :short)
+            %td
+              - if contribution.pledged_at.present?
+                = l(contribution.pledged_at, format: :short)
+              - else
+                N/A
             %td= contribution.impression_token
-            %td= l(contribution.imported_at, format: :short)
+            %td
+              - if contribution.imported_at.present?
+                = l(contribution.imported_at, format: :short)
+              - else
+                N/A
