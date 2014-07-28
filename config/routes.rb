@@ -47,7 +47,11 @@ Rails.application.routes.draw do
       end
 
       resources :schools do
-        resources :teachers
+        resources :teachers do
+          member do
+            match :reassign, via: [:get, :post]
+          end
+        end
       end
 
       resources :campaigns, param: 'slug', except: [:new, :create] do

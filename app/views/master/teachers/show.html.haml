@@ -57,6 +57,12 @@
         %tr
           %th= Teacher.human_attribute_name(:updated_at)
           %td= l(@teacher.updated_at, format: :short)
+        %tr
+          %th Actions
+          %td
+            = link_to reassign_school_teacher_path(@school, @teacher), class: 'btn btn-info btn-xs', title: "Reassign Teacher" do
+              %span.glyphicon.glyphicon-shuffle
+              Reassign Teacher
 
   #campaigns.tab-pane
     %div#button-toolbar

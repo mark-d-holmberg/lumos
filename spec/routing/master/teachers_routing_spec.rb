@@ -32,5 +32,13 @@ RSpec.describe Master::TeachersController, type: :routing do
       expect(delete: "#{url}/teachers/1").to route_to("master/teachers#destroy", id: "1", school_id: "5")
     end
 
+    it "routes to #reassign via GET" do
+      expect(get: "#{url}/teachers/1/reassign").to route_to("master/teachers#reassign", id: "1", school_id: "5")
+    end
+
+    it "routes to #reassign via POST" do
+      expect(post: "#{url}/teachers/1/reassign").to route_to("master/teachers#reassign", id: "1", school_id: "5")
+    end
+
   end
 end

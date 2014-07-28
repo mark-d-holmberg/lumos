@@ -1,0 +1,18 @@
+- title "Reassign Teacher"
+
+%p.alert.alert-success
+  The following Reassignment process will allow you to transfer one teacher
+  and all their associated campaigns from one school into a different school.
+  The appropriate States and Districts will automatically be updated.
+
+= simple_form_for :reassign, url: reassign_school_teacher_path(@school, @teacher), html: { id: 'reassign_teacher' } do |f|
+  = f.error_notification
+
+  = f.input :state_id, as: :select, collection: State.ordered.map { |k| [k.name, k.id, {data: {abbr: k.abbr}}] }, include_blank: 'Select State', input_html: { data: {url: api_v1_districts_url} }
+  = f.input :district_id, as: :select, collection: [], disabled: true, include_blank: 'Select District', input_html: { data: { url: api_v1_district_schools_url(district_id: ':district_id')}}
+  = f.input :new_school_id, as: :select, collection: [], disabled: true, include_blank: 'Select New School', label: 'New School'
+
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.button :submit, 'Reassign Teacher', class: 'btn btn-primary'
+      = link_to 'Cancel', @teacher.new_record? ? school_teachers_path(@school) : school_teacher_path(@school, @teacher), class: 'btn btn-link'

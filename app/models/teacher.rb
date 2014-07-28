@@ -69,6 +69,36 @@ class Teacher < ActiveRecord::Base
     }
   end
 
+  def reassign(new_school_or_new_school_params)
+    # Bail out if they don't pass us stuff
+    return false if new_school_or_new_school_params.blank?
+
+    if new_school_or_new_school_params.is_a?(School)
+      # Do nothing, we're cool
+      new_school = new_school_or_new_school_params
+    elsif new_school_or_new_school_params.is_a?(Hash)
+      new_school_id = new_school_or_new_school_params.try(:[], :new_school_id)
+      new_school = School.find(new_school_id)
+    else
+      # Nothing found
+      new_school = nil
+    end
+
+    if new_school.present?
+      # Update all their campaigns
+      campaigns.update_all({school_id: new_school.id, district_id: new_school.district.id, state_id: new_school.district.state.id})
+
+      # Update my school_id
+      update(school_id: new_school.id)
+
+      # Return the new school
+      new_school
+    else
+      # No school found
+      nil
+    end
+  end
+
 
   private
 

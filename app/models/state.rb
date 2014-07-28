@@ -36,6 +36,10 @@ class State < ActiveRecord::Base
     abbr
   end
 
+  def ordered_districts
+    districts.ordered
+  end
+
 
   private
 

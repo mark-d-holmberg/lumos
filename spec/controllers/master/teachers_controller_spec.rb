@@ -6,6 +6,7 @@ RSpec.describe Master::TeachersController, type: :controller do
     allow(controller).to receive(:authenticate_user!).and_return(true)
     allow(controller).to receive(:current_user).and_return(create(:user))
     @school = create(:school, name: 'Snow Canyon')
+    @new_school = create(:school, name: 'Desert Hills')
   end
 
   # This should return the minimal set of attributes required to create a valid
@@ -57,6 +58,14 @@ RSpec.describe Master::TeachersController, type: :controller do
     it "assigns the requested teacher as @teacher" do
       teacher = Teacher.create! valid_attributes
       get :edit, {school_id: @school.to_param, id: teacher.to_param}, valid_session
+      expect(assigns(:teacher)).to eq(teacher)
+    end
+  end
+
+  describe "GET reassign" do
+    it "assigns the requested teacher as @teacher" do
+      teacher = Teacher.create! valid_attributes
+      get :reassign, {school_id: @school.to_param, id: teacher.to_param}, valid_session
       expect(assigns(:teacher)).to eq(teacher)
     end
   end
@@ -135,6 +144,49 @@ RSpec.describe Master::TeachersController, type: :controller do
         teacher = Teacher.create! valid_attributes
         put :update, {school_id: @school.to_param, id: teacher.to_param, teacher: invalid_attributes}, valid_session
         expect(response).to render_template("edit")
+      end
+    end
+  end
+
+  describe "POST reassign" do
+    describe "with valid params" do
+      let(:new_attributes) {
+        {
+          new_school_id: @new_school.id,
+        }
+      }
+
+      it "reassigns the requested teacher" do
+        teacher = Teacher.create! valid_attributes
+        post :reassign, {school_id: @school.to_param, id: teacher.to_param, reassign: new_attributes}, valid_session
+        teacher.reload
+        expect(teacher.school_id).to eql(@new_school.id)
+      end
+
+      it "assigns the requested teacher as @teacher" do
+        teacher = Teacher.create! valid_attributes
+        post :reassign, {school_id: @school.to_param, id: teacher.to_param, reassign: new_attributes}, valid_session
+        expect(assigns(:teacher)).to eq(teacher)
+      end
+
+      it "redirects to the teacher" do
+        teacher = Teacher.create! valid_attributes
+        post :reassign, {school_id: @school.to_param, id: teacher.to_param, reassign: new_attributes}, valid_session
+        expect(response).to redirect_to(school_teacher_url(@new_school.id, teacher))
+      end
+    end
+
+    describe "with invalid params" do
+      it "assigns the teacher as @teacher" do
+        teacher = Teacher.create! valid_attributes
+        post :reassign, {school_id: @school.to_param, id: teacher.to_param, reassign: invalid_attributes}, valid_session
+        expect(assigns(:teacher)).to eq(teacher)
+      end
+
+      it "re-renders the 'reassign' template" do
+        teacher = Teacher.create! valid_attributes
+        post :reassign, {school_id: @school.to_param, id: teacher.to_param, reassign: invalid_attributes}, valid_session
+        expect(response).to render_template("reassign")
       end
     end
   end

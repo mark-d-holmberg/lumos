@@ -8,7 +8,6 @@ class Campaign < ActiveRecord::Base
   belongs_to :school
   belongs_to :product
   belongs_to :campaignable, polymorphic: true
-  belongs_to :teacher, -> { where("campaigns.campaignable_type = 'Teacher'") }, foreign_key: 'campaignable_id'
 
   has_many :contributions
   has_many :impressions

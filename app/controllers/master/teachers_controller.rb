@@ -1,6 +1,6 @@
 class Master::TeachersController < MasterController
   before_action :set_school
-  before_action :set_teacher, only: [:show, :edit, :update, :destroy]
+  before_action :set_teacher, only: [:show, :edit, :update, :destroy, :reassign]
 
   def index
     @teachers = @school.teachers
@@ -49,6 +49,21 @@ class Master::TeachersController < MasterController
     redirect_to school_teachers_url, notice: 'Teacher was successfully removed.'
   end
 
+  def reassign
+    if request.post?
+      # Update the information
+      @new_school = @teacher.reassign(reassign_params)
+
+      if @new_school
+        redirect_to school_teacher_url(@new_school, @teacher), notice: 'Teacher was successfully reassigned.'
+      else
+        render :reassign
+      end
+    else
+      # GET stuff here
+    end
+  end
+
 
   private
 
@@ -62,6 +77,10 @@ class Master::TeachersController < MasterController
 
   def safe_params
     params.require(:teacher).permit(:first_name, :last_name, :email, :prefix)
+  end
+
+  def reassign_params
+    params.require(:reassign).permit(:new_school_id)
   end
 
 end

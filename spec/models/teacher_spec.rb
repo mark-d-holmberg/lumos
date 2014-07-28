@@ -113,4 +113,41 @@ RSpec.describe Teacher, type: :model do
       expect(build(:teacher, first_name: 'Mark', last_name: 'Holmberg', prefix: 'Dark Lord').prestigious_name).to eql("Dark Lord Mark Holmberg")
     end
   end
+
+  describe "concernign reassigning teachers to a different school, state, or district" do
+    before(:each) do
+      @utah = create(:state, name: 'Utah', abbr: 'UT')
+      @nevada = create(:state, name: 'Nevada', abbr: 'NV')
+      @district_1 = create(:district, state: @utah, name: 'Washington County')
+      @district_2 = create(:district, state: @nevada, name: 'Mojave County')
+      @school_1 = create(:school, name: 'Snow Canyon', district: @district_1)
+      @school_2 = create(:school, name: 'Desert Hills', district: @district_2)
+      @teacher = create(:teacher, first_name: 'Mark', last_name: 'Holmberg', prefix: 'Dark Overlord', school: @school_1)
+      @campaign_1 = create(:campaign, campaignable: @teacher, school: @school_1, district: @district_1, state: @utah, school_wide: false)
+    end
+
+    it "should have the associations set up properly for this test" do
+      expect(@utah.districts).to match_array([@district_1])
+      expect(@nevada.districts).to match_array([@district_2])
+      expect(@utah.campaigns).to match_array([@campaign_1])
+      expect(@district_1.schools).to match_array([@school_1])
+      expect(@district_2.schools).to match_array([@school_2])
+      expect(@teacher.school).to eq(@school_1)
+      expect(@teacher.campaigns).to match_array([@campaign_1])
+      expect(@campaign_1.school).to eq(@school_1)
+    end
+
+    it "should move over all their campaigns" do
+      @teacher.reassign(@school_2)
+      @campaign_1.reload
+      expect(@campaign_1.school).to eq(@school_2)
+      expect(@campaign_1.district).to eq(@district_2)
+      expect(@campaign_1.state).to eq(@nevada)
+    end
+
+    it "should update the teacher's school_id" do
+      @teacher.reassign(@school_2)
+      expect(@teacher.school).to eq(@school_2)
+    end
+  end
 end
