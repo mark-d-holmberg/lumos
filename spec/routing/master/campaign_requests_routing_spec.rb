@@ -24,5 +24,13 @@ RSpec.describe Master::CampaignRequestsController, type: :routing do
       expect(delete: "#{url}/campaign_requests/abc123").to route_to("master/campaign_requests#destroy", slug: "abc123")
     end
 
+    it "routes to #convert via GET" do
+      expect(get: "#{url}/campaign_requests/abc123/convert").to route_to("master/campaign_requests#convert", slug: "abc123")
+    end
+
+    it "routes to #convert via POST" do
+      expect(post: "#{url}/campaign_requests/abc123/convert").to route_to("master/campaign_requests#convert", slug: "abc123")
+    end
+
   end
 end

@@ -11,6 +11,9 @@ Rails.application.routes.draw do
           resources :campaigns, only: [:index]
         end
       end
+      resources :schools, only: [] do
+        resources :teachers, only: [:index]
+      end
     end
   end
 
@@ -80,7 +83,11 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :campaign_requests, except: [:new, :create], param: 'slug'
+      resources :campaign_requests, except: [:new, :create], param: 'slug' do
+        member do
+          match :convert, via: [:get, :post]
+        end
+      end
 
       match '/', to: 'campaigns#index', via: [:get], as: :master_root
     end

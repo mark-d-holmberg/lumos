@@ -6,6 +6,7 @@ RSpec.describe Master::CampaignRequestsController, type: :controller do
     allow(controller).to receive(:authenticate_user!).and_return(true)
     allow(controller).to receive(:current_user).and_return(create(:user))
     @state = create(:state, name: 'Utah', abbr: 'UT')
+    @district = create(:district, state: @state, name: 'Washington District')
   end
 
   # This should return the minimal set of attributes required to create a valid
@@ -105,6 +106,48 @@ RSpec.describe Master::CampaignRequestsController, type: :controller do
       campaign_request = CampaignRequest.create! valid_attributes
       delete :destroy, {slug: campaign_request.to_param}, valid_session
       expect(response).to redirect_to(campaign_requests_url)
+    end
+  end
+
+  describe "GET convert" do
+    it "assigns the requested campaign_request as @campaign_request" do
+      campaign_request = CampaignRequest.create! valid_attributes
+      get :convert, {slug: campaign_request.to_param}, valid_session
+      expect(assigns(:campaign_request)).to eq(campaign_request)
+    end
+  end
+
+  describe "POST convert" do
+    describe "with valid params" do
+      let(:new_attributes) {
+        {"state_id"=> @state.id, "school_wide"=>"false", "email"=>"whatevadads@example.com", "associations"=>{"district_id"=> @district.id, "school_id"=>""}, "school_name"=>"Mojave Desert Hills", "teacher_name"=>"Herp Derp", "campaign_name"=>"Jew Balls Campaign for Stuff"}
+      }
+
+      it "assigns the requested campaign_request as @campaign_request" do
+        campaign_request = CampaignRequest.create! valid_attributes
+        post :convert, {slug: campaign_request.to_param, convert_campaign_request: new_attributes}, valid_session
+        expect(assigns(:campaign_request)).to eq(campaign_request)
+      end
+
+      it "redirects to the campaign requests index" do
+        campaign_request = CampaignRequest.create! valid_attributes
+        post :convert, {slug: campaign_request.to_param, convert_campaign_request: new_attributes}, valid_session
+        expect(response).to redirect_to(campaign_requests_url)
+      end
+    end
+
+    describe "with invalid params" do
+      it "assigns the campaign_request as @campaign_request" do
+        campaign_request = CampaignRequest.create! valid_attributes
+        post :convert, {slug: campaign_request.to_param, convert_campaign_request: invalid_attributes}, valid_session
+        expect(assigns(:campaign_request)).to eq(campaign_request)
+      end
+
+      it "re-renders the 'convert' template" do
+        campaign_request = CampaignRequest.create! valid_attributes
+        post :convert, {slug: campaign_request.to_param, convert_campaign_request: invalid_attributes}, valid_session
+        expect(response).to render_template("convert")
+      end
     end
   end
 

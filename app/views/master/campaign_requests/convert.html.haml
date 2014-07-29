@@ -1,0 +1,36 @@
+- title "Convert Campaign Request"
+
+%p.alert.alert-success
+  The following Conversion process will allow you to take an existing
+  Campaign Request and create new Districts or Schools, or assign existing
+  Districts and Schools to this request. Once created, an automated email will
+  be dispatched informing the Campaign Request author that their new campaign
+  has been created.
+
+= simple_form_for @campaign_request, as: :convert_campaign_request, method: :post, url: convert_campaign_request_path(@campaign_request), html: { id: 'convert_campaign_request' } do |f|
+  = f.error_notification
+
+  %h4.page-header General
+  -# We know the state
+  = f.input :state_id, as: :select, collection: State.ordered, include_blank: 'Select State'
+  = f.input :school_wide, as: :select, include_blank: false
+  = f.input :email
+
+  -# Choose an existing District, School, or Teacher
+  %h4.page-header Manual Override
+  = f.simple_fields_for :associations do |k|
+    = k.input :district_id, as: :select, collection: @campaign_request.state.districts.ordered, disabled: false, include_blank: 'Select District', input_html: { data: { url: api_v1_district_schools_url(district_id: ':district_id')}}
+    = k.input :school_id, as: :select, collection: [], include_blank: 'Select School', disabled: true, input_html: { data: { url: api_v1_school_teachers_url(school_id: ':school_id')}}
+    = k.input :teacher_id, as: :select, collection: [], include_blank: 'Select Teacher', disabled: true
+
+  -# Exisitng Fields
+  %h4.page-header Use Existing
+  = f.input :district_name, label: 'District Name'
+  = f.input :school_name, label: 'School Name'
+  = f.input :teacher_name, label: 'Teacher Name'
+  = f.input :campaign_name, label: 'Campaign Name'
+
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.button :submit, 'Convert Campaign Request', class: 'btn btn-primary'
+      = link_to 'Cancel', campaign_request_path(@campaign_request), class: 'btn btn-link'

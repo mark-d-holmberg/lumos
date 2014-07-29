@@ -13,7 +13,7 @@ class CampaignRequestsController < ApplicationController
     @campaign_request = CampaignRequest.new(safe_params)
 
     if @campaign_request.save
-      redirect_to @campaign_request, notice: 'Campaign request was successfully created.'
+      redirect_to @campaign_request, notice: 'Campaign Request was successfully created.'
     else
       render :new
     end
