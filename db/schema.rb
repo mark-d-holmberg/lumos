@@ -11,21 +11,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140728204240) do
+ActiveRecord::Schema.define(version: 20140730203311) do
 
   create_table "campaign_requests", force: true do |t|
     t.integer  "state_id"
     t.string   "district_name"
     t.string   "school_name"
-    t.string   "teacher_name"
     t.string   "campaign_name"
-    t.boolean  "school_wide",   default: false
+    t.boolean  "school_wide",          default: false
     t.string   "email"
     t.string   "slug"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "teacher_first_name"
+    t.string   "teacher_last_name"
+    t.integer  "product_id"
+    t.string   "physical_address"
+    t.string   "physical_address_ext"
+    t.string   "physical_city"
+    t.string   "physical_state"
+    t.string   "physical_postal_code"
+    t.integer  "campaign_id"
+    t.datetime "approved_at"
   end
 
+  add_index "campaign_requests", ["campaign_id"], name: "index_campaign_requests_on_campaign_id", using: :btree
+  add_index "campaign_requests", ["product_id"], name: "index_campaign_requests_on_product_id", using: :btree
   add_index "campaign_requests", ["state_id"], name: "index_campaign_requests_on_state_id", using: :btree
 
   create_table "campaigns", force: true do |t|

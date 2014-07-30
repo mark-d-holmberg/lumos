@@ -3,6 +3,10 @@ class CampaignRequestsController < ApplicationController
   before_action :set_campaign_request, only: [:show]
 
   def show
+    if @campaign_request.campaign.present?
+      # Redirect this stuff
+      redirect_to landing_campaign_url(@campaign_request.campaign.to_param, subdomain: 'landing'), notice: 'Campaign Request was approved!'
+    end
   end
 
   def new
@@ -27,7 +31,22 @@ class CampaignRequestsController < ApplicationController
   end
 
   def safe_params
-    safe_attributes = [:state_id, :district_name, :school_name, :teacher_name, :campaign_name, :school_wide, :email]
+    safe_attributes = [
+      :campaign_name,
+      :district_name,
+      :email,
+      :physical_address,
+      :physical_address_ext,
+      :physical_city,
+      :physical_postal_code,
+      :physical_state,
+      :product_id,
+      :school_name,
+      :school_wide,
+      :state_id,
+      :teacher_first_name,
+      :teacher_last_name,
+    ]
     params.require(:campaign_request).permit(safe_attributes)
   end
 

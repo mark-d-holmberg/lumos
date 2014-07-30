@@ -30,28 +30,46 @@
         %tr
           %th= CampaignRequest.human_attribute_name(:school_name)
           %td= @campaign_request.school_name
-          %th= CampaignRequest.human_attribute_name(:teacher_name)
-          %td= @campaign_request.teacher_name
+          %th= CampaignRequest.human_attribute_name(:teacher_first_name)
+          %td= @campaign_request.teacher_first_name
         %tr
+          %th= CampaignRequest.human_attribute_name(:teacher_last_name)
+          %td= @campaign_request.teacher_last_name
           %th= CampaignRequest.human_attribute_name(:school_wide)
           %td= @campaign_request.school_wide? ? 'Yes' : 'No'
-          %th= CampaignRequest.human_attribute_name(:slug)
+        %tr
+          %th= CampaignRequest.human_attribute_name(:approved_at)
           %td
-            = link_to landing_campaign_request_url(@campaign_request.to_param, subdomain: 'landing'), class: 'btn btn-link', title: 'View Public Campaign Request' do
-              = @campaign_request.slug
-              %span.glyphicon.glyphicon-share-alt
+            - if @campaign_request.approved_at.present?
+              = l(@campaign_request.approved_at, format: :short)
+            - else
+              N/A
+          %th= CampaignRequest.human_attribute_name(:campaign)
+          %td
+            - if @campaign_request.campaign.present?
+              = link_to @campaign_request.campaign.name, @campaign_request.campaign
+            - else
+              N/A
         %tr
           %th= CampaignRequest.human_attribute_name(:created_at)
           %td= l(@campaign_request.created_at, format: :short)
           %th= CampaignRequest.human_attribute_name(:updated_at)
           %td= l(@campaign_request.updated_at, format: :short)
         %tr
+          %th= CampaignRequest.human_attribute_name(:slug)
+          %td
+            = link_to landing_campaign_request_url(@campaign_request.to_param, subdomain: 'landing'), target: '_blank', class: 'btn btn-link', title: 'View Public Campaign Request' do
+              = @campaign_request.slug
+              %span.glyphicon.glyphicon-share-alt
           %th Actions
           %td
             %span
-              = link_to edit_campaign_request_path(@campaign_request), class: 'btn btn-warning btn-xs', title: "Edit Campaign Request" do
-                %span.glyphicon.glyphicon-edit
-                Edit
-              = link_to convert_campaign_request_path(@campaign_request), class: 'btn btn-primary btn-xs', title: "Convert Campaign Request" do
-                %span.glyphicon.glyphicon-retweet
-                Convert
+              - if @campaign_request.approved_at.blank?
+                -# Don't edit already converted stuff
+                = link_to edit_campaign_request_path(@campaign_request), class: 'btn btn-warning btn-xs', title: "Edit Campaign Request" do
+                  %span.glyphicon.glyphicon-edit
+                  Edit
+                -# Don't convert already converted campaigns
+                = link_to convert_campaign_request_path(@campaign_request), class: 'btn btn-primary btn-xs', title: "Convert Campaign Request" do
+                  %span.glyphicon.glyphicon-retweet
+                  Convert

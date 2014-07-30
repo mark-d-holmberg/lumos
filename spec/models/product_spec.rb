@@ -60,6 +60,13 @@ RSpec.describe Product, type: :model do
       campaign_2 = create(:school_based_campaign, product: product, school_wide: true)
       expect(product.campaigns).to match_array([campaign_1, campaign_2])
     end
+
+    it "should have many campaigns" do
+      product = create(:product, name: 'Hammer')
+      cr_1 = create(:campaign_request, product: product)
+      cr_2 = create(:campaign_request, product: product)
+      expect(product.campaign_requests).to match_array([cr_1, cr_2])
+    end
   end
 
   describe "concerning ActiveRecord callbacks" do

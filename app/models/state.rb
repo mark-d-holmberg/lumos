@@ -2,6 +2,7 @@ class State < ActiveRecord::Base
 
   has_many :districts
   has_many :campaigns
+  has_many :campaign_requests
 
   sorty on: [:name, :abbr, :created_at, :updated_at]
 

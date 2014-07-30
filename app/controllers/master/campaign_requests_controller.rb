@@ -1,9 +1,10 @@
 class Master::CampaignRequestsController < MasterController
 
   before_action :set_campaign_request, only: [:show, :edit, :update, :destroy, :convert]
+  before_action :check_approved_at, only: [:edit, :update, :convert]
 
   def index
-    @campaign_requests = CampaignRequest.ordered.page(params[:page])
+    @campaign_requests = CampaignRequest.not_approved.ordered.page(params[:page])
   end
 
   def show
@@ -40,24 +41,53 @@ class Master::CampaignRequestsController < MasterController
 
   private
 
+  def check_approved_at
+    if @campaign_request.approved_at.present?
+      flash[:error] = 'Cannot modify approved Campaign Requests!'
+      redirect_to campaign_requests_path
+    end
+  end
+
   def set_campaign_request
     @campaign_request = CampaignRequest.find_by(slug: params[:slug])
   end
 
   def safe_params
-    safe_attributes = [:state_id, :district_name, :school_name, :teacher_name, :campaign_name, :school_wide, :email]
+    safe_attributes = [
+      :campaign_name,
+      :district_name,
+      :email,
+      :physical_address,
+      :physical_address_ext,
+      :physical_city,
+      :physical_postal_code,
+      :physical_state,
+      :product_id,
+      :school_name,
+      :school_wide,
+      :state_id,
+      :teacher_first_name,
+      :teacher_last_name,
+    ]
     params.require(:campaign_request).permit(safe_attributes)
   end
 
   def convert_params
     safe_attributes = [
-      :state_id,
-      :district_name,
-      :school_name,
-      :teacher_name,
       :campaign_name,
-      :school_wide,
+      :district_name,
       :email,
+      :physical_address,
+      :physical_address_ext,
+      :physical_city,
+      :physical_postal_code,
+      :physical_state,
+      :product_id,
+      :school_name,
+      :school_wide,
+      :state_id,
+      :teacher_first_name,
+      :teacher_last_name,
       associations: [
         :district_id,
         :school_id,

@@ -71,6 +71,10 @@ LumosApi =
           # Add each one
           $.each data, (index, element) ->
             $school_element.append($('<option>').text(element.name).attr('value', element.id));
+
+          # Add a 'Not Listed' step
+          $school_element.append($('<option>').text("School Not Listed").attr('value', '-1'));
+
           # Remove the disabled
           $school_element.prop('disabled', false)
 
@@ -163,6 +167,20 @@ jQuery ->
         if $district_option_value.length
           LumosApi.GetSchools($district_option_value)
 
+  # Bind the stuff for creating a new campaign
+  $("form#landing_new_campaign_form select#campaign_school_id").change ->
+    # Find the selected option
+    $school_option = $(this).find("option:selected")
+
+    # Make sure we have that HTML element
+    if $school_option
+      # See if there's actually a value
+      $school_option_value = $school_option.val()
+
+      if $school_option_value is '-1'
+        window.location = $("form#landing_new_campaign_form select#campaign_district_id").data("new-campaign-request-url")
+      else
+        # Do absolutely nothing
 
   # Bind the stuff for creating a new campaign
   $("form#landing_new_campaign_form select#campaign_campaignable_type").change ->

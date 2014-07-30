@@ -7,13 +7,14 @@ RSpec.describe Master::CampaignRequestsController, type: :controller do
     allow(controller).to receive(:current_user).and_return(create(:user))
     @state = create(:state, name: 'Utah', abbr: 'UT')
     @district = create(:district, state: @state, name: 'Washington District')
+    @product = create(:product, name: 'Hammer')
   end
 
   # This should return the minimal set of attributes required to create a valid
   # CampaignRequest. As you add validations to CampaignRequest, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    attributes_for(:campaign_request).merge({state_id: @state.id})
+    attributes_for(:campaign_request).merge({state_id: @state.id, product_id: @product.id})
   }
 
   let(:invalid_attributes) {
@@ -120,7 +121,7 @@ RSpec.describe Master::CampaignRequestsController, type: :controller do
   describe "POST convert" do
     describe "with valid params" do
       let(:new_attributes) {
-        {"state_id"=> @state.id, "school_wide"=>"false", "email"=>"whatevadads@example.com", "associations"=>{"district_id"=> @district.id, "school_id"=>""}, "school_name"=>"Mojave Desert Hills", "teacher_name"=>"Herp Derp", "campaign_name"=>"Jew Balls Campaign for Stuff"}
+        {"state_id"=> @state.id, "product_id"=> @product.id, "school_wide"=>"false", "email"=>"whatevadads@example.com", "associations"=>{"district_id"=> @district.id, "school_id"=>""}, "school_name"=>"Mojave Desert Hills", "teacher_first_name"=>"Herp", "teacher_last_name"=>"Derp", "campaign_name"=>"Jew Balls Campaign for Stuff"}
       }
 
       it "assigns the requested campaign_request as @campaign_request" do

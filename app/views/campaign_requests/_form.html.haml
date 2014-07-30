@@ -4,10 +4,17 @@
   = f.association :state, collection: State.ordered
   = f.input :district_name, label: 'District Name'
   = f.input :school_name, label: 'School Name'
-  = f.input :teacher_name, label: 'Teacher Name'
+  = f.input :teacher_first_name, label: 'Teacher First Name'
+  = f.input :teacher_last_name, label: 'Teacher Last Name'
   = f.input :campaign_name, label: 'Campaign Name'
   = f.input :school_wide, as: :select, include_blank: false
   = f.input :email
+  = f.association :product, include_blank: false, collection: Product.all.map { |k| [k.pretty_name, k.id] }
+  = f.input :physical_address
+  = f.input :physical_address_ext
+  = f.input :physical_city
+  = f.input :physical_state
+  = f.input :physical_postal_code
 
   .form-group
     .col-sm-offset-2.col-sm-10

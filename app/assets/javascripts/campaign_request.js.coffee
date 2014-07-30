@@ -83,7 +83,7 @@ jQuery ->
         $("form#convert_campaign_request input#convert_campaign_request_school_name").prop('disabled', false)
         $teacher_element.prop('disabled', true)
 
-  # Lock out the teacher_name when they select a teacher_id
+  # Lock out the teacher name when they select a teacher_id
   $("form#convert_campaign_request select#convert_campaign_request_associations_teacher_id").change (e) ->
     $teacher_option = $(this).find("option:selected");
     if $teacher_option
@@ -91,7 +91,8 @@ jQuery ->
       $teacher_element = $("form#convert_campaign_request select#convert_campaign_request_associations_teacher_id")
 
       if $teacher_id.length
-        $("form#convert_campaign_request input#convert_campaign_request_teacher_name").prop('disabled', true)
+        $("form#convert_campaign_request input#convert_campaign_request_teacher_first_name").prop('disabled', true)
+        $("form#convert_campaign_request input#convert_campaign_request_teacher_last_name").prop('disabled', true)
 
         # Disable manual entry
         $teacher_element.prop('disabled', false)
@@ -99,5 +100,6 @@ jQuery ->
         # Clear out the value for a teacher
         $teacher_element.html('<option value="">Select a Teacher</option>')
         # Re-enable manual entry
-        $("form#convert_campaign_request input#convert_campaign_request_teacher_name").prop('disabled', false)
+        $("form#convert_campaign_request input#convert_campaign_request_teacher_first_name").prop('disabled', false)
+        $("form#convert_campaign_request input#convert_campaign_request_teacher_last_name").prop('disabled', false)
         $teacher_element.prop('disabled', true)

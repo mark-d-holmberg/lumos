@@ -9,6 +9,8 @@ class Campaign < ActiveRecord::Base
   belongs_to :product
   belongs_to :campaignable, polymorphic: true
 
+  has_one :campaign_request
+
   has_many :contributions
   has_many :impressions
 

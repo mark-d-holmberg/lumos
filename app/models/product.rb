@@ -3,6 +3,7 @@ class Product < ActiveRecord::Base
   include Dollars
 
   has_many :campaigns
+  has_many :campaign_requests
 
   monetize :price_cents
   has_dollar_field :price

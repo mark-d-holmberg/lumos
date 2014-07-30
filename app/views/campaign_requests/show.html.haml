@@ -23,11 +23,27 @@
         %tr
           %th= CampaignRequest.human_attribute_name(:school_name)
           %td= @campaign_request.school_name
-          %th= CampaignRequest.human_attribute_name(:teacher_name)
-          %td= @campaign_request.teacher_name
+          %th= CampaignRequest.human_attribute_name(:teacher_first_name)
+          %td= @campaign_request.teacher_first_name
         %tr
+          %th= CampaignRequest.human_attribute_name(:teacher_last_name)
+          %td= @campaign_request.teacher_last_name
           %th= CampaignRequest.human_attribute_name(:school_wide)
           %td= @campaign_request.school_wide? ? 'Yes' : 'No'
+        %tr
+          %th= CampaignRequest.human_attribute_name(:approved_at)
+          %td
+            - if @campaign_request.approved_at.present?
+              = l(@campaign_request.approved_at, format: :short)
+            - else
+              N/A
+          %th= CampaignRequest.human_attribute_name(:campaign)
+          %td
+            - if @campaign_request.campaign.present?
+              = link_to landing_campaign_url(@campaign_request.campaign.to_param, subdomain: 'landing'), class: 'btn btn-link', title: 'View Campaign'
+            - else
+              N/A
+        %tr
           %th= CampaignRequest.human_attribute_name(:slug)
           %td
             = link_to landing_campaign_request_url(@campaign_request.to_param, subdomain: 'landing'), class: 'btn btn-link', title: 'View Public Campaign Request' do

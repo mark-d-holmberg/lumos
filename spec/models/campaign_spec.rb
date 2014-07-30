@@ -212,6 +212,12 @@ RSpec.describe Campaign, type: :model do
       impression_2 = create(:impression, campaign: campaign)
       expect(campaign.impressions).to match_array([impression_1, impression_2])
     end
+
+    it "should have one campaign request" do
+      campaign = create(:campaign)
+      campaign_request = create(:campaign_request, campaign: campaign)
+      expect(campaign.campaign_request).to eql(campaign_request)
+    end
   end
 
   describe "concerning instance methods" do

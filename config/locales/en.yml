@@ -33,14 +33,23 @@ en:
         state: 'State'
         teacher: 'Teacher'
       campaign_request:
+        approved_at: 'Approved At'
+        campaign: 'Campaign'
         campaign_name: 'Campaign'
         district_name: 'District'
         email: 'Email'
+        physical_address: "Address"
+        physical_address_ext: "Address Ext."
+        physical_city: "City"
+        physical_postal_code: "ZIP Code"
+        physical_state: "State"
+        product: 'Product'
         school_name: 'School'
         school_wide: 'School Based'
         slug: 'Slug'
         state: 'State'
-        teacher_name: 'Teacher'
+        teacher_first_name: 'Teacher First Name'
+        teacher_last_name: 'Teacher Last Name'
       contribution:
         amount: 'Amount'
         amount_cents: 'Amount (cents)'

@@ -3,13 +3,14 @@ require 'rails_helper'
 RSpec.describe CampaignRequestsController, type: :controller do
   before(:each) do
     @state = create(:state, name: 'Utah', abbr: 'UT')
+    @product = create(:product, name: 'Hammer')
   end
 
   # This should return the minimal set of attributes required to create a valid
   # CampaignRequest. As you add validations to CampaignRequest, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    attributes_for(:campaign_request).merge({state_id: @state.id})
+    attributes_for(:campaign_request).merge({state_id: @state.id, product_id: @product.id})
   }
 
   let(:invalid_attributes) {
