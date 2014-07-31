@@ -6,8 +6,8 @@ GIT
       railties (>= 3.0)
 
 GIT
-  remote: git://github.com/mark-d-holmberg/sorty.git
-  revision: 0adeef83110e04c5475b8c48df42a3c5195952fc
+  remote: https://github.com/PhoenixfireDevelopment/sorty.git
+  revision: 322962bea79b82ae8e2c62fcfe445d11c8104926
   specs:
     sorty (0.0.1)
       rails (>= 4.0.2)
